@@ -1,7 +1,11 @@
+import AppHeader from "../app-header/app-header";
+
+import styles from "./app.module.css";
+
 function App() {
   return (
-    <div>
-      <h1>Hello, world</h1>
+    <div className={styles.app}>
+      <AppHeader />
     </div>
   );
 }

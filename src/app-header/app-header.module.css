@@ -1,0 +1,30 @@
+.header {
+  display: flex;
+}
+
+.nav {
+  display: flex;
+}
+
+.nav_ul {
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.nav_li {
+  list-style: none;
+  margin: 0;
+}
+
+.col {
+  width: 100%;
+}
+
+.col_right {
+  justify-content: end;
+}
+
+.logo {
+  display: block;
+}
