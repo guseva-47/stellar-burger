@@ -1,0 +1,12 @@
+.ingredients {
+  margin:  0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  
+}
+
+.item {
+  padding: 0 8px 32px 16px;
+  list-style: none;
+}
