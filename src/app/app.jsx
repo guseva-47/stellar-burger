@@ -10,10 +10,10 @@ function App() {
       <AppHeader />
       <main className={styles.main}>
         <section className={`${styles.col} mr-10`}>
-          <BurgerConstructor />
+          <BurgerIngredients />
         </section>
         <section className={styles.col}>
-          <BurgerIngredients />
+          <BurgerConstructor />
         </section>
       </main>
     </div>
