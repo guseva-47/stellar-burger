@@ -29,7 +29,11 @@ function AppHeader() {
       </a>
 
       <nav className={`${styles.nav} ${styles.col} ${styles.col_right}`}>
-        <NavLink text="Личный кабинет" Icon={ProfileIcon} />
+        <ul className={`${styles.nav_ul}`}>
+          <li className={`${styles.nav_li}`}>
+            <NavLink text="Личный кабинет" Icon={ProfileIcon} />
+          </li>
+        </ul>
       </nav>
     </header>
   );
