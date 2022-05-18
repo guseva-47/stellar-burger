@@ -22,10 +22,10 @@ import styles from "./ingredient.module.css";
 //   __v: 0,
 // },
 
-function Ingredient({ data }) {
+function Ingredient({ data, count = 0 }) {
   return (
     <article className={`${styles.ingredient}`}>
-      <Counter count={1} size="default" />
+      { count > 0 ? <Counter count={count} size="default" /> : null }
       <div className=" pr-4 pb-1 pl-4">
         <img src={data.image} alt={data.name} />
       </div>
