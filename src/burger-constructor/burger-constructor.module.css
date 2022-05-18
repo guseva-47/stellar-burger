@@ -1,0 +1,21 @@
+.constructor {
+}
+
+.elements {
+  display: flex;
+  flex-direction: column;
+  /* align-items: flex-end; */
+  gap: 16px;
+  max-height: calc(100vh - 156px - 188px);
+  overflow: auto;
+}
+
+.element {
+  /* display: block;
+  width: 100%; */
+}
+
+.line {
+  display: flex;
+  align-items: center;
+}
