@@ -10,7 +10,7 @@ import NavLink from "../nav-link/nav-link";
 
 function AppHeader() {
   return (
-    <header className={`pt-4 pb-4 ${styles.header}`}>
+    <header className={`pt-4 pb-3 ${styles.header}`}>
       <nav className={`${styles.nav} ${styles.col}`}>
         <ul className={`${styles.nav_ul}`}>
           <li className={`${styles.nav_li}`}>
@@ -24,7 +24,7 @@ function AppHeader() {
         </ul>
       </nav>
 
-      <a href="##" className={`${styles.logo}`}>
+      <a href="##" className={`${styles.logo} pt-1`}>
         <Logo />
       </a>
 
