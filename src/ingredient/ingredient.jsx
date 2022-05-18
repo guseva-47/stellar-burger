@@ -26,7 +26,7 @@ function Ingredient({ data, count = 0 }) {
   return (
     <article className={`${styles.ingredient}`}>
       { count > 0 ? <Counter count={count} size="default" /> : null }
-      <div className=" pr-4 pb-1 pl-4">
+      <div className=" pr-3 pb-1 pl-4">
         <img src={data.image} alt={data.name} />
       </div>
 

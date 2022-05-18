@@ -37,7 +37,7 @@ function BurgerIngredients(props) {
           );
         })}
       </div>
-      <section>
+      <section className={`${styles.elements} custom-scroll`}>
         {types.map(({ value, title }) => {
           const ingredientsSet = dataSet.filter((data) => data.type === value);
           return (
