@@ -6,11 +6,11 @@
 
 .middle {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
-  max-height: calc(100vh - 268px - 236px);
   overflow: auto;
   min-height: 80px;
+  max-height: calc(100vh - 268px - 236px);
+  flex-direction: column;
+  gap: 16px;
 }
 
 .line {

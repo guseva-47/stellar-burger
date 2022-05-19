@@ -8,6 +8,6 @@
 }
 
 .elements {
-  height: calc(100vh - 244px);
   overflow: auto;
+  height: calc(100vh - 244px);
 }

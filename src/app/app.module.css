@@ -1,14 +1,14 @@
 .app {
-  margin: 0 auto;
+  overflow: hidden;
   max-width: 1280px;
   max-height: 100vh;
-  overflow: hidden;
+  margin: 0 auto;
 }
 
 .main {
-  margin: 0 auto;
-  max-width: 1240px;
   display: flex;
+  max-width: 1240px;
+  margin: 0 auto;
 }
 
 .col {
