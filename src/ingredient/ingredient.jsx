@@ -6,26 +6,12 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./ingredient.module.css";
-
-// {
-//   _id: "60666c42cc7b410027a1a9b5",
-//   name: "Говяжий метеорит (отбивная)",
-//   type: "main",
-//   proteins: 800,
-//   fat: 800,
-//   carbohydrates: 300,
-//   calories: 2674,
-//   price: 3000,
-//   image: "https://code.s3.yandex.net/react/code/meat-04.png",
-//   image_mobile: "https://code.s3.yandex.net/react/code/meat-04-mobile.png",
-//   image_large: "https://code.s3.yandex.net/react/code/meat-04-large.png",
-//   __v: 0,
-// },
+import ingredientPropTypes from "../prop-types/ingredient-prop-types";
 
 function Ingredient({ data, count = 0 }) {
   return (
     <article className={`${styles.ingredient}`}>
-      { count > 0 ? <Counter count={count} size="default" /> : null }
+      {count > 0 ? <Counter count={count} size="default" /> : null}
       <div className=" pr-3 pb-1 pl-4">
         <img src={data.image} alt={data.name} />
       </div>
@@ -42,6 +28,9 @@ function Ingredient({ data, count = 0 }) {
   );
 }
 
-Ingredient.propTypes = {};
+Ingredient.propTypes = {
+  data: ingredientPropTypes.isRequired,
+  count: PropTypes.number,
+};
 
 export default Ingredient;

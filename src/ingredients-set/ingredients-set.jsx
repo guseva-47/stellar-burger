@@ -1,9 +1,9 @@
-import React from "react";
 import PropTypes from "prop-types";
 
 import Ingredient from "../ingredient/ingredient";
 
 import styles from "./ingredients-set.module.css";
+import ingredientPropTypes from "../prop-types/ingredient-prop-types";
 
 function IngredientsSet({ title = "", dataSet = [] }) {
   return (
@@ -23,6 +23,9 @@ function IngredientsSet({ title = "", dataSet = [] }) {
   );
 }
 
-IngredientsSet.propTypes = {};
+IngredientsSet.propTypes = {
+  title: PropTypes.string.isRequired,
+  dataSet: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired
+};
 
 export default IngredientsSet;

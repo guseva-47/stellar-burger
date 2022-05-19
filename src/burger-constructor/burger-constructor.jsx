@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 
 import {
@@ -8,9 +7,9 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import dataSet from "../utils/data";
 import styles from "./burger-constructor.module.css";
-function BurgerConstructor(props) {
+import ingredientPropTypes from "../prop-types/ingredient-prop-types";
+function BurgerConstructor({ bun, ingredients }) {
   const calcPrice = () => {
     return 610;
   };
@@ -21,16 +20,16 @@ function BurgerConstructor(props) {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text="Краторная булка N-200i (верх)"
-            price={200}
-            thumbnail={"https://code.s3.yandex.net/react/code/meat-01.png"}
+            text={bun.name}
+            price={bun.price}
+            thumbnail={bun.image}
             className={`${styles.element}`}
           />
         </div>
         <div className={`${styles.middle} ${styles.elements} custom-scroll`}>
-          {dataSet.map((data) => {
+          {ingredients.map((data) => {
             return (
-              <div className={`${styles.line}`}>
+              <div className={`${styles.line}`} key={data._id}>
                 <span className="pr-2">
                   <DragIcon type="primary" />
                 </span>
@@ -39,7 +38,6 @@ function BurgerConstructor(props) {
                   price={data.price}
                   thumbnail={data.image}
                   className={`${styles.element}`}
-                  key={data._id}
                 />
               </div>
             );
@@ -50,9 +48,9 @@ function BurgerConstructor(props) {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text="Краторная булка N-200i (низ)"
-            price={200}
-            thumbnail={"https://code.s3.yandex.net/react/code/meat-01.png"}
+            text={bun.name}
+            price={bun.price}
+            thumbnail={bun.image}
             className={`${styles.element}`}
           />
         </div>
@@ -71,6 +69,9 @@ function BurgerConstructor(props) {
   );
 }
 
-BurgerConstructor.propTypes = {};
+BurgerConstructor.propTypes = {
+  bun: ingredientPropTypes.isRequired,
+  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired),
+};
 
 export default BurgerConstructor;

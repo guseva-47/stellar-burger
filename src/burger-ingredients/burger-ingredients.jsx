@@ -4,9 +4,9 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import IngredientsSet from "../ingredients-set/ingredients-set";
 import styles from "./burger-ingredients.module.css";
-import dataSet from "../utils/data";
+import ingredientPropTypes from "../prop-types/ingredient-prop-types";
 
-function BurgerIngredients(props) {
+function BurgerIngredients({ ingredients = [] }) {
   const types = [
     {
       value: "bun",
@@ -31,7 +31,12 @@ function BurgerIngredients(props) {
       <div className={`${styles.tabs} pb-10`}>
         {types.map(({ value, title }) => {
           return (
-            <Tab value={value} active={current === value} onClick={setCurrent}>
+            <Tab
+              value={value}
+              active={current === value}
+              onClick={setCurrent}
+              key={value}
+            >
               {title}
             </Tab>
           );
@@ -39,7 +44,9 @@ function BurgerIngredients(props) {
       </div>
       <section className={`${styles.elements} custom-scroll`}>
         {types.map(({ value, title }) => {
-          const ingredientsSet = dataSet.filter((data) => data.type === value);
+          const ingredientsSet = ingredients.filter(
+            (data) => data.type === value
+          );
           return (
             <IngredientsSet
               dataSet={ingredientsSet}
@@ -53,6 +60,8 @@ function BurgerIngredients(props) {
   );
 }
 
-BurgerIngredients.propTypes = {};
+BurgerIngredients.propTypes = {
+  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
+};
 
 export default BurgerIngredients;
