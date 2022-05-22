@@ -20,7 +20,9 @@ function App() {
     image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
     __v: 0,
   };
-  
+
+  const stuffing = ingredients.filter(elem => elem.type !== "bun");
+
   return (
     <div className={styles.app}>
       <AppHeader />
@@ -29,7 +31,7 @@ function App() {
           <BurgerIngredients ingredients={ingredients} />
         </section>
         <section className={styles.col}>
-          <BurgerConstructor ingredients={ingredients} bun={bun} />
+          <BurgerConstructor ingredients={stuffing} bun={bun} />
         </section>
       </main>
     </div>
