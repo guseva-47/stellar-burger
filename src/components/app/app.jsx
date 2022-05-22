@@ -3,7 +3,7 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 
 import styles from "./app.module.css";
-import ingredients from "../utils/data";
+import ingredients from "../../utils/data";
 
 function App() {
   const bun = {
@@ -20,7 +20,7 @@ function App() {
     image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
     __v: 0,
   };
-
+  
   return (
     <div className={styles.app}>
       <AppHeader />
