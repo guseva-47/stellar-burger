@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 import styles from "./nav-link.module.css";
 
 function NavLink({ Icon, text = "", ref="", isActive = false }) {
@@ -15,6 +17,13 @@ function NavLink({ Icon, text = "", ref="", isActive = false }) {
       {text}
     </a>
   );
+}
+
+NavLink.propTypes = {
+  Icon: PropTypes.elementType.isRequired,
+  ref: PropTypes.string,
+  text: PropTypes.string.isRequired,
+  isActive: PropTypes.bool
 }
 
 export default NavLink;
