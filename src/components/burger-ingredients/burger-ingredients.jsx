@@ -25,7 +25,7 @@ function BurgerIngredients({ ingredients = [] }) {
   const [current, setCurrent] = useState(types[0].value);
 
   return (
-    <section className={`${styles.burger_ingredients} pt-10`}>
+    <section className={`pt-10`}>
       <h1 className="text text_type_main-large pb-5">Соберите бургер</h1>
 
       <div className={`${styles.tabs} pb-10`}>

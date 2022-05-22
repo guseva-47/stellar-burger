@@ -1,13 +1,8 @@
-.ingredients {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 .tabs {
   display: flex;
 }
 
 .elements {
   overflow: auto;
-  height: calc(100vh - 244px);
+  height: calc(100vh - 244px - 64px);
 }
