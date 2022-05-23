@@ -1,0 +1,25 @@
+.elements {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.middle {
+  display: flex;
+  overflow: auto;
+  min-height: 80px;
+  max-height: calc(100vh - 268px - 236px);
+  flex-direction: column;
+  gap: 16px;
+}
+
+.line {
+  display: flex;
+  align-items: center;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}

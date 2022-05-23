@@ -1,0 +1,16 @@
+.app {
+  overflow: hidden;
+  max-width: 1280px;
+  max-height: 100vh;
+  margin: 0 auto;
+}
+
+.main {
+  display: flex;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.col {
+  width: 100%;
+}
