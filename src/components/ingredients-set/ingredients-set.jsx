@@ -10,13 +10,17 @@ function IngredientsSet({ title = '', dataSet = [] }) {
       <h2 className="text text_type_main-medium">{title}</h2>
 
       <section className="pt-6 pb-2">
-        <ul className={`${styles.ingredients}`}>
-          {dataSet.map((data) => (
-            <li className={`${styles.item}`} key={data._id}>
-              <Ingredient data={data} />
-            </li>
-          ))}
-        </ul>
+        {dataSet.length === 0 ? (
+          <p className="text text_type_main-default pb-6">Пусто</p>
+        ) : (
+          <ul className={`${styles.ingredients}`}>
+            {dataSet.map((data) => (
+              <li className={`${styles.item}`} key={data._id}>
+                <Ingredient data={data} />
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
     </section>
   );
