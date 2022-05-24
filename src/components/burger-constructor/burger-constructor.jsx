@@ -1,5 +1,10 @@
 import PropTypes from 'prop-types';
-import { Button, CurrencyIcon, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import {
+  Button,
+  CurrencyIcon,
+  ConstructorElement,
+  DragIcon,
+} from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './burger-constructor.module.css';
 import ingredientPropTypes from '../prop-types/ingredient-prop-types';
