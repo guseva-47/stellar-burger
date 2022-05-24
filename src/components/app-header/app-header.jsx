@@ -1,21 +1,17 @@
-import {
-  BurgerIcon,
-  ListIcon,
-  Logo,
-  ProfileIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import styles from "./app-header.module.css";
-import NavLink from "../nav-link/nav-link";
+import styles from './app-header.module.css';
+import NavLink from '../nav-link/nav-link';
 
 function AppHeader() {
+  const isActive = true;
   return (
     <header className={`pt-4 pb-3 ${styles.header}`}>
       <nav className={`${styles.nav} ${styles.col}`}>
         <ul className={`${styles.nav_ul}`}>
           <li className={`${styles.nav_li}`}>
             <div className="pr-2">
-              <NavLink text="Конструктор" isActive={true} Icon={BurgerIcon} />
+              <NavLink text="Конструктор" isActive={isActive} Icon={BurgerIcon} />
             </div>
           </li>
           <li className={`${styles.nav_li}`}>
