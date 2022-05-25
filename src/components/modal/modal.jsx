@@ -26,7 +26,9 @@ function Modal({ title = 'Детали ингредиента' }) {
     <article className={`${styles.modal} p-10 pb-15`}>
       <section className={`${styles.header}`}>
         <h2 className="text text_type_main-large">{title}</h2>
-        <CloseIcon type="primary" />
+        <button className={styles['close-btn']} type="button">
+          <CloseIcon type="primary" />
+        </button>
       </section>
       <section className="" style={{ display: 'flex', justifyContent: 'center' }}>
         <IngredientDetails data={ingredient} />
