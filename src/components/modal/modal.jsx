@@ -1,5 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import { createPortal } from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './modal.module.css';
@@ -7,6 +7,8 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 
 // todo 'детали ингридиента'
 function Modal({ title = 'Детали ингредиента' }) {
+  const modalNode = document.getElementById('modal');
+
   const ingredient = {
     _id: '60666c42cc7b410027a1a9b6',
     name: 'Биокотлета из марсианской Магнолии',
@@ -22,7 +24,7 @@ function Modal({ title = 'Детали ингредиента' }) {
     __v: 0,
   };
 
-  return (
+  return createPortal(
     <article className={`${styles.modal} p-10 pb-15`}>
       <section className={`${styles.header}`}>
         <h2 className="text text_type_main-large">{title}</h2>
@@ -33,7 +35,8 @@ function Modal({ title = 'Детали ингредиента' }) {
       <section className="" style={{ display: 'flex', justifyContent: 'center' }}>
         <IngredientDetails data={ingredient} />
       </section>
-    </article>
+    </article>,
+    modalNode,
   );
 }
 
