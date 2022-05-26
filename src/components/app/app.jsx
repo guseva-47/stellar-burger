@@ -7,7 +7,6 @@ import bun from '../../utils/bun';
 import styles from './app.module.css';
 import ingredientsData from '../../utils/data';
 import BackendApi from '../../api/backend-api';
-import Modal from '../modal/modal';
 
 function App() {
   const [ingredients, setIngredients] = useState([]);
@@ -22,7 +21,6 @@ function App() {
 
   return (
     <div className={styles.app}>
-      <Modal />
       <AppHeader />
       <main className={styles.main}>
         <section className={`${styles.col} mr-10`}>

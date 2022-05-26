@@ -1,7 +1,7 @@
 import styles from './ingredient-details.module.css';
 import ingredientPropTypes from '../prop-types/ingredient-prop-types';
 
-function IngredientDetails({ data }) {
+function IngredientDetails({ data = {} }) {
   const energyValue = [
     ['Каллории, ккал', data.calories],
     ['Белки, г', data.proteins],
