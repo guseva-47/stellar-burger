@@ -26,6 +26,7 @@
     "react/react-in-jsx-scope": "off",
     "no-unused-vars": "warn",
     "no-console": "off",
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "no-trailing-spaces":"warn"
   }
 }
