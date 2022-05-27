@@ -1,0 +1,20 @@
+#modal {
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  left: 0;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 700;
+  src: url("./fonts/JetBrainsMono-Bold.ttf") format("ttf");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./fonts/JetBrainsMono-Regular.ttf") format("ttf");
+}

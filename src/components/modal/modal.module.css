@@ -1,0 +1,39 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  z-index: 1;
+  width: 722px;
+  min-height: 541px;
+  box-sizing: border-box;
+  border: 1px solid rgba(76 76 255 / 20%);
+  background: #1c1c21;
+  border-radius: 40px;
+  box-shadow:
+    0 24px 32px rgba(0 0 0 / 4%),
+    0 16px 24px rgba(0 0 0 / 4%),
+    0 4px 8px rgba(0 0 0 / 4%),
+    0 0 1px rgba(0 0 0 / 4%);
+}
+
+.header {
+  display: flex;
+  min-height: 64px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.close-btn {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+}

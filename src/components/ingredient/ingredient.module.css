@@ -4,6 +4,15 @@
   height: 208px;
 }
 
+.wrapper {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+}
+
 .price,
 .name {
   display: flex;

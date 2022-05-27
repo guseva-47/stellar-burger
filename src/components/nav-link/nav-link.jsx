@@ -1,10 +1,12 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import styles from "./nav-link.module.css";
+import styles from './nav-link.module.css';
 
-function NavLink({ Icon, text = "", ref="", isActive = false }) {
-  const getColor = isActive ? "text_color_primary" : "text_color_inactive";
-  const iconType = isActive ? "primary" : "secondary";
+function NavLink({
+  Icon, text = '', ref = '', isActive = false,
+}) {
+  const getColor = isActive ? 'text_color_primary' : 'text_color_inactive';
+  const iconType = isActive ? 'primary' : 'secondary';
   return (
     <a
       href={ref}
@@ -23,7 +25,12 @@ NavLink.propTypes = {
   Icon: PropTypes.elementType.isRequired,
   ref: PropTypes.string,
   text: PropTypes.string.isRequired,
-  isActive: PropTypes.bool
-}
+  isActive: PropTypes.bool,
+};
+
+NavLink.defaultProps = {
+  ref: '',
+  isActive: false,
+};
 
 export default NavLink;
