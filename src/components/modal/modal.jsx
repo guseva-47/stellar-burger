@@ -11,15 +11,23 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 function Modal({ title = '', ingredient = {}, closeHandler }) {
   const modalNode = document.getElementById('modal');
 
-  const closeRef = createRef();
+  const modalRef = createRef();
 
   useEffect(() => {
-    closeRef.current.focus();
-  }, []);
+    const escapeHandler = (e) => {
+      if (e.key === 'Escape') {
+        closeHandler();
+      }
+    };
+    modalRef.current.focus();
+    document.addEventListener('keydown', escapeHandler);
+
+    return () => document.removeEventListener('keydown', escapeHandler);
+  }, [modalRef, closeHandler]);
 
   return createPortal(
     <ModalOverlay closeHandler={closeHandler}>
-      <article className={`${styles.modal} p-10 pb-15`}>
+      <article className={`${styles.modal} p-10 pb-15`} ref={modalRef} tabIndex={-1}>
         {/* header */}
         <section className={`${styles.header}`}>
           <h2 className="text text_type_main-large">{title}</h2>
@@ -28,7 +36,6 @@ function Modal({ title = '', ingredient = {}, closeHandler }) {
             className={styles['close-btn']}
             type="button"
             onClick={closeHandler}
-            ref={closeRef}
           >
             <CloseIcon type="primary" />
           </button>
