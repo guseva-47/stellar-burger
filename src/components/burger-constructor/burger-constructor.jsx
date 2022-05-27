@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -8,9 +9,13 @@ import {
 
 import styles from './burger-constructor.module.css';
 import ingredientPropTypes from '../prop-types/ingredient-prop-types';
+import Modal from '../modal/modal';
 
 function BurgerConstructor({ bun, ingredients }) {
   const calcPrice = () => 610;
+  const [isVisible, setIsVisible] = useState(false);
+  const closeHandler = () => setIsVisible(false);
+
   return (
     <section className="pt-25 pl-4">
       <div className={`${styles.elements} pb-10`}>
@@ -57,9 +62,12 @@ function BurgerConstructor({ bun, ingredients }) {
         <span className="pr-10">
           <CurrencyIcon type="primary" />
         </span>
-        <Button type="primary" size="large">
+
+        <Button type="primary" size="large" onClick={() => setIsVisible(true)}>
           Оформить заказ
         </Button>
+
+        {isVisible && <Modal closeHandler={closeHandler}>hello</Modal>}
       </div>
     </section>
   );
