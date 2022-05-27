@@ -13,13 +13,13 @@ function AppHeader() {
   return (
     <header className={`pt-4 pb-3 ${styles.header}`}>
       <nav className={`${styles.nav} ${styles.col}`}>
-        <ul className={`${styles.nav_ul}`}>
-          <li className={`${styles.nav_li}`}>
+        <ul className={`${styles['nav-ul']}`}>
+          <li className={`${styles['nav-li']}`}>
             <div className="pr-2">
               <NavLink text="Конструктор" isActive={isActive} Icon={BurgerIcon} />
             </div>
           </li>
-          <li className={`${styles.nav_li}`}>
+          <li className={`${styles['nav-li']}`}>
             <NavLink text="Лента заказов" Icon={ListIcon} />
           </li>
         </ul>
@@ -29,9 +29,9 @@ function AppHeader() {
         <Logo />
       </a>
 
-      <nav className={`${styles.nav} ${styles.col} ${styles.col_right}`}>
-        <ul className={`${styles.nav_ul}`}>
-          <li className={`${styles.nav_li}`}>
+      <nav className={`${styles.nav} ${styles.col} ${styles['col-right']}`}>
+        <ul className={`${styles['nav-ul']}`}>
+          <li className={`${styles['nav-li']}`}>
             <NavLink text="Личный кабинет" Icon={ProfileIcon} />
           </li>
         </ul>
