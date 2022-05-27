@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -24,21 +24,42 @@ function BurgerIngredients({ ingredients = [] }) {
 
   const [current, setCurrent] = useState(types[0].value);
 
+  const itemsRef = useRef([]);
+
+  const clickHAndler = (value, i) => {
+    setCurrent(value);
+    itemsRef.current[i].scrollIntoView();
+  };
+
   return (
     <section className="pt-10">
       <h1 className="text text_type_main-large pb-5">Соберите бургер</h1>
 
       <div className={`${styles.tabs} pb-10`}>
-        {types.map(({ value, title }) => (
-          <Tab value={value} active={current === value} onClick={setCurrent} key={value}>
+        {types.map(({ value, title }, i) => (
+          <Tab
+            value={value}
+            active={current === value}
+            onClick={() => clickHAndler(value, i)}
+            key={value}
+          >
             {title}
           </Tab>
         ))}
       </div>
       <section className={`${styles.elements} custom-scroll`}>
-        {types.map(({ value, title }) => {
+        {types.map(({ value, title }, i) => {
           const ingredientsSet = ingredients.filter((data) => data.type === value);
-          return <IngredientsSet dataSet={ingredientsSet} title={title} key={value} />;
+          return (
+            <div
+              ref={(el) => {
+                itemsRef.current[i] = el;
+              }}
+              key={value}
+            >
+              <IngredientsSet dataSet={ingredientsSet} title={title} key={value} />
+            </div>
+          );
         })}
       </section>
     </section>
