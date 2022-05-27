@@ -1,7 +1,7 @@
 .modal {
   box-sizing: border-box;
   width: 722px;
-  height: 541px;
+  min-height: 541px;
 
   /* stylelint-disable-next-line declaration-empty-line-before */
   border: 1px solid rgba(76 76 255 / 20%);

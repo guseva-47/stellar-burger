@@ -10,6 +10,7 @@ import {
 import styles from './burger-constructor.module.css';
 import ingredientPropTypes from '../prop-types/ingredient-prop-types';
 import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
 
 function BurgerConstructor({ bun, ingredients }) {
   const calcPrice = () => 610;
@@ -67,7 +68,11 @@ function BurgerConstructor({ bun, ingredients }) {
           Оформить заказ
         </Button>
 
-        {isVisible && <Modal closeHandler={closeHandler}>hello</Modal>}
+        {isVisible && (
+          <Modal closeHandler={closeHandler}>
+            <OrderDetails number="034536" />
+          </Modal>
+        )}
       </div>
     </section>
   );
