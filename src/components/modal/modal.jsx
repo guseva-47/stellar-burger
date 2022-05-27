@@ -4,11 +4,9 @@ import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './modal.module.css';
-import IngredientDetails from '../ingredient-details/ingredient-details';
-import ingredientPropTypes from '../prop-types/ingredient-prop-types';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 
-function Modal({ title = '', ingredient = {}, closeHandler }) {
+function Modal({ children, title = '', closeHandler }) {
   const modalNode = document.getElementById('modal');
 
   const modalRef = createRef();
@@ -32,28 +30,22 @@ function Modal({ title = '', ingredient = {}, closeHandler }) {
         <section className={`${styles.header}`}>
           <h2 className="text text_type_main-large">{title}</h2>
 
-          <button
-            className={styles['close-btn']}
-            type="button"
-            onClick={closeHandler}
-          >
+          <button className={styles['close-btn']} type="button" onClick={closeHandler}>
             <CloseIcon type="primary" />
           </button>
         </section>
 
         {/* main */}
-        <section style={{ display: 'flex', justifyContent: 'center' }}>
-          <IngredientDetails data={ingredient} />
-        </section>
+        <section style={{ display: 'flex', justifyContent: 'center' }}>{children}</section>
       </article>
     </ModalOverlay>,
-    modalNode,
+    modalNode
   );
 }
 
 Modal.propTypes = {
+  children: PropTypes.node.isRequired,
   title: PropTypes.string,
-  ingredient: ingredientPropTypes.isRequired,
   closeHandler: PropTypes.func.isRequired,
 };
 

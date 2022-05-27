@@ -5,6 +5,7 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import styles from './ingredient.module.css';
 import ingredientPropTypes from '../prop-types/ingredient-prop-types';
 import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 
 function Ingredient({ data, count = 0 }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -28,7 +29,9 @@ function Ingredient({ data, count = 0 }) {
       </button>
 
       {isVisible && (
-        <Modal title="Детали ингредиента" ingredient={data} closeHandler={closeHandler} />
+        <Modal title="Детали ингредиента" ingredient={data} closeHandler={closeHandler}>
+          <IngredientDetails data={data} />
+        </Modal>
       )}
     </article>
   );
