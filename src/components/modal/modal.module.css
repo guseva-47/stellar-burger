@@ -1,9 +1,17 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
 .modal {
+  z-index: 1;
   width: 722px;
   min-height: 541px;
   box-sizing: border-box;
-
-  /* stylelint-disable-next-line declaration-empty-line-before */
   border: 1px solid rgba(76 76 255 / 20%);
   background: #1c1c21;
   border-radius: 40px;

@@ -24,7 +24,7 @@ function Modal({ children, title = '', closeHandler }) {
   }, [modalRef, closeHandler]);
 
   return createPortal(
-    <ModalOverlay closeHandler={closeHandler}>
+    <div className={styles.wrapper}>
       <article className={`${styles.modal} p-10 pb-15`} ref={modalRef} tabIndex={-1}>
         {/* header */}
         <section className={`${styles.header}`}>
@@ -38,7 +38,8 @@ function Modal({ children, title = '', closeHandler }) {
         {/* main */}
         <section style={{ display: 'flex', justifyContent: 'center' }}>{children}</section>
       </article>
-    </ModalOverlay>,
+      <ModalOverlay closeHandler={closeHandler} />
+    </div>,
     modalNode
   );
 }
