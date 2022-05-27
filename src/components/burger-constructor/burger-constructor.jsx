@@ -31,8 +31,9 @@ function BurgerConstructor({ bun, ingredients }) {
           />
         </div>
         <div className={`${styles.middle} ${styles.elements} custom-scroll`}>
-          {ingredients.map((data) => (
-            <div className={`${styles.line}`} key={data._id}>
+          {ingredients.map((data, i) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <div className={`${styles.line}`} key={i}>
               <span className="pr-2">
                 <DragIcon type="primary" />
               </span>

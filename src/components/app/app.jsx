@@ -3,9 +3,7 @@ import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 
-import bun from '../../utils/bun';
 import styles from './app.module.css';
-import ingredientsData from '../../utils/data';
 import BackendApi from '../../api/backend-api';
 
 function App() {
@@ -17,7 +15,8 @@ function App() {
       .catch((err) => console.error(err.message));
   }, []);
 
-  const stuffing = ingredientsData.filter((elem) => elem.type !== 'bun');
+  const stuffing = ingredients.filter((elem) => elem.type !== 'bun');
+  const bun = ingredients.find((elem) => elem.type === 'bun') || {};
 
   return (
     <div className={styles.app}>
