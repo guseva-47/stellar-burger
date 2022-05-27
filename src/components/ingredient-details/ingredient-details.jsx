@@ -18,7 +18,7 @@ function IngredientDetails({ data = {} }) {
       <h3 className={`${styles.name} text text_type_main-medium pb-2`}>{data.name}</h3>
       <ul className={`${styles.list}`}>
         {energyValue.map(([title, val]) => (
-          <li key={val} className={`${styles.elem}`}>
+          <li key={title} className={`${styles.elem}`}>
             <span className="text text_type_main-default pb-2">{title}</span>
             <span className="text text_type_digits-default pb-1">{val}</span>
           </li>
