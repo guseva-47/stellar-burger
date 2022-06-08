@@ -1,13 +1,12 @@
 import { useSelector } from 'react-redux';
+import { getIngredientsByType } from '../../services/selectors/app';
 
 import Ingredient from '../ingredient/ingredient';
 import ingredientsTypePropTypes from '../prop-types/ingredients-type-prop-types';
 import styles from './ingredients-set.module.css';
 
-function IngredientsSet({ type }) {
-  const ingredients = useSelector((store) => (
-    store.app.allIngredients.filter((item) => item.type === type.value)
-  ));
+function IngredientsSet({ type = { title: '', value: '' } }) {
+  const ingredients = useSelector((state) => getIngredientsByType(state, type.value));
 
   return (
     <section>
