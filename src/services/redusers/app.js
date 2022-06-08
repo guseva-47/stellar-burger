@@ -1,15 +1,17 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import backendApi from '../../api/backend-api';
+
+import data from '../../utils/data';
 
 const initialState = {
-  allIngredients: [],
+  allIngredients: data,
   currentIngredient: null,
 };
 
-export const fetchItems = createAsyncThunk('app/fetchAll', async (_, { rejectWithValue }) => {
-  const res = await fetch('https://norma.nomoreparties.space/api/ingredients');
-  if (!res.ok) return rejectWithValue(res.statusText);
-  return res.json();
-});
+export const fetchItems = createAsyncThunk(
+  'app/fetchAll',
+  () => backendApi.getAllIngredients()
+);
 
 export const appSlice = createSlice({
   name: 'app',
@@ -27,11 +29,11 @@ export const appSlice = createSlice({
       state.allIngredients = [];
     });
     builder.addCase(fetchItems.fulfilled, (state, action) => {
-      state.allIngredients = action.payload.data;
+      state.allIngredients = action.payload;
     });
     builder.addCase(fetchItems.rejected, (state, action) => {
       state.allIngredients = [];
-      console.error(action.error);
+      console.error(action.error.message);
     });
   },
 });
