@@ -1,10 +1,13 @@
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import ingredientPropTypes from '../prop-types/ingredient-prop-types';
 import styles from './burger-constructor.module.css';
+import { getBun, getStuffing } from '../../services/selectors/order';
 
-function BurgerConstructor({ bun = {}, ingredients = [] }) {
+function BurgerConstructor() {
+  const ingredients = useSelector(getStuffing);
+  const bun = useSelector(getBun);
+
   return (
     <div>
       <div className={`${styles.line} pl-8`}>
@@ -47,10 +50,5 @@ function BurgerConstructor({ bun = {}, ingredients = [] }) {
     </div>
   );
 }
-
-BurgerConstructor.propTypes = {
-  bun: ingredientPropTypes.isRequired,
-  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
-};
 
 export default BurgerConstructor;

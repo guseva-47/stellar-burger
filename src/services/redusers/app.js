@@ -5,8 +5,6 @@ import data from '../../utils/data';
 const initialState = {
   allIngredients: data,
   currentIngredient: null,
-  order: null,
-  ingredientsInOrder: [],
 };
 
 export const appSlice = createSlice({
