@@ -1,11 +1,10 @@
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 import Ingredient from '../ingredient/ingredient';
 import ingredientsTypePropTypes from '../prop-types/ingredients-type-prop-types';
 import styles from './ingredients-set.module.css';
 
-function IngredientsSet({ type = { title: '', value: '' } }) {
+function IngredientsSet({ type }) {
   const ingredients = useSelector((store) => (
     store.app.allIngredients.filter((item) => item.type === type.value)
   ));
@@ -32,7 +31,7 @@ function IngredientsSet({ type = { title: '', value: '' } }) {
 }
 
 IngredientsSet.propTypes = {
-  type: PropTypes.objectOf(ingredientsTypePropTypes.isRequired).isRequired,
+  type: ingredientsTypePropTypes.isRequired,
 };
 
 export default IngredientsSet;
