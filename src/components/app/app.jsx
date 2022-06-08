@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
 import AppHeader from '../app-header/app-header';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
+import OrderConstructor from '../order-constructor/orderer-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import styles from './app.module.css';
 
@@ -20,7 +20,7 @@ function App() {
           <BurgerIngredients />
         </section>
         <section className={styles.col}>
-          <BurgerConstructor ingredients={stuffing} bun={bun} />
+          <OrderConstructor ingredients={stuffing} bun={bun} />
         </section>
       </main>
     </div>
