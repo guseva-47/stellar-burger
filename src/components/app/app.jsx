@@ -1,9 +1,22 @@
+import { useDispatch, useSelector } from 'react-redux';
+
 import AppHeader from '../app-header/app-header';
 import OrderConstructor from '../order-constructor/orderer-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import styles from './app.module.css';
+import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import { getCurrentIngredient } from '../../services/selectors/app';
+import { resetCurrent } from '../../services/redusers/app';
 
 function App() {
+  const dispatch = useDispatch();
+  const data = useSelector(getCurrentIngredient);
+  const closeHandler = () => {
+    dispatch(resetCurrent());
+  };
+  const isVisible = !!data;
+
   return (
     <div className={styles.app}>
       <AppHeader />
@@ -15,6 +28,13 @@ function App() {
         <section className={styles.col}>
           <OrderConstructor />
         </section>
+
+        {/* Модальное окно */}
+        {isVisible && (
+          <Modal title="Детали ингредиента" ingredient={data} closeHandler={closeHandler}>
+            <IngredientDetails data={data ?? {}} />
+          </Modal>
+        )}
       </main>
     </div>
   );

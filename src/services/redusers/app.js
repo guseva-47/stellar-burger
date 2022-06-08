@@ -10,9 +10,16 @@ const initialState = {
 export const appSlice = createSlice({
   name: 'app',
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrent: (state, action) => {
+      state.currentIngredient = action.payload;
+    },
+    resetCurrent: (state) => {
+      state.currentIngredient = null;
+    },
+  },
 });
 
-// export const { } = appSlice.actions;
+export const { resetCurrent, setCurrent } = appSlice.actions;
 
 export default appSlice.reducer;
