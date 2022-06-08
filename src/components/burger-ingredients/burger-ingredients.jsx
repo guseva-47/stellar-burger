@@ -1,33 +1,17 @@
 import { useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import IngredientsSet from '../ingredients-set/ingredients-set';
 import styles from './burger-ingredients.module.css';
-import ingredientPropTypes from '../prop-types/ingredient-prop-types';
+import types from './ingredient-types';
 
-function BurgerIngredients({ ingredients = [] }) {
-  const types = [
-    {
-      value: 'bun',
-      title: 'Булки',
-    },
-    {
-      value: 'sauce',
-      title: 'Соусы',
-    },
-    {
-      value: 'main',
-      title: 'Начинки',
-    },
-  ];
-
-  const [current, setCurrent] = useState(types[0].value);
+function BurgerIngredients() {
+  const [currentType, setCurrentType] = useState(types[0].value);
 
   const itemsRef = useRef([]);
 
   const clickHAndler = (value, i) => {
-    setCurrent(value);
+    setCurrentType(value);
     itemsRef.current[i].scrollIntoView();
   };
 
@@ -35,11 +19,12 @@ function BurgerIngredients({ ingredients = [] }) {
     <section className="pt-10">
       <h1 className="text text_type_main-large pb-5">Соберите бургер</h1>
 
+      {/* Табы с типами ингредиентов */}
       <div className={`${styles.tabs} pb-10`}>
         {types.map(({ value, title }, i) => (
           <Tab
             value={value}
-            active={current === value}
+            active={currentType === value}
             onClick={() => clickHAndler(value, i)}
             key={value}
           >
@@ -47,27 +32,22 @@ function BurgerIngredients({ ingredients = [] }) {
           </Tab>
         ))}
       </div>
+
+      {/* Блоки ингредиентов */}
       <section className={`${styles.elements} custom-scroll`}>
-        {types.map(({ value, title }, i) => {
-          const ingredientsSet = ingredients.filter((data) => data.type === value);
-          return (
-            <div
-              ref={(el) => {
-                itemsRef.current[i] = el;
-              }}
-              key={value}
-            >
-              <IngredientsSet dataSet={ingredientsSet} title={title} key={value} />
-            </div>
-          );
-        })}
+        {types.map((type, i) => (
+          <div
+            ref={(el) => {
+              itemsRef.current[i] = el;
+            }}
+            key={type.value}
+          >
+            <IngredientsSet type={type} key={type.value} />
+          </div>
+        ))}
       </section>
     </section>
   );
 }
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropTypes.isRequired).isRequired,
-};
 
 export default BurgerIngredients;

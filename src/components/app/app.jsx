@@ -17,7 +17,7 @@ function App() {
 
       <main className={styles.main}>
         <section className={`${styles.col} mr-10`}>
-          <BurgerIngredients ingredients={ingredients} />
+          <BurgerIngredients />
         </section>
         <section className={styles.col}>
           <BurgerConstructor ingredients={stuffing} bun={bun} />
