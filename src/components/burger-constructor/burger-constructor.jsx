@@ -6,6 +6,8 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 import styles from './burger-constructor.module.css';
 import { getBun, getStuffing } from '../../services/selectors/order';
 import { removeStuffing, setBun, setStuffing } from '../../services/redusers/order';
+import BunTop from './bun/bun-top';
+import BunBottom from './bun/bun-bottom';
 
 function BurgerConstructor() {
   const ingredients = useSelector(getStuffing);
@@ -31,17 +33,8 @@ function BurgerConstructor() {
 
   return (
     <section ref={dropTarget} className={styles.tes}>
-      <div className={`${styles.line} pl-8`}>
-        {!!bun && (
-          <ConstructorElement
-            type="top"
-            isLocked
-            text={`${bun.name} (верх)`}
-            price={bun.price}
-            thumbnail={bun.image}
-            className={`${styles.element}`}
-          />
-        )}
+      <div className={`${styles.line} pl-8 pr-4 pb-4`}>
+        <BunTop bun={bun} />
       </div>
       <div className={`${styles.middle} ${styles.elements} custom-scroll`}>
         {ingredients.map((data) => (
@@ -60,17 +53,8 @@ function BurgerConstructor() {
         ))}
       </div>
 
-      <div className={`${styles.line} pl-8`}>
-        {!!bun && (
-          <ConstructorElement
-            type="bottom"
-            isLocked
-            text={`${bun.name} (низ)`}
-            price={bun.price}
-            thumbnail={bun.image}
-            className={`${styles.element}`}
-          />
-        )}
+      <div className={`${styles.line} pl-8 pr-4 pt-4`}>
+        <BunBottom bun={bun} />
       </div>
     </section>
   );
