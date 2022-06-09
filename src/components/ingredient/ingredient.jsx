@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
+import { useDrag } from 'react-dnd';
 
 import styles from './ingredient.module.css';
 import ingredientPropTypes from '../prop-types/ingredient-prop-types';
@@ -12,8 +13,16 @@ function Ingredient({ data, count = 0 }) {
     dispatch(setCurrent(data));
   };
 
+  const [{ isDrag }, dragRef] = useDrag({
+    type: data.type,
+    item: { ingredient: data },
+    collect: (monitor) => ({
+      isDrag: monitor.isDragging(),
+    }),
+  });
+
   return (
-    <article className={`${styles.ingredient}`}>
+    <article className={`${styles.ingredient} ${isDrag ? styles.drag : ''}`} ref={dragRef}>
       <button type="button" className={styles.wrapper} onClick={clickHandler}>
         {count > 0 ? <Counter count={count} size="default" /> : null}
         <div className=" pr-3 pb-1 pl-4">

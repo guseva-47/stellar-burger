@@ -1,4 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import AppHeader from '../app-header/app-header';
 import OrderConstructor from '../order-constructor/orderer-constructor';
@@ -11,26 +13,28 @@ import { resetCurrent } from '../../services/redusers/app';
 
 function App() {
   const dispatch = useDispatch();
-  const data = useSelector(getCurrentIngredient);
   const closeHandler = () => {
     dispatch(resetCurrent());
   };
-  const isVisible = !!data;
+
+  const data = useSelector(getCurrentIngredient);
 
   return (
     <div className={styles.app}>
       <AppHeader />
 
       <main className={styles.main}>
-        <section className={`${styles.col} mr-10`}>
-          <BurgerIngredients />
-        </section>
-        <section className={styles.col}>
-          <OrderConstructor />
-        </section>
+        <DndProvider backend={HTML5Backend}>
+          <section className={`${styles.col} mr-10`}>
+            <BurgerIngredients />
+          </section>
+          <section className={styles.col}>
+            <OrderConstructor />
+          </section>
+        </DndProvider>
 
         {/* Модальное окно */}
-        {isVisible && (
+        {!!data && (
           <Modal title="Детали ингредиента" ingredient={data} closeHandler={closeHandler}>
             <IngredientDetails data={data ?? {}} />
           </Modal>

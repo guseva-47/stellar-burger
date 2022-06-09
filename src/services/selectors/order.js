@@ -1,17 +1,18 @@
 import { createSelector } from 'reselect';
 
-const isBun = (ingredient) => ingredient.type === 'bun';
-
 export const getStuffing = createSelector(
   (store) => store.order.ingredients,
-  (ingredients) => ingredients.filter((item) => !isBun(item))
+  (ingredients) => ingredients.stuffing
 );
 
 export const getBun = createSelector(
   (store) => store.order.ingredients,
-  (ingredients) => ingredients.find(isBun)
+  (ingredients) => ingredients.bun
 );
 
-export const getCost = (store) =>
-  // eslint-disable-next-line implicit-arrow-linebreak
-  store.order.ingredients.reduce((accum, ingredient) => ingredient.price + accum, 0);
+export const getCost = (store) => {
+  const { bun, stuffing } = store.order.ingredients;
+  let cost = stuffing.reduce((accum, ingredient) => ingredient.price + accum, 0);
+  cost += 2 * (bun?.price ?? 0);
+  return cost;
+};
