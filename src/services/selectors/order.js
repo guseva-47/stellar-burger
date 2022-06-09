@@ -19,11 +19,11 @@ export const getCost = (store) => {
 
 export const getCountStuffing = createSelector(
   (store) => store.order.ingredients,
-  (_, data) => data,
-  (ingredients, { id, type }) => {
+  (_, ingredient) => ingredient,
+  (ingredients, { _id, type }) => {
     if (type === 'bun') {
-      return ingredients.bun?._id === id ? 2 : 0;
+      return ingredients.bun?._id === _id ? 2 : 0;
     }
-    return ingredients.stuffing.filter((item) => item._id === id).length;
+    return ingredients.stuffing.filter((item) => item._id === _id).length;
   }
 );

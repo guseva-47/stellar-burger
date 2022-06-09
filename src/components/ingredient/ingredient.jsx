@@ -21,7 +21,7 @@ function Ingredient({ data }) {
     }),
   });
 
-  const count = useSelector((state) => getCountStuffing(state, { id: data._id, type: data.type }));
+  const count = useSelector((state) => getCountStuffing(state, data));
 
   return (
     <article className={`${styles.ingredient} ${isDrag ? styles.drag : ''}`} ref={dragRef}>

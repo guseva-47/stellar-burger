@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
+import { v4 as uuidv4 } from 'uuid';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './burger-constructor.module.css';
@@ -43,9 +44,8 @@ function BurgerConstructor() {
         )}
       </div>
       <div className={`${styles.middle} ${styles.elements} custom-scroll`}>
-        {ingredients.map((data, i) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <div className={`${styles.line}`} key={i}>
+        {ingredients.map((data) => (
+          <div className={`${styles.line}`} key={uuidv4()}>
             <span className="pr-2">
               <DragIcon type="primary" />
             </span>
