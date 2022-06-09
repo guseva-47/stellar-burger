@@ -8,6 +8,7 @@ import { getBun, getStuffing } from '../../services/selectors/order';
 import { removeStuffing, setBun, setStuffing } from '../../services/redusers/order';
 import BunTop from './bun/bun-top';
 import BunBottom from './bun/bun-bottom';
+import Stuffing from './stuffing/stuffing';
 
 function BurgerConstructor() {
   const ingredients = useSelector(getStuffing);
@@ -37,6 +38,8 @@ function BurgerConstructor() {
         <BunTop bun={bun} />
       </div>
       <div className={`${styles.middle} ${styles.elements} custom-scroll`}>
+        {ingredients.length === 0 && <Stuffing />}
+
         {ingredients.map((data) => (
           <div className={`${styles.line}`} key={uuidv4()}>
             <span className="pr-2">
