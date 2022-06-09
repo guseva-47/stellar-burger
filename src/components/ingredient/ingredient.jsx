@@ -3,7 +3,7 @@ import { useDrag } from 'react-dnd';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './ingredient.module.css';
-import ingredientPropTypes from '../prop-types/ingredient-prop-types';
+import ingredientPropTypes from '../../types/ingredient-prop-types';
 import { setCurrent } from '../../services/redusers/app';
 import { getCountStuffing } from '../../services/selectors/order';
 

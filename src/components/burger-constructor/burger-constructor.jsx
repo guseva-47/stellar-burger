@@ -9,6 +9,7 @@ import { removeStuffing, setBun, setStuffing } from '../../services/redusers/ord
 import BunTop from './bun/bun-top';
 import BunBottom from './bun/bun-bottom';
 import Stuffing from './stuffing/stuffing';
+import { BUN, MAIN, SAUCE } from '../../types/ingredient-types';
 
 function BurgerConstructor() {
   const ingredients = useSelector(getStuffing);
@@ -17,12 +18,12 @@ function BurgerConstructor() {
   const dispatch = useDispatch();
 
   const onDropHandler = ({ ingredient }) => {
-    const action = ingredient.type === 'bun' ? setBun : setStuffing;
+    const action = ingredient.type === BUN ? setBun : setStuffing;
     dispatch(action(ingredient));
   };
 
   const [, dropTarget] = useDrop({
-    accept: ['sauce', 'main', 'bun'],
+    accept: [BUN, MAIN, SAUCE],
     drop(ingredient) {
       onDropHandler(ingredient);
     },

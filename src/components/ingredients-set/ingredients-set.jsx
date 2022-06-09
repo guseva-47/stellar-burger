@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { getIngredientsByType } from '../../services/selectors/app';
 
 import Ingredient from '../ingredient/ingredient';
-import ingredientsTypePropTypes from '../prop-types/ingredients-type-prop-types';
+import ingredientsTypePropTypes from '../../types/ingredients-type-prop-types';
 import styles from './ingredients-set.module.css';
 
 function IngredientsSet({ type = { title: '', value: '' } }) {
