@@ -16,3 +16,14 @@ export const getCost = (store) => {
   cost += 2 * (bun?.price ?? 0);
   return cost;
 };
+
+export const getCountStuffing = createSelector(
+  (store) => store.order.ingredients,
+  (_, data) => data,
+  (ingredients, { id, type }) => {
+    if (type === 'bun') {
+      return ingredients.bun?._id === id ? 2 : 0;
+    }
+    return ingredients.stuffing.filter((item) => item._id === id).length;
+  }
+);

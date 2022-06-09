@@ -1,13 +1,13 @@
-import PropTypes from 'prop-types';
-import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
+import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './ingredient.module.css';
 import ingredientPropTypes from '../prop-types/ingredient-prop-types';
 import { setCurrent } from '../../services/redusers/app';
+import { getCountStuffing } from '../../services/selectors/order';
 
-function Ingredient({ data, count = 0 }) {
+function Ingredient({ data }) {
   const dispatch = useDispatch();
   const clickHandler = () => {
     dispatch(setCurrent(data));
@@ -20,6 +20,8 @@ function Ingredient({ data, count = 0 }) {
       isDrag: monitor.isDragging(),
     }),
   });
+
+  const count = useSelector((state) => getCountStuffing(state, { id: data._id, type: data.type }));
 
   return (
     <article className={`${styles.ingredient} ${isDrag ? styles.drag : ''}`} ref={dragRef}>
@@ -42,11 +44,6 @@ function Ingredient({ data, count = 0 }) {
 
 Ingredient.propTypes = {
   data: ingredientPropTypes.isRequired,
-  count: PropTypes.number,
-};
-
-Ingredient.defaultProps = {
-  count: 0,
 };
 
 export default Ingredient;

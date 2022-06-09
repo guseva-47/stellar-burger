@@ -8,10 +8,7 @@ const initialState = {
   currentIngredient: null,
 };
 
-export const fetchItems = createAsyncThunk(
-  'app/fetchAll',
-  () => backendApi.getAllIngredients()
-);
+export const fetchItems = createAsyncThunk('app/fetchAll', () => backendApi.getAllIngredients());
 
 export const appSlice = createSlice({
   name: 'app',
