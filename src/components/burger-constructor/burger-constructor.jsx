@@ -1,11 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { v4 as uuidv4 } from 'uuid';
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './burger-constructor.module.css';
 import { getBun, getStuffing } from '../../services/selectors/order';
-import { removeStuffing, setBun, setStuffing } from '../../services/redusers/order';
+import { setBun, setStuffing } from '../../services/redusers/order';
 import BunTop from './bun/bun-top';
 import BunBottom from './bun/bun-bottom';
 import Stuffing from './stuffing/stuffing';
@@ -29,37 +28,25 @@ function BurgerConstructor() {
     },
   });
 
-  const deleteStuffing = (ingredient) => {
-    dispatch(removeStuffing(ingredient));
-  };
-
   return (
     <section ref={dropTarget} className={styles.tes}>
-      <div className={`${styles.line} pl-8 pr-4 pb-4`}>
-        <BunTop bun={bun} />
-      </div>
-      <div className={`${styles.middle} ${styles.elements} custom-scroll`}>
-        {ingredients.length === 0 && <Stuffing />}
+      <BunTop bun={bun} />
+
+      <ul className={`${styles.middle} ${styles.elements} custom-scroll`}>
+        {ingredients.length === 0 && (
+          <li>
+            <Stuffing />
+          </li>
+        )}
 
         {ingredients.map((data) => (
-          <div className={`${styles.line}`} key={uuidv4()}>
-            <span className="pr-2">
-              <DragIcon type="primary" />
-            </span>
-            <ConstructorElement
-              text={data.name}
-              price={data.price}
-              thumbnail={data.image}
-              className={`${styles.element}`}
-              handleClose={() => deleteStuffing(data)}
-            />
-          </div>
+          <li key={uuidv4()}>
+            <Stuffing ingredient={data} />
+          </li>
         ))}
-      </div>
+      </ul>
 
-      <div className={`${styles.line} pl-8 pr-4 pt-4`}>
-        <BunBottom bun={bun} />
-      </div>
+      <BunBottom bun={bun} />
     </section>
   );
 }
