@@ -29,10 +29,16 @@ export const orderSlice = createSlice({
     removeBun: (state) => {
       state.ingredients.bun = null;
     },
+    updateOrder: (state, action) => {
+      const { idFrom, idTo } = action.payload;
+      const item = state.ingredients.stuffing[idFrom];
+      state.ingredients.stuffing.splice(idFrom, 1);
+      state.ingredients.stuffing.splice(idTo, 0, item);
+    },
   },
 });
 
 // eslint-disable-next-line object-curly-newline
-export const { setStuffing, removeStuffing, setBun, removeBun } = orderSlice.actions;
+export const { setStuffing, removeStuffing, setBun, removeBun, updateOrder } = orderSlice.actions;
 
 export default orderSlice.reducer;
