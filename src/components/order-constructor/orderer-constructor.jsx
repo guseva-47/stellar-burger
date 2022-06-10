@@ -6,8 +6,14 @@ import Modal from '../modal/modal';
 import { fetchPostOrder } from '../../services/redusers/order';
 import OrderDetails from '../order-details/order-details';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-// eslint-disable-next-line object-curly-newline
-import { getBun, getCost, getOrderNumber, getStuffing } from '../../services/selectors/order';
+import {
+  getBun,
+  getCost,
+  getOrderNumber,
+  getStuffing,
+  isOrderFailed,
+  isOrderLoading,
+} from '../../services/selectors/order';
 
 import styles from './order-constructor.module.css';
 
@@ -31,6 +37,9 @@ function OrderConstructor() {
     setIsVisible(true);
   };
 
+  const isLoading = useSelector(isOrderLoading);
+  const isFailed = useSelector(isOrderFailed);
+
   return (
     <section className="pt-25 pl-4">
       <div className={`${styles.elements} pb-10`}>
@@ -44,12 +53,17 @@ function OrderConstructor() {
         </span>
 
         <Button type="primary" size="large" onClick={makeOrder} disabled={!isBurgerDone}>
-          Оформить заказ
+          {isLoading ? 'Отправка' : 'Оформить заказ'}
         </Button>
 
         {isVisible && orderNum && (
           <Modal closeHandler={closeHandler}>
             <OrderDetails number={orderNum} />
+          </Modal>
+        )}
+        {isVisible && isFailed && (
+          <Modal closeHandler={closeHandler} title="Ошибка">
+            <span className="text text_type_main-default">Неудалось сделать заказ. Попробуйте снова.</span>
           </Modal>
         )}
       </div>

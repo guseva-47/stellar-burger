@@ -7,12 +7,13 @@ const initialState = {
     bun: null,
   },
   number: null,
+  isLoading: false,
+  isFailed: false,
 };
 
-export const fetchPostOrder = createAsyncThunk(
-  'order/postOrder',
-  async (ingredients) => backendApi.postOrder(ingredients)
-);
+export const fetchPostOrder = createAsyncThunk('order/postOrder', async (ingredients) => (
+  backendApi.postOrder(ingredients)
+));
 
 export const orderSlice = createSlice({
   name: 'order',
@@ -45,12 +46,18 @@ export const orderSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchPostOrder.pending, (state) => {
       state.number = null;
+      state.isLoading = true;
+      state.isFailed = false;
     });
     builder.addCase(fetchPostOrder.fulfilled, (state, action) => {
       state.number = action.payload.order.number;
+      state.isLoading = false;
+      state.isFailed = false;
     });
     builder.addCase(fetchPostOrder.rejected, (state, action) => {
       state.allIngredients = null;
+      state.isLoading = false;
+      state.isFailed = true;
       console.error(action.error.message);
     });
   },

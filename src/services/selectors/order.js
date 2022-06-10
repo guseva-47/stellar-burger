@@ -33,3 +33,13 @@ export const getOrderNumber = createSelector(
   (store) => store.order,
   (order) => order.number
 );
+
+export const isOrderLoading = createSelector(
+  (store) => store.order.isLoading,
+  (isLoading) => isLoading
+);
+
+export const isOrderFailed = createSelector(
+  (store) => store.order.isFailed,
+  (isFailed) => isFailed
+);
