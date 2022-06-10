@@ -28,3 +28,8 @@ export const getCountStuffing = createSelector(
     return ingredients.stuffing.filter((item) => item._id === _id).length;
   }
 );
+
+export const getOrderNumber = createSelector(
+  (store) => store.order,
+  (order) => order.number
+);

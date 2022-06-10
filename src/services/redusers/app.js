@@ -8,7 +8,7 @@ const initialState = {
   currentIngredient: null,
 };
 
-export const fetchItems = createAsyncThunk('app/fetchAll', () => backendApi.getAllIngredients());
+export const fetchGetItems = createAsyncThunk('app/getAll', async () => backendApi.getAllIngredients());
 
 export const appSlice = createSlice({
   name: 'app',
@@ -22,13 +22,13 @@ export const appSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchItems.pending, (state) => {
+    builder.addCase(fetchGetItems.pending, (state) => {
       state.allIngredients = [];
     });
-    builder.addCase(fetchItems.fulfilled, (state, action) => {
+    builder.addCase(fetchGetItems.fulfilled, (state, action) => {
       state.allIngredients = action.payload;
     });
-    builder.addCase(fetchItems.rejected, (state, action) => {
+    builder.addCase(fetchGetItems.rejected, (state, action) => {
       state.allIngredients = [];
       console.error(action.error.message);
     });

@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import backendApi from '../../api/backend-api';
 
 const initialState = {
   ingredients: {
@@ -7,6 +8,11 @@ const initialState = {
   },
   number: null,
 };
+
+export const fetchPostOrder = createAsyncThunk(
+  'order/postOrder',
+  async (ingredients) => backendApi.postOrder(ingredients)
+);
 
 export const orderSlice = createSlice({
   name: 'order',
@@ -35,6 +41,18 @@ export const orderSlice = createSlice({
       state.ingredients.stuffing.splice(idFrom, 1);
       state.ingredients.stuffing.splice(idTo, 0, item);
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchPostOrder.pending, (state) => {
+      state.number = null;
+    });
+    builder.addCase(fetchPostOrder.fulfilled, (state, action) => {
+      state.number = action.payload.order.number;
+    });
+    builder.addCase(fetchPostOrder.rejected, (state, action) => {
+      state.allIngredients = null;
+      console.error(action.error.message);
+    });
   },
 });
 

@@ -5,7 +5,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsSet from '../ingredients-set/ingredients-set';
 import styles from './burger-ingredients.module.css';
 import types from './ingredient-types';
-import { fetchItems } from '../../services/redusers/app';
+import { fetchGetItems } from '../../services/redusers/app';
 
 function BurgerIngredients() {
   const [currentType, setCurrentType] = useState(types[0].value);
@@ -20,7 +20,7 @@ function BurgerIngredients() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchItems());
+    dispatch(fetchGetItems());
   }, [dispatch]);
 
   return (
