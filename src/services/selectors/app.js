@@ -9,3 +9,13 @@ export const getIngredientsByType = createSelector(
 );
 
 export const getCurrentIngredient = (store) => store.app.currentIngredient;
+
+export const isAllIngredientsLoading = createSelector(
+  (store) => store.app.allIngredientsLoading,
+  (isLoading) => isLoading
+);
+
+export const isAllIngredientsFailed = createSelector(
+  (store) => store.app.allIngredientsFailed,
+  (isFailed) => isFailed
+);
