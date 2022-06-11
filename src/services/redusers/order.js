@@ -54,8 +54,13 @@ export const orderSlice = createSlice({
     });
     builder.addCase(fetchPostOrder.fulfilled, (state, action) => {
       state.number = action.payload.order.number;
+
       state.isLoading = false;
       state.isFailed = false;
+      state.ingredients = {
+        stuffing: [],
+        bun: null,
+      };
     });
     builder.addCase(fetchPostOrder.rejected, (state, action) => {
       state.allIngredients = null;
