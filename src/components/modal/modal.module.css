@@ -37,3 +37,8 @@
   cursor: pointer;
   font: inherit;
 }
+
+.main {
+  display: flex;
+  justify-content: center;
+}

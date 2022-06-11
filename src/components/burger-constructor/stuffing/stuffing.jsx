@@ -62,7 +62,6 @@ function Stuffing({ ingredient = {}, moveCard, index, text = 'Добавьте �
     }),
   });
 
-  const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
 
   return !ingredient ? (
@@ -72,7 +71,7 @@ function Stuffing({ ingredient = {}, moveCard, index, text = 'Добавьте �
       </div>
     </div>
   ) : (
-    <div className={styles.line} style={{ opacity }} ref={ref}>
+    <div className={`${styles.line} ${isDragging ? styles.invis : ''}`} ref={ref}>
       <span className={`${styles['drag-icon']} pr-2`}>
         <DragIcon type="primary" />
       </span>
