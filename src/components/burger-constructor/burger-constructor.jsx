@@ -1,7 +1,6 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
-import { v4 as uuidv4 } from 'uuid';
 
 import { getBun, getStuffing } from '../../services/selectors/order';
 import { setBun, setStuffing, updateOrder } from '../../services/redusers/order';
@@ -49,7 +48,7 @@ function BurgerConstructor() {
         )}
 
         {ingredients.map((data, i) => (
-          <li key={uuidv4()}>
+          <li key={data.uuid}>
             <Stuffing ingredient={data} index={i} moveCard={moveCard} />
           </li>
         ))}

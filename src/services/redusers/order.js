@@ -1,4 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid';
+
 import backendApi from '../../api/backend-api';
 
 const initialState = {
@@ -21,7 +23,8 @@ export const orderSlice = createSlice({
   reducers: {
     setStuffing: (state, action) => {
       const item = action.payload;
-      state.ingredients.stuffing.splice(0, 0, item);
+      const uniqItem = { ...item, uuid: uuidv4() };
+      state.ingredients.stuffing.splice(0, 0, uniqItem);
     },
     removeStuffing: (state, action) => {
       const item = action.payload;
