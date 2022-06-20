@@ -1,5 +1,5 @@
 import styles from './ingredient-details.module.css';
-import ingredientPropTypes from '../prop-types/ingredient-prop-types';
+import ingredientPropTypes from '../../types/ingredient-prop-types';
 
 function IngredientDetails({ data = {} }) {
   const energyValue = [

@@ -21,13 +21,15 @@
 
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
-    "linebreak-style": 0,
+    "linebreak-style": "off",
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
     "no-unused-vars": "warn",
     "no-console": "warn",
     "no-underscore-dangle": "off",
     "no-trailing-spaces": "warn",
-    "comma-dangle": ["error", "only-multiline"]
+    "comma-dangle": ["error", "only-multiline"],
+    "no-param-reassign": ["error", { "props": false }],
+    "class-methods-use-this": "off"
   }
 }

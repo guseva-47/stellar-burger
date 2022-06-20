@@ -1,33 +1,44 @@
-import { useEffect, useState } from 'react';
-import AppHeader from '../app-header/app-header';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import { useDispatch, useSelector } from 'react-redux';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
+import AppHeader from '../app-header/app-header';
+import OrderConstructor from '../order-constructor/orderer-constructor';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import styles from './app.module.css';
-import BackendApi from '../../api/backend-api';
+import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import { getCurrentIngredient } from '../../services/selectors/app';
+import { resetCurrent } from '../../services/redusers/app';
 
 function App() {
-  const [ingredients, setIngredients] = useState([]);
+  const dispatch = useDispatch();
+  const closeHandler = () => {
+    dispatch(resetCurrent());
+  };
 
-  useEffect(() => {
-    BackendApi.getAllIngredients()
-      .then((res) => setIngredients(res))
-      .catch((err) => console.error(err.message));
-  }, []);
-
-  const stuffing = ingredients.filter((elem) => elem.type !== 'bun');
-  const bun = ingredients.find((elem) => elem.type === 'bun') || {};
+  const data = useSelector(getCurrentIngredient);
 
   return (
     <div className={styles.app}>
       <AppHeader />
+
       <main className={styles.main}>
-        <section className={`${styles.col} mr-10`}>
-          <BurgerIngredients ingredients={ingredients} />
-        </section>
-        <section className={styles.col}>
-          <BurgerConstructor ingredients={stuffing} bun={bun} />
-        </section>
+        <DndProvider backend={HTML5Backend}>
+          <section className={`${styles.col} mr-10`}>
+            <BurgerIngredients />
+          </section>
+          <section className={styles.col}>
+            <OrderConstructor />
+          </section>
+        </DndProvider>
+
+        {/* Модальное окно */}
+        {!!data && (
+          <Modal title="Детали ингредиента" ingredient={data} closeHandler={closeHandler}>
+            <IngredientDetails data={data ?? {}} />
+          </Modal>
+        )}
       </main>
     </div>
   );

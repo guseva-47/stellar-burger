@@ -24,3 +24,7 @@
 .name {
   min-height: 48px;
 }
+
+.drag {
+  opacity: 0.5;
+}

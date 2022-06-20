@@ -1,20 +1,31 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { useDrag } from 'react-dnd';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './ingredient.module.css';
-import ingredientPropTypes from '../prop-types/ingredient-prop-types';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
+import ingredientPropTypes from '../../types/ingredient-prop-types';
+import { setCurrent } from '../../services/redusers/app';
+import { getCountStuffing } from '../../services/selectors/order';
 
-function Ingredient({ data, count = 0 }) {
-  const [isVisible, setIsVisible] = useState(false);
+function Ingredient({ data }) {
+  const dispatch = useDispatch();
+  const clickHandler = () => {
+    dispatch(setCurrent(data));
+  };
 
-  const closeHandler = () => setIsVisible(false);
+  const [{ isDrag }, dragRef] = useDrag({
+    type: data.type,
+    item: { ingredient: data },
+    collect: (monitor) => ({
+      isDrag: monitor.isDragging(),
+    }),
+  });
+
+  const count = useSelector((state) => getCountStuffing(state, data));
 
   return (
-    <article className={`${styles.ingredient}`}>
-      <button type="button" className={styles.wrapper} onClick={() => setIsVisible(true)}>
+    <article className={`${styles.ingredient} ${isDrag ? styles.drag : ''}`} ref={dragRef}>
+      <button type="button" className={styles.wrapper} onClick={clickHandler}>
         {count > 0 ? <Counter count={count} size="default" /> : null}
         <div className=" pr-3 pb-1 pl-4">
           <img src={data.image} alt={data.name} />
@@ -27,23 +38,12 @@ function Ingredient({ data, count = 0 }) {
 
         <h3 className={`${styles.name} text text_type_main-default`}>{data.name}</h3>
       </button>
-
-      {isVisible && (
-        <Modal title="Детали ингредиента" ingredient={data} closeHandler={closeHandler}>
-          <IngredientDetails data={data} />
-        </Modal>
-      )}
     </article>
   );
 }
 
 Ingredient.propTypes = {
   data: ingredientPropTypes.isRequired,
-  count: PropTypes.number,
-};
-
-Ingredient.defaultProps = {
-  count: 0,
 };
 
 export default Ingredient;

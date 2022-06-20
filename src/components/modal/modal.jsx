@@ -3,8 +3,9 @@ import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import styles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
+
+import styles from './modal.module.css';
 
 function Modal({ children, title = '', closeHandler }) {
   const modalNode = document.getElementById('modal');
@@ -36,7 +37,7 @@ function Modal({ children, title = '', closeHandler }) {
         </section>
 
         {/* main */}
-        <section style={{ display: 'flex', justifyContent: 'center' }}>{children}</section>
+        <section className={styles.main}>{children}</section>
       </article>
       <ModalOverlay closeHandler={closeHandler} />
     </div>,
