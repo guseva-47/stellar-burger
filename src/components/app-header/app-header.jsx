@@ -6,8 +6,9 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 
-import styles from './app-header.module.css';
 import NavLink from '../nav-link/nav-link';
+
+import styles from './app-header.module.css';
 
 function AppHeader() {
   const isActive = true;

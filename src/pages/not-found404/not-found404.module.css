@@ -1,0 +1,13 @@
+.text {
+  width: 100%;
+  padding: 2em 1em;
+  text-align: center;
+}
+
+.link {
+  color: var(--text-inactive-color);
+}
+
+.link:hover {
+  color: var(--text-primary-color);
+}
