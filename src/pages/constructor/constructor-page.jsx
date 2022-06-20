@@ -2,16 +2,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-import AppHeader from '../app-header/app-header';
-import OrderConstructor from '../order-constructor/orderer-constructor';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import styles from './app.module.css';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
 import { getCurrentIngredient } from '../../services/selectors/app';
 import { resetCurrent } from '../../services/redusers/app';
 
-function App() {
+import styles from './constructor-page.module.css';
+import AppHeader from '../../components/app-header/app-header';
+import BurgerIngredients from '../../components/burger-ingredients/burger-ingredients';
+import OrderConstructor from '../../components/order-constructor/orderer-constructor';
+import Modal from '../../components/modal/modal';
+import IngredientDetails from '../../components/ingredient-details/ingredient-details';
+
+function ConstructorPage() {
   const dispatch = useDispatch();
   const closeHandler = () => {
     dispatch(resetCurrent());
@@ -20,7 +21,7 @@ function App() {
   const data = useSelector(getCurrentIngredient);
 
   return (
-    <div className={styles.app}>
+    <div className={styles.page}>
       <AppHeader />
 
       <main className={styles.main}>
@@ -44,4 +45,4 @@ function App() {
   );
 }
 
-export default App;
+export default ConstructorPage;
