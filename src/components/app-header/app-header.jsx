@@ -4,6 +4,7 @@ import {
   Logo,
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link } from 'react-router-dom';
 
 import styles from './app-header.module.css';
 import NavLink from '../nav-link/nav-link';
@@ -16,23 +17,23 @@ function AppHeader() {
         <ul className={`${styles['nav-ul']}`}>
           <li className={`${styles['nav-li']}`}>
             <div className="pr-2">
-              <NavLink text="Конструктор" isActive={isActive} Icon={BurgerIcon} />
+              <NavLink to="/" text="Конструктор" isActive={isActive} Icon={BurgerIcon} />
             </div>
           </li>
           <li className={`${styles['nav-li']}`}>
-            <NavLink text="Лента заказов" Icon={ListIcon} />
+            <NavLink to="/orders" text="Лента заказов" Icon={ListIcon} />
           </li>
         </ul>
       </nav>
 
-      <a href="##" className={`${styles.logo} pt-1`}>
+      <Link to="/" className={`${styles.logo} pt-1`}>
         <Logo />
-      </a>
+      </Link>
 
       <nav className={`${styles.nav} ${styles.col} ${styles['col-right']}`}>
         <ul className={`${styles['nav-ul']}`}>
           <li className={`${styles['nav-li']}`}>
-            <NavLink text="Личный кабинет" Icon={ProfileIcon} />
+            <NavLink to="/profile" text="Личный кабинет" Icon={ProfileIcon} />
           </li>
         </ul>
       </nav>
