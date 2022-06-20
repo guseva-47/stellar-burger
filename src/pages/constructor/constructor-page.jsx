@@ -21,7 +21,7 @@ function ConstructorPage() {
   const data = useSelector(getCurrentIngredient);
 
   return (
-    <>
+    <section className={styles.main}>
       <DndProvider backend={HTML5Backend}>
         <section className={`${styles.col} mr-10`}>
           <BurgerIngredients />
@@ -37,7 +37,7 @@ function ConstructorPage() {
           <IngredientDetails data={data ?? {}} />
         </Modal>
       )}
-    </>
+    </section>
   );
 }
 
