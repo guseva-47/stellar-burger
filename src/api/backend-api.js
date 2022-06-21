@@ -42,6 +42,62 @@ class BackendApi {
 
     return { name: data.name, order: data.order };
   }
+
+  async resetPasword(email) {
+    let res = await fetch(`${this.url}/password-reset`, {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    res = await this.checkResponce(res);
+
+    const data = await res.json();
+    await this.checkSuccess(data);
+
+    return data.success;
+  }
+
+  async newPasword({ password, token }) {
+    let res = await fetch(`${this.url}/password-reset/reset`, {
+      method: 'POST',
+      body: JSON.stringify({ password, token }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+    });
+
+    res = await this.checkResponce(res);
+
+    const data = await res.json();
+    await this.checkSuccess(data);
+
+    return data.success;
+  }
+
+  async createUser({ email, password, name }) {
+    let res = await fetch(`${this.url}/password-reset/reset`, {
+      method: 'POST',
+      body: JSON.stringify({ email, password, name }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    res = await this.checkResponce(res);
+
+    const data = await res.json();
+    await this.checkSuccess(data);
+
+    return data.success;
+  }
 }
 
 export default new BackendApi();
