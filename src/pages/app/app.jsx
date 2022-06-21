@@ -6,6 +6,9 @@ import NotFound404 from '../not-found404/not-found404';
 import RegisterPage from '../register/register';
 import ResetPassword from '../password/reset-password';
 import Layout from './layout';
+import ProfileLayout from '../profile/profile-layout';
+import Orders from '../profile/orders';
+import Profile from '../profile/profile';
 
 function App() {
   return (
@@ -16,6 +19,10 @@ function App() {
         <Route path="register" element={<RegisterPage />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="reset-password" element={<ResetPassword />} />
+        <Route path="profile" element={<ProfileLayout />}>
+          <Route index element={<Profile />} />
+          <Route path="orders" element={<Orders />} />
+        </Route>
 
         <Route path="*" element={<NotFound404 />} />
       </Route>
