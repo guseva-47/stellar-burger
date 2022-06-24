@@ -17,7 +17,7 @@ function LoginPage() {
         <div className="pb-6">
           <Input
             type="email"
-            autocomplete="usernameдля"
+            autocomplete="username"
             placeholder="E-mail"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
