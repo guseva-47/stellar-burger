@@ -1,4 +1,6 @@
+import { useDispatch } from 'react-redux';
 import { Link, Outlet, useMatch } from 'react-router-dom';
+import { logout } from '../../services/redusers/auth';
 
 import styles from './profile.module.css';
 
@@ -10,6 +12,12 @@ function ProfileLayout() {
     ? 'В этом разделе вы можете изменить свои персональные данные'
     : 'В этом разделе вы можете просмотреть свою историю заказов';
 
+  const dispatcher = useDispatch();
+
+  const handleLogout = () => {
+    dispatcher(logout());
+  };
+
   return (
     <div className={styles.layout}>
       <section className={styles.nav}>
@@ -19,9 +27,9 @@ function ProfileLayout() {
         <Link to="orders" className={isOrders ? cName + styles.active : cName}>
           История заказов
         </Link>
-        <Link to="/exit" className={cName}>
+        <button className={`${cName} ${styles.exit}`} onClick={handleLogout} type="submit">
           Выход
-        </Link>
+        </button>
         <p className="pt-15 text text_type_main-default text_color_inactive">{description}</p>
       </section>
       <section>

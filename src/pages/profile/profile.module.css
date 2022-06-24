@@ -29,3 +29,11 @@
   color: var(--text-primary-color);
   text-decoration: none;
 }
+
+.exit {
+  padding: 0;
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+  text-align: left;
+}

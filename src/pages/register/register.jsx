@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import { registratiion } from '../../services/redusers/auth';
 
 import styles from './register.module.css';
 
@@ -9,9 +12,17 @@ function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('submit', { email, password, name });
+    dispatch(registratiion({ email, password, name }));
+  };
+
   return (
     <>
-      <form className={`${styles.main} pt-20`}>
+      <form className={`${styles.main} pt-20`} onSubmit={handleSubmit}>
         <h2 className="text text_type_main-medium pb-6">Регистрация</h2>
 
         {/* Имя */}
@@ -52,7 +63,7 @@ function RegisterPage() {
           />
         </div>
 
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" htmlType="submit">
           Зарегистрироваться
         </Button>
       </form>

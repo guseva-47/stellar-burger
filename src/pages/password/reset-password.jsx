@@ -21,7 +21,7 @@ function ResetPassword() {
 
   return (
     <>
-      <form className={`${styles.main} pt-20`}>
+      <form className={`${styles.main} pt-20`} onSubmit={restorePasswrod}>
         <h2 className="text text_type_main-medium pb-6">Восстановление пароля</h2>
 
         {/* New Password */}
@@ -50,7 +50,7 @@ function ResetPassword() {
           />
         </div>
 
-        <Button type="primary" size="medium" htmlType="submit" onClick={restorePasswrod}>
+        <Button type="primary" size="medium" htmlType="submit">
           Сохранить
         </Button>
       </form>

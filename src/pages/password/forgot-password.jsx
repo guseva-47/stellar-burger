@@ -23,7 +23,7 @@ function ForgotPassword() {
 
   return (
     <>
-      <form className={`${styles.main} pt-20`}>
+      <form className={`${styles.main} pt-20`} onSubmit={restorePasswrod}>
         <h2 className="text text_type_main-medium pb-6">Восстановление пароля</h2>
 
         {/* Email */}
@@ -48,7 +48,7 @@ function ForgotPassword() {
             </Button>
           </Link>
         ) : (
-          <Button type="primary" size="medium" onClick={restorePasswrod} htmlType="submit">
+          <Button type="primary" size="medium" htmlType="submit">
             Восстановить
           </Button>
         )}

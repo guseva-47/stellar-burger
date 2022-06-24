@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import { login } from '../../services/redusers/auth';
 
 import styles from './login-page.module.css';
 
@@ -8,9 +11,15 @@ function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(login({ email, password }));
+  };
   return (
     <>
-      <form className={`${styles.main} pt-20`}>
+      <form className={`${styles.main} pt-20`} onSubmit={handleSubmit}>
         <h2 className="text text_type_main-medium pb-6">Вход</h2>
 
         {/* Email */}
@@ -37,7 +46,7 @@ function LoginPage() {
           />
         </div>
 
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" htmlType="submit">
           Войти
         </Button>
       </form>
