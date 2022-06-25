@@ -1,13 +1,45 @@
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { editUser, getUser } from '../../services/redusers/auth';
+import { getProfile, isProfileFailed, isProfileLoading } from '../../services/selectors/auth';
 
 function Profile() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
+  const dispatcher = useDispatch();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatcher(editUser(email, name, password));
+  };
+
+  const user = useSelector(getProfile);
+  const isLoading = useSelector(isProfileLoading);
+  const isFailed = useSelector(isProfileFailed);
+
+  useEffect(() => {
+    dispatcher(getUser());
+  }, [dispatcher]);
+
+  useEffect(() => {
+    const func = (data) => {
+      if (isLoading) return 'Загрузка...';
+      if (isFailed) return 'Не удалось загрузить данные';
+      return data ?? '';
+    };
+
+    const emailText = func(user?.email);
+    setEmail(emailText);
+
+    const nameText = func(user?.name);
+    setName(nameText);
+  }, [user, isLoading, isFailed]);
+
   return (
-    <section>
+    <form onSubmit={handleSubmit}>
       {/* Имя */}
       <div className="pb-6">
         <Input
@@ -53,7 +85,7 @@ function Profile() {
           icon="EditIcon"
         />
       </div>
-    </section>
+    </form>
   );
 }
 

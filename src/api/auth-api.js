@@ -22,8 +22,6 @@ class AuthApi {
 
   removeRefreshToken = () => Cookies.remove('refresh', { path: '/' });
 
-  checkAccess = () => false; // TODO
-
   async registerUser({ email, password, name }) {
     let res = await fetch(`${this.urlAuth}/register`, {
       method: 'POST',
@@ -64,10 +62,8 @@ class AuthApi {
     return { user: data.user };
   }
 
-  // POST https://norma.nomoreparties.space/api/auth/token - эндпоинт обновления токена.
   async refreshToken() {
     const token = this.getRefreshToken();
-    console.log('cookie refresh', token);
 
     let res = await fetch(`${this.urlAuth}/token`, {
       method: 'POST',
@@ -84,14 +80,10 @@ class AuthApi {
 
     this.setAccessToken(data.accessToken);
     this.setRefreshToken(data.refreshToken);
-
-    console.log('refresh OK', data);
   }
 
-  // POST https://norma.nomoreparties.space/api/auth/logout - эндпоинт для выхода из системы.
   async logout() {
     const token = this.getRefreshToken();
-    console.log(token);
 
     let res = await fetch(`${this.urlAuth}/logout`, {
       method: 'POST',
@@ -108,6 +100,75 @@ class AuthApi {
 
     this.removeAccessToken();
     this.removeRefreshToken();
+  }
+
+  async getUser() {
+    const token = await this.checkAndRefresh();
+
+    let res = await fetch(`${this.urlAuth}/user`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    res = await backendApi.checkResponce(res);
+
+    const data = await res.json();
+    await backendApi.checkSuccess(data);
+
+    return { user: data.user };
+  }
+
+  async updateUser({ email, password, name }) {
+    const token = await this.checkAndRefresh();
+
+    let res = await fetch(`${this.urlAuth}/user`, {
+      method: 'POST',
+      body: JSON.stringify({
+        email,
+        password,
+        name,
+        token,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    res = await backendApi.checkResponce(res);
+
+    const data = await res.json();
+    await backendApi.checkSuccess(data);
+
+    return { user: data.user };
+  }
+
+  async checkAndRefresh() {
+    const parseJwt = (token) => {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(
+        window
+          .atob(base64)
+          .split('')
+          .map((c) => `%${(`00${c.charCodeAt(0).toString(16)}`).slice(-2)}`)
+          .join('')
+      );
+      return JSON.parse(jsonPayload);
+    };
+
+    const isExpired = (token) => {
+      const payload = parseJwt(token);
+      return Date.now() >= payload.exp * 1000;
+    };
+
+    const accessToken = this.getAccessToken();
+    if (!accessToken || isExpired(accessToken)) {
+      await this.refreshToken();
+    }
+
+    return this.getAccessToken();
   }
 }
 

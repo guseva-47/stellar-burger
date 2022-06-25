@@ -1,12 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import authApi from '../../api/auth-api';
+import { initIsObj } from './utils';
 
 const initialState = {
   user: {
     email: '',
     name: '',
   },
+  isUser: initIsObj(),
 };
 
 export const login = createAsyncThunk(
@@ -24,15 +26,21 @@ export const logout = createAsyncThunk(
   async () => authApi.logout()
 );
 
+export const getUser = createAsyncThunk(
+  'auth/getuser',
+  async () => authApi.getUser()
+);
+
+export const editUser = createAsyncThunk(
+  'auth/edituser',
+  async ({ email, password, name }) => authApi.updateUser({ email, password, name })
+);
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
-    // setCurrent: (state, action) => {
-    //   state.currentIngredient = action.payload;
-    // },
-  },
   extraReducers: (builder) => {
+    // Регистрация
     builder.addCase(registratiion.pending, (state) => {
       console.log('отправлен запрос на регистрацию');
     });
@@ -47,6 +55,7 @@ export const authSlice = createSlice({
       console.error(action.error.message);
     });
 
+    // Автризация
     builder.addCase(login.pending, (state) => {
       console.log('отправлен запрос login');
     });
@@ -61,6 +70,7 @@ export const authSlice = createSlice({
       console.error(action.error.message);
     });
 
+    // Разлогинивание
     builder.addCase(logout.pending, (state) => {
       console.log('отправлен запрос logout');
     });
@@ -70,6 +80,40 @@ export const authSlice = createSlice({
       state.user.name = '';
     });
     builder.addCase(logout.rejected, (state, action) => {
+      console.log('FAIL logout');
+      console.error(action.error.message);
+    });
+
+    // Получение данных профиля
+    builder.addCase(getUser.pending, (state) => {
+      state.isUser.isLoading = true;
+      console.log('отправлен запрос user profile');
+    });
+    builder.addCase(getUser.fulfilled, (state, action) => {
+      console.log('GOOD user profile');
+      const { user } = action.payload;
+      state.user.email = user.email;
+      state.user.name = user.name;
+      state.isUser.isLoading = false;
+    });
+    builder.addCase(getUser.rejected, (state, action) => {
+      console.log('FAIL user profile');
+      console.error(action.error.message);
+      state.isUser.isLoading = false;
+      state.isUser.isFailed = true;
+    });
+
+    // Редактирование данных профиля
+    builder.addCase(editUser.pending, (state) => {
+      console.log('отправлен запрос edit');
+    });
+    builder.addCase(editUser.fulfilled, (state, action) => {
+      console.log('GOOD edit');
+      const { user } = action.payload;
+      state.user.email = user.email;
+      state.user.name = user.name;
+    });
+    builder.addCase(editUser.rejected, (state, action) => {
       console.log('FAIL logout');
       console.error(action.error.message);
     });
