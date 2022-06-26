@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Route, Routes, useLocation } from 'react-router-dom';
+// eslint-disable-next-line object-curly-newline
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import ConstructorPage from '../constructor/constructor-page';
 import ForgotPassword from '../password/forgot-password';
@@ -26,6 +27,9 @@ function App() {
   useEffect(() => {
     dispatch(fetchGetItems());
   }, [dispatch]);
+
+  const navigate = useNavigate();
+  const modalCloseHandler = useCallback(() => navigate(-1), [navigate]);
 
   return (
     <>
@@ -59,10 +63,11 @@ function App() {
 
       {location.state?.backgroundLocation && (
         <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route path="/ingredients/:id" element={<Modal title="Детали ингредиента" />}>
-              <Route index element={<IngredientDetails />} />
-            </Route>
+          <Route
+            path="/ingredients/:id"
+            element={<Modal title="Детали ингредиента" closeHandler={modalCloseHandler} />}
+          >
+            <Route index element={<IngredientDetails />} />
           </Route>
         </Routes>
       )}

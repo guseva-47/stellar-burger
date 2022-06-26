@@ -1,6 +1,6 @@
-import { createRef, useCallback, useEffect } from 'react';
+import { createRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -8,12 +8,10 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 
 import styles from './modal.module.css';
 
-function Modal({ title = '' }) {
+function Modal({ title = '', closeHandler }) {
   const modalNode = document.getElementById('modal');
-  const navigate = useNavigate();
 
   const modalRef = createRef();
-  const closeHandler = useCallback(() => navigate(-1), [navigate]);
 
   useEffect(() => {
     const escapeHandler = (e) => {
@@ -52,6 +50,7 @@ function Modal({ title = '' }) {
 
 Modal.propTypes = {
   title: PropTypes.string,
+  closeHandler: PropTypes.func.isRequired,
 };
 
 Modal.defaultProps = {
