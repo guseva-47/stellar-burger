@@ -16,11 +16,11 @@ class AuthApi {
 
   removeAccessToken = () => Cookies.remove('access', { path: '/' });
 
-  setRefreshToken = (token) => Cookies.set('refresh', token, { path: '/' });
+  setRefreshToken = (token) => localStorage.setItem('refresh', token);
 
-  getRefreshToken = () => Cookies.get('refresh');
+  getRefreshToken = () => localStorage.getItem('refresh');
 
-  removeRefreshToken = () => Cookies.remove('refresh', { path: '/' });
+  removeRefreshToken = () => localStorage.removeItem('refresh');
 
   async registerUser({ email, password, name }) {
     let res = await fetch(`${this.urlAuth}/register`, {
