@@ -1,22 +1,40 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { login } from '../../services/redusers/auth';
 
 import styles from './login-page.module.css';
+import { isLoginFailed, loginErrorMessage } from '../../services/selectors/auth';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const isValidForm = email && password.length >= 6;
+
   const dispatch = useDispatch();
+
+  const [loginError, setLoginError] = useState('');
+  const isFailed = useSelector(isLoginFailed);
+  const errMsg = useSelector(loginErrorMessage);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(login({ email, password }));
   };
+
+  useEffect(() => {
+    if (isFailed) {
+      setLoginError(
+        errMsg.includes('email or password are incorrect')
+          ? 'Неверный логин или пароль'
+          : 'Ошибка авторизации'
+      );
+    }
+  }, [errMsg, isFailed]);
+
   return (
     <>
       <form className={`${styles.main} pt-20`} onSubmit={handleSubmit}>
@@ -31,7 +49,8 @@ function LoginPage() {
             onChange={(e) => setEmail(e.target.value)}
             value={email}
             name="email"
-            error={false}
+            error={isFailed}
+            errorText={loginError}
             size="default"
           />
         </div>
@@ -46,7 +65,7 @@ function LoginPage() {
           />
         </div>
 
-        <Button type="primary" size="medium" htmlType="submit">
+        <Button type="primary" size="medium" htmlType="submit" disabled={!isValidForm}>
           Войти
         </Button>
       </form>

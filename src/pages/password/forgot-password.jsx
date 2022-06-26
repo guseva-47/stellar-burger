@@ -16,11 +16,11 @@ function ForgotPassword() {
   const restorePasswrod = async (e) => {
     e.preventDefault();
     try {
+      setEmailError('');
       await backendApi.resetPasword(email);
       navigate('/reset-password', { state: { from: location } });
     } catch (err) {
-      console.error(err);
-      setEmailError('Не удалось отправить запрос');
+      setEmailError('Не удалось сбросить пароль');
     }
   };
 

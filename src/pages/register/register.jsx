@@ -1,28 +1,49 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { registratiion } from '../../services/redusers/auth';
 
 import styles from './register.module.css';
+import { isRegFailed, regErrorMessage } from '../../services/selectors/auth';
 
 function RegisterPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [regError, setRegError] = useState('');
+
+  const isValidForm = name && email && password.length >= 6;
 
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setRegError('');
     dispatch(registratiion({ email, password, name }));
   };
+
+  const isFailed = useSelector(isRegFailed);
+  const errMsg = useSelector(regErrorMessage);
+
+  useEffect(() => {
+    if (isFailed) {
+      setRegError(
+        errMsg.includes('User already exists')
+          ? 'Такой пользователь уже существует'
+          : 'Ошибка регистрации'
+      );
+    }
+  }, [errMsg, isFailed]);
 
   return (
     <>
       <form className={`${styles.main} pt-20`} onSubmit={handleSubmit}>
-        <h2 className="text text_type_main-medium pb-6">Регистрация</h2>
+        <h2 className="text text_type_main-medium pb-6">
+          Регистрация
+          {`${isFailed}`}
+        </h2>
 
         {/* Имя */}
         <div className="pb-6">
@@ -33,8 +54,9 @@ function RegisterPage() {
             onChange={(e) => setName(e.target.value)}
             value={name}
             name="email"
-            error={false}
             size="default"
+            errorText={regError}
+            error={isFailed}
           />
         </div>
 
@@ -62,7 +84,7 @@ function RegisterPage() {
           />
         </div>
 
-        <Button type="primary" size="medium" htmlType="submit">
+        <Button type="primary" size="medium" htmlType="submit" disabled={!isValidForm}>
           Зарегистрироваться
         </Button>
       </form>

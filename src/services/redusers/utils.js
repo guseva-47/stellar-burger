@@ -1,3 +1,2 @@
-export const initIsObj = () => ({ isLoading: false, isFailed: false });
-export const setIsLoad = () => ({ isLoading: true, isFailed: false });
-export const setIsFailed = () => ({ isLoading: false, isFailed: true });
+export const initIsLoadFailed = () => ({ isLoading: false, isFailed: false });
+export const initIsLoadFailedErrMsg = () => ({ isLoading: false, isFailed: false, errMessage: '' });

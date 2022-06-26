@@ -1,14 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import authApi from '../../api/auth-api';
-import { initIsObj } from './utils';
+import { initIsLoadFailed, initIsLoadFailedErrMsg } from './utils';
 
 const initialState = {
   user: {
     email: '',
     name: '',
   },
-  isUser: initIsObj(),
+  isUser: initIsLoadFailed(),
+  isReg: initIsLoadFailed(),
+  isLogin: initIsLoadFailedErrMsg(),
 };
 
 export const login = createAsyncThunk(
@@ -42,32 +44,44 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     // Регистрация
     builder.addCase(registratiion.pending, (state) => {
-      console.log('отправлен запрос на регистрацию');
+      state.isReg.isLoading = true;
+      state.isReg.isFailed = false;
+      state.isReg.errMessage = '';
     });
     builder.addCase(registratiion.fulfilled, (state, action) => {
-      console.log('GOOD запрос на регистрацию');
       const { user } = action.payload;
       state.user.email = user.email;
       state.user.name = user.name;
+
+      state.isReg.isLoading = false;
+      state.isReg.isFailed = false;
+      state.isReg.errMessage = '';
     });
     builder.addCase(registratiion.rejected, (state, action) => {
-      console.log('FAIL запрос на регистрацию');
-      console.error(action.error.message);
+      state.isReg.errMessage = action.error.message;
+      state.isReg.isFailed = true;
+      state.isReg.isLoading = false;
     });
 
     // Автризация
     builder.addCase(login.pending, (state) => {
-      console.log('отправлен запрос login');
+      state.isLogin.isLoading = true;
+      state.isLogin.isFailed = false;
+      state.isLogin.errMessage = '';
     });
     builder.addCase(login.fulfilled, (state, action) => {
-      console.log('GOOD login');
       const { user } = action.payload;
       state.user.email = user.email;
       state.user.name = user.name;
+
+      state.isLogin.isFailed = false;
+      state.isLogin.isLoading = false;
+      state.isLogin.errMessage = '';
     });
     builder.addCase(login.rejected, (state, action) => {
-      console.log('FAIL login');
-      console.error(action.error.message);
+      state.isLogin.isFailed = true;
+      state.isLogin.isLoading = false;
+      state.isLogin.errMessage = action.error.message;
     });
 
     // Разлогинивание
@@ -87,18 +101,17 @@ export const authSlice = createSlice({
     // Получение данных профиля
     builder.addCase(getUser.pending, (state) => {
       state.isUser.isLoading = true;
-      console.log('отправлен запрос user profile');
+      state.isUser.isFailed = false;
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
-      console.log('GOOD user profile');
       const { user } = action.payload;
       state.user.email = user.email;
       state.user.name = user.name;
+
       state.isUser.isLoading = false;
+      state.isUser.isFailed = false;
     });
     builder.addCase(getUser.rejected, (state, action) => {
-      console.log('FAIL user profile');
-      console.error(action.error.message);
       state.isUser.isLoading = false;
       state.isUser.isFailed = true;
     });
