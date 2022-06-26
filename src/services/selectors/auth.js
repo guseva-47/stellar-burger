@@ -2,49 +2,42 @@ import { createSelector } from 'reselect';
 
 export const getProfile = (store) => store.auth.user;
 
-export const isProfileLoading = createSelector(
-  (store) => store.auth.isUser,
-  ({ isLoading }) => isLoading
+const createIsLoadingCreateSelector = (key) => (
+  createSelector(
+    (store) => store.auth[key],
+    ({ isLoading }) => isLoading
+  )
 );
 
-export const isProfileFailed = createSelector(
-  (store) => store.auth.isUser,
-  ({ isFailed }) => isFailed
+const createIsFailedCreateSelector = (key) => (
+  createSelector(
+    (store) => store.auth[key],
+    ({ isFailed }) => isFailed
+  )
 );
+
+export const isProfileLoading = createIsLoadingCreateSelector('isUser');
+
+export const isProfileFailed = createIsFailedCreateSelector('isUser');
 
 export const getUserName = (store) => store.auth.user.name ?? '';
 
-export const isRegLoading = createSelector(
-  (store) => store.auth.isReg,
-  ({ isLoading }) => isLoading
-);
+export const isRegLoading = createIsLoadingCreateSelector('isReg');
 
-export const isRegFailed = createSelector(
-  (store) => store.auth.isReg,
-  ({ isFailed }) => isFailed
-);
+export const isRegFailed = createIsFailedCreateSelector('isReg');
 
 export const regErrorMessage = createSelector(
   (store) => store.auth.isReg,
   ({ errMessage }) => errMessage
 );
 
-export const isLoginFailed = createSelector(
-  (store) => store.auth.isLogin,
-  ({ isFailed }) => isFailed
-);
+export const isLoginFailed = createIsFailedCreateSelector('isLogin');
 
 export const loginErrorMessage = createSelector(
   (store) => store.auth.isLogin,
   ({ errMessage }) => errMessage
 );
 
-export const isEditLoading = createSelector(
-  (store) => store.auth.isEdit,
-  ({ isLoading }) => isLoading
-);
+export const isEditLoading = createIsLoadingCreateSelector('isEdit');
 
-export const isEditFailed = createSelector(
-  (store) => store.auth.isEdit,
-  ({ isFailed }) => isFailed
-);
+export const isEditFailed = createIsFailedCreateSelector('isEdit');

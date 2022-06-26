@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { getUserName } from '../../services/selectors/auth';
+import { getUserName } from '../services/selectors/auth';
 
 function PrivateRoute() {
   const auth = useSelector(getUserName);
