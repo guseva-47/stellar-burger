@@ -38,3 +38,13 @@ export const loginErrorMessage = createSelector(
   (store) => store.auth.isLogin,
   ({ errMessage }) => errMessage
 );
+
+export const isEditLoading = createSelector(
+  (store) => store.auth.isEdit,
+  ({ isLoading }) => isLoading
+);
+
+export const isEditFailed = createSelector(
+  (store) => store.auth.isEdit,
+  ({ isFailed }) => isFailed
+);

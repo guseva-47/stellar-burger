@@ -85,6 +85,9 @@ class AuthApi {
   async logout() {
     const token = this.getRefreshToken();
 
+    this.removeAccessToken();
+    this.removeRefreshToken();
+
     let res = await fetch(`${this.urlAuth}/logout`, {
       method: 'POST',
       body: JSON.stringify({ token }),
@@ -103,7 +106,7 @@ class AuthApi {
   }
 
   async getUser() {
-    const token = await this.checkAndRefresh();
+    const token = await this.getAccessTokenWithRefresh();
 
     let res = await fetch(`${this.urlAuth}/user`, {
       headers: {
@@ -121,18 +124,14 @@ class AuthApi {
   }
 
   async updateUser({ email, password, name }) {
-    const token = await this.checkAndRefresh();
+    const token = await this.getAccessTokenWithRefresh();
 
     let res = await fetch(`${this.urlAuth}/user`, {
-      method: 'POST',
-      body: JSON.stringify({
-        email,
-        password,
-        name,
-        token,
-      }),
+      method: 'PATCH',
+      body: JSON.stringify({ email, password, name }),
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -140,11 +139,10 @@ class AuthApi {
 
     const data = await res.json();
     await backendApi.checkSuccess(data);
-
     return { user: data.user };
   }
 
-  async checkAndRefresh() {
+  async getAccessTokenWithRefresh() {
     const parseJwt = (token) => {
       const base64Url = token.split('.')[1];
       const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');

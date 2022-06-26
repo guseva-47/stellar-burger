@@ -37,3 +37,12 @@
   cursor: pointer;
   text-align: left;
 }
+
+.form {
+  max-width: 480px;
+}
+
+.form div {
+  width: 100%;
+  text-align: right;
+}

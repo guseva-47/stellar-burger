@@ -12,10 +12,10 @@ function ProfileLayout() {
     ? 'В этом разделе вы можете изменить свои персональные данные'
     : 'В этом разделе вы можете просмотреть свою историю заказов';
 
-  const dispatcher = useDispatch();
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
-    dispatcher(logout());
+    dispatch(logout());
   };
 
   return (

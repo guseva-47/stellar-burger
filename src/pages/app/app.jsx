@@ -17,6 +17,7 @@ import OnlyNotAuthRoute from './only-not-auth-route';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
 import { fetchGetItems } from '../../services/redusers/app';
 import Modal from '../../components/modal/modal';
+import ProfileEditor from '../profile/profile-editor';
 
 function App() {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ function App() {
           <Route path="profile" element={<PrivateRoute />}>
             <Route element={<ProfileLayout />}>
               <Route index element={<Profile />} />
+              <Route path="edit" element={<ProfileEditor />} />
               <Route path="orders" element={<Orders />} />
             </Route>
           </Route>

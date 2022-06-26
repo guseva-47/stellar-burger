@@ -11,6 +11,7 @@ const initialState = {
   isUser: initIsLoadFailed(),
   isReg: initIsLoadFailed(),
   isLogin: initIsLoadFailedErrMsg(),
+  isEdit: initIsLoadFailed(),
 };
 
 export const login = createAsyncThunk(
@@ -87,11 +88,11 @@ export const authSlice = createSlice({
     // Разлогинивание
     builder.addCase(logout.pending, (state) => {
       console.log('отправлен запрос logout');
+      state.user.email = '';
+      state.user.name = '';
     });
     builder.addCase(logout.fulfilled, (state, action) => {
       console.log('GOOD logout');
-      state.user.email = '';
-      state.user.name = '';
     });
     builder.addCase(logout.rejected, (state, action) => {
       console.log('FAIL logout');
@@ -111,7 +112,7 @@ export const authSlice = createSlice({
       state.isUser.isLoading = false;
       state.isUser.isFailed = false;
     });
-    builder.addCase(getUser.rejected, (state, action) => {
+    builder.addCase(getUser.rejected, (state) => {
       state.isUser.isLoading = false;
       state.isUser.isFailed = true;
     });
@@ -119,23 +120,24 @@ export const authSlice = createSlice({
     // Редактирование данных профиля
     builder.addCase(editUser.pending, (state) => {
       console.log('отправлен запрос edit');
+      state.isEdit.isLoading = true;
+      state.isEdit.isFailed = false;
     });
     builder.addCase(editUser.fulfilled, (state, action) => {
-      console.log('GOOD edit');
+      console.log('good edit', state.user);
       const { user } = action.payload;
       state.user.email = user.email;
       state.user.name = user.name;
+
+      state.isEdit.isLoading = false;
+      state.isEdit.isFailed = false;
     });
     builder.addCase(editUser.rejected, (state, action) => {
-      console.log('FAIL logout');
       console.error(action.error.message);
+      state.isEdit.isLoading = false;
+      state.isEdit.isFailed = true;
     });
   },
 });
-
-// eslint-disable-next-line max-len
-// accessToken: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZC…zE0fQ.j2MXAlD1Iu0AxK5KRTP4jL6DCq6ef47T1ERui33nDAY',
-// refreshToken: 'a91743bc8e778de3719896b44d2b43c1ac9d7abda38f10de95458d95d41987c2e5b7632d7c5c9b9b'
-// export const { setCurrent } = authSlice.actions;
 
 export default authSlice.reducer;

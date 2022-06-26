@@ -1,28 +1,26 @@
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { editUser, getUser } from '../../services/redusers/auth';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { getUser } from '../../services/redusers/auth';
 import { getProfile, isProfileFailed, isProfileLoading } from '../../services/selectors/auth';
+
+import styles from './profile.module.css';
 
 function Profile() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
-  const dispatcher = useDispatch();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatcher(editUser(email, name, password));
-  };
+  const dispatch = useDispatch();
 
   const user = useSelector(getProfile);
   const isLoading = useSelector(isProfileLoading);
   const isFailed = useSelector(isProfileFailed);
 
   useEffect(() => {
-    dispatcher(getUser());
-  }, [dispatcher]);
+    dispatch(getUser());
+  }, [dispatch]);
 
   useEffect(() => {
     const func = (data) => {
@@ -38,8 +36,16 @@ function Profile() {
     setName(nameText);
   }, [user, isLoading, isFailed]);
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const goToEdit = () => {
+    if (isLoading || isFailed) return;
+    navigate('edit', { state: { from: location } });
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={(e) => e.preventDefault()} className={styles.form}>
       {/* Имя */}
       <div className="pb-6">
         <Input
@@ -52,8 +58,8 @@ function Profile() {
           error={false}
           size="default"
           icon="EditIcon"
-          // onIconClick={() => setDisName(!disName)}
-          // disabled={disName}
+          onIconClick={goToEdit}
+          disabled
         />
       </div>
       {/* Email */}
@@ -68,6 +74,8 @@ function Profile() {
           error={false}
           size="default"
           icon="EditIcon"
+          onIconClick={goToEdit}
+          disabled
         />
       </div>
 
@@ -83,6 +91,8 @@ function Profile() {
           error={false}
           size="default"
           icon="EditIcon"
+          onIconClick={goToEdit}
+          disabled
         />
       </div>
     </form>
