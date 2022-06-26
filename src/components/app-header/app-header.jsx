@@ -6,7 +6,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 
-import HeaderLink from '../nav-link/nav-link';
+import HeaderLink from '../header-link/header-link';
 
 import styles from './app-header.module.css';
 

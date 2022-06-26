@@ -5,7 +5,7 @@ import styles from './nav-link.module.css';
 
 function HeaderLink({ Icon, text = '', to = '' }) {
   const isActive = useMatch(to);
-  const getColor = isActive ? 'text_color_primary' : 'text_color_inactive';
+  const getColor = isActive ? `${styles.link} ${styles.active}` : styles.link;
   const iconType = isActive ? 'primary' : 'secondary';
   return (
     <NavLink
