@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './password.module.css';
@@ -8,13 +8,16 @@ import backendApi from '../../api/backend-api';
 function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
-  const [hasRestored, setRestored] = useState(false);
+
+  const location = useLocation();
+
+  const navigate = useNavigate();
 
   const restorePasswrod = async (e) => {
     e.preventDefault();
     try {
       await backendApi.resetPasword(email);
-      setRestored(true);
+      navigate('/reset-password', { state: { from: location } });
     } catch (err) {
       console.error(err);
       setEmailError('Не удалось отправить запрос');
@@ -40,18 +43,9 @@ function ForgotPassword() {
             errorText={emailError}
           />
         </div>
-
-        {hasRestored ? (
-          <Link to="/reset-password" className={styles.link}>
-            <Button type="primary" size="medium">
-              Далее
-            </Button>
-          </Link>
-        ) : (
-          <Button type="primary" size="medium" htmlType="submit">
-            Восстановить
-          </Button>
-        )}
+        <Button type="primary" size="medium" htmlType="submit">
+          Восстановить
+        </Button>
       </form>
 
       <div className={`${styles.main} pt-20`}>

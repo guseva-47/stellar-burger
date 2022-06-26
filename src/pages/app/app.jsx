@@ -9,19 +9,31 @@ import Layout from './layout';
 import ProfileLayout from '../profile/profile-layout';
 import Orders from '../profile/orders';
 import Profile from '../profile/profile';
+import PrivateRoute from './private-route';
+import OnlyNotAuthRoute from './only-not-auth-route';
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<ConstructorPage />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="register" element={<RegisterPage />} />
-        <Route path="forgot-password" element={<ForgotPassword />} />
-        <Route path="reset-password" element={<ResetPassword />} />
-        <Route path="profile" element={<ProfileLayout />}>
-          <Route index element={<Profile />} />
-          <Route path="orders" element={<Orders />} />
+        <Route path="login" element={<OnlyNotAuthRoute />}>
+          <Route index element={<LoginPage />} />
+        </Route>
+        <Route path="register" element={<OnlyNotAuthRoute />}>
+          <Route index element={<RegisterPage />} />
+        </Route>
+        <Route path="forgot-password" element={<OnlyNotAuthRoute />}>
+          <Route index element={<ForgotPassword />} />
+        </Route>
+        <Route path="reset-password" element={<OnlyNotAuthRoute />}>
+          <Route index element={<ResetPassword />} />
+        </Route>
+        <Route path="profile" element={<PrivateRoute />}>
+          <Route element={<ProfileLayout />}>
+            <Route index element={<Profile />} />
+            <Route path="orders" element={<Orders />} />
+          </Route>
         </Route>
 
         <Route path="*" element={<NotFound404 />} />

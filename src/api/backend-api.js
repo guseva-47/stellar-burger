@@ -4,15 +4,18 @@ class BackendApi {
   async checkResponce(responce) {
     if (!responce.ok) {
       const data = await responce.json();
-      return Promise.reject(new Error(`Request error: status ${responce.status}, message "${data.message}"`));
+      return Promise.reject(
+        new Error(`Request error: status ${responce.status}, message "${data.message}"`)
+      );
     }
     return responce;
   }
 
   async checkSuccess(data) {
     if (data.success !== true) {
-      console.log(data);
-      return Promise.reject(new Error(`Request error: success status ${data.success} message ${data.message}`));
+      return Promise.reject(
+        new Error(`Request error: success status ${data.success} message ${data.message}`)
+      );
     }
     return data;
   }
@@ -77,6 +80,7 @@ class BackendApi {
     res = await this.checkResponce(res);
 
     const data = await res.json();
+
     await this.checkSuccess(data);
   }
 }

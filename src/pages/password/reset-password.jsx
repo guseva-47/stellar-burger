@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './password.module.css';
@@ -9,11 +9,23 @@ function ResetPassword() {
   const [token, setToken] = useState('');
   const [password, setPassword] = useState('');
   const [restoreError, setRestoreError] = useState('');
+  const location = useLocation();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const forgotPasswordPath = '/forgot-password';
+    if (location?.state?.from?.pathname !== forgotPasswordPath) {
+      navigate(forgotPasswordPath, { replace: true });
+    }
+  }, [location, navigate]);
 
   const restorePasswrod = async (e) => {
     e.preventDefault();
     try {
+      setRestoreError('');
       await backendApi.newPasword({ password, token });
+      navigate('/login');
     } catch (err) {
       setRestoreError('Не удалось обновить пароль');
     }

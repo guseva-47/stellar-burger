@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -16,8 +17,13 @@ import {
 } from '../../services/selectors/order';
 
 import styles from './order-constructor.module.css';
+import { getUserName } from '../../services/selectors/auth';
 
 function OrderConstructor() {
+  const auth = useSelector(getUserName);
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [isVisible, setIsVisible] = useState(false);
   const closeHandler = () => setIsVisible(false);
   const cost = useSelector(getCost);
@@ -30,6 +36,8 @@ function OrderConstructor() {
   const orderNum = useSelector(getOrderNumber);
 
   const makeOrder = () => {
+    if (!auth) navigate('/login', { state: { from: location } });
+
     if (!isBurgerDone) return;
 
     const items = [bun, ...stuffing];
@@ -63,7 +71,9 @@ function OrderConstructor() {
         )}
         {isVisible && isFailed && (
           <Modal closeHandler={closeHandler} title="Ошибка">
-            <span className="text text_type_main-default">Неудалось сделать заказ. Попробуйте снова.</span>
+            <span className="text text_type_main-default">
+              Неудалось сделать заказ. Попробуйте снова.
+            </span>
           </Modal>
         )}
       </div>
