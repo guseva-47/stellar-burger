@@ -1,4 +1,7 @@
-import { Route, Routes } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Route, Routes, useLocation } from 'react-router-dom';
+
 import ConstructorPage from '../constructor/constructor-page';
 import ForgotPassword from '../password/forgot-password';
 import LoginPage from '../login/login-page';
@@ -11,34 +14,57 @@ import Orders from '../profile/orders';
 import Profile from '../profile/profile';
 import PrivateRoute from './private-route';
 import OnlyNotAuthRoute from './only-not-auth-route';
+import IngredientDetails from '../../components/ingredient-details/ingredient-details';
+import { fetchGetItems } from '../../services/redusers/app';
+import Modal from '../../components/modal/modal';
 
 function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<ConstructorPage />} />
-        <Route path="login" element={<OnlyNotAuthRoute />}>
-          <Route index element={<LoginPage />} />
-        </Route>
-        <Route path="register" element={<OnlyNotAuthRoute />}>
-          <Route index element={<RegisterPage />} />
-        </Route>
-        <Route path="forgot-password" element={<OnlyNotAuthRoute />}>
-          <Route index element={<ForgotPassword />} />
-        </Route>
-        <Route path="reset-password" element={<OnlyNotAuthRoute />}>
-          <Route index element={<ResetPassword />} />
-        </Route>
-        <Route path="profile" element={<PrivateRoute />}>
-          <Route element={<ProfileLayout />}>
-            <Route index element={<Profile />} />
-            <Route path="orders" element={<Orders />} />
-          </Route>
-        </Route>
+  const dispatch = useDispatch();
+  const location = useLocation();
 
-        <Route path="*" element={<NotFound404 />} />
-      </Route>
-    </Routes>
+  useEffect(() => {
+    dispatch(fetchGetItems());
+  }, [dispatch]);
+
+  return (
+    <>
+      <Routes location={location.state?.backgroundLocation || location}>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<ConstructorPage />} />
+          <Route path="login" element={<OnlyNotAuthRoute />}>
+            <Route index element={<LoginPage />} />
+          </Route>
+          <Route path="register" element={<OnlyNotAuthRoute />}>
+            <Route index element={<RegisterPage />} />
+          </Route>
+          <Route path="forgot-password" element={<OnlyNotAuthRoute />}>
+            <Route index element={<ForgotPassword />} />
+          </Route>
+          <Route path="reset-password" element={<OnlyNotAuthRoute />}>
+            <Route index element={<ResetPassword />} />
+          </Route>
+          <Route path="profile" element={<PrivateRoute />}>
+            <Route element={<ProfileLayout />}>
+              <Route index element={<Profile />} />
+              <Route path="orders" element={<Orders />} />
+            </Route>
+          </Route>
+          <Route path="/ingredients/:id" element={<IngredientDetails />} />
+
+          <Route path="*" element={<NotFound404 />} />
+        </Route>
+      </Routes>
+
+      {location.state?.backgroundLocation && (
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route path="/ingredients/:id" element={<Modal title="Детали ингредиента" />}>
+              <Route index element={<IngredientDetails />} />
+            </Route>
+          </Route>
+        </Routes>
+      )}
+    </>
   );
 }
 

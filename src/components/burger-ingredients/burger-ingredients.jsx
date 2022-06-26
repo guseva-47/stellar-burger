@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import IngredientsSet from '../ingredients-set/ingredients-set';
 import styles from './burger-ingredients.module.css';
 import types from './ingredient-types';
-import { fetchGetItems } from '../../services/redusers/app';
 
 function BurgerIngredients() {
   const [currentType, setCurrentType] = useState(0);
@@ -27,12 +25,6 @@ function BurgerIngredients() {
     setCurrentType(i);
     itemsRef.current[i].scrollIntoView();
   };
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchGetItems());
-  }, [dispatch]);
 
   useEffect(() => {
     const node = scrollAreaRef.current;

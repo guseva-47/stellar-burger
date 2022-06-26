@@ -1,17 +1,15 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
+import { Link, useLocation } from 'react-router-dom';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import styles from './ingredient.module.css';
 import ingredientPropTypes from '../../types/ingredient-prop-types';
-import { setCurrent } from '../../services/redusers/app';
 import { getCountStuffing } from '../../services/selectors/order';
 
+import styles from './ingredient.module.css';
+
 function Ingredient({ data }) {
-  const dispatch = useDispatch();
-  const clickHandler = () => {
-    dispatch(setCurrent(data));
-  };
+  const location = useLocation();
 
   const [{ isDrag }, dragRef] = useDrag({
     type: data.type,
@@ -25,10 +23,14 @@ function Ingredient({ data }) {
 
   return (
     <article className={`${styles.ingredient} ${isDrag ? styles.drag : ''}`} ref={dragRef}>
-      <button type="button" className={styles.wrapper} onClick={clickHandler}>
+      <Link
+        to={`/ingredients/${data._id}`}
+        state={{ backgroundLocation: location }}
+        className={styles.wrapper}
+      >
         {count > 0 ? <Counter count={count} size="default" /> : null}
         <div className=" pr-3 pb-1 pl-4">
-          <img src={data.image} alt={data.name} />
+          <img className={styles.image} src={data.image} alt={data.name} />
         </div>
 
         <h3 className={`${styles.price} text text_type_digits-default pb-2`}>
@@ -37,7 +39,7 @@ function Ingredient({ data }) {
         </h3>
 
         <h3 className={`${styles.name} text text_type_main-default`}>{data.name}</h3>
-      </button>
+      </Link>
     </article>
   );
 }

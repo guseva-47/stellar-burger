@@ -5,12 +5,12 @@
 }
 
 .wrapper {
-  padding: 0;
-  border: none;
-  background-color: transparent;
   color: inherit;
-  cursor: pointer;
-  font: inherit;
+  text-decoration: none;
+}
+
+.image {
+  min-width: 240px;
 }
 
 .price,
