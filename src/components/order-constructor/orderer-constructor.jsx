@@ -36,7 +36,10 @@ function OrderConstructor() {
   const orderNum = useSelector(getOrderNumber);
 
   const makeOrder = () => {
-    if (!auth) navigate('/login', { state: { from: location } });
+    if (!auth) {
+      navigate('/login', { state: { from: location } });
+      return;
+    }
 
     if (!isBurgerDone) return;
 
