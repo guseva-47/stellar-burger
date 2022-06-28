@@ -74,7 +74,6 @@ export const orderSlice = createSlice({
   },
 });
 
-// eslint-disable-next-line object-curly-newline
 export const { setStuffing, removeStuffing, setBun, removeBun, updateOrder } = orderSlice.actions;
 
 export default orderSlice.reducer;

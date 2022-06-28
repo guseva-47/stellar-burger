@@ -30,6 +30,7 @@
     "no-trailing-spaces": "warn",
     "comma-dangle": ["error", "only-multiline"],
     "no-param-reassign": ["error", { "props": false }],
-    "class-methods-use-this": "off"
+    "class-methods-use-this": "off",
+    "object-curly-newline": "off"
   }
 }
