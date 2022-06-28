@@ -24,8 +24,8 @@ function OrderConstructor() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [isVisible, setIsVisible] = useState(false);
-  const closeHandler = () => setIsVisible(false);
+  const [isSended, setIsSended] = useState(false);
+  const closeHandler = () => setIsSended(false);
   const cost = useSelector(getCost);
 
   const stuffing = useSelector(getStuffing);
@@ -42,7 +42,7 @@ function OrderConstructor() {
 
     const items = [bun, ...stuffing];
     dispatch(fetchPostOrder(items));
-    setIsVisible(true);
+    setIsSended(true);
   };
 
   const isLoading = useSelector(isOrderLoading);
@@ -64,16 +64,18 @@ function OrderConstructor() {
           {isLoading ? 'Отправка' : 'Оформить заказ'}
         </Button>
 
-        {isVisible && orderNum && (
+        {isSended && !isLoading && orderNum && (
           <Modal closeHandler={closeHandler}>
             <OrderDetails number={orderNum} />
           </Modal>
         )}
-        {isVisible && isFailed && (
+        {isSended && isFailed && (
           <Modal closeHandler={closeHandler} title="Ошибка">
-            <span className="text text_type_main-default">
-              Неудалось сделать заказ. Попробуйте снова.
-            </span>
+            <div className="pt-10">
+              <span className="text text_type_main-default">
+                Не удается сделать заказ. Попробуйте снова.
+              </span>
+            </div>
           </Modal>
         )}
       </div>

@@ -8,7 +8,7 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 
 import styles from './modal.module.css';
 
-function Modal({ title = '', closeHandler }) {
+function Modal({ children, title = '', closeHandler }) {
   const modalNode = document.getElementById('modal');
 
   const modalRef = createRef();
@@ -40,6 +40,7 @@ function Modal({ title = '', closeHandler }) {
         {/* main */}
         <section className={styles.main}>
           <Outlet />
+          {children && <div>{children}</div>}
         </section>
       </article>
       <ModalOverlay closeHandler={closeHandler} />
@@ -51,6 +52,7 @@ function Modal({ title = '', closeHandler }) {
 Modal.propTypes = {
   title: PropTypes.string,
   closeHandler: PropTypes.func.isRequired,
+  children: PropTypes.node,
 };
 
 Modal.defaultProps = {
