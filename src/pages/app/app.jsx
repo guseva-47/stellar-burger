@@ -1,6 +1,5 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-// eslint-disable-next-line object-curly-newline
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import ConstructorPage from '../constructor/constructor-page';
@@ -19,6 +18,7 @@ import IngredientDetails from '../../components/ingredient-details/ingredient-de
 import { fetchGetItems } from '../../services/redusers/app';
 import Modal from '../../components/modal/modal';
 import ProfileEditor from '../profile/profile-editor';
+import { getUser } from '../../services/redusers/auth';
 
 function App() {
   const dispatch = useDispatch();
@@ -26,6 +26,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchGetItems());
+    dispatch(getUser());
   }, [dispatch]);
 
   const navigate = useNavigate();

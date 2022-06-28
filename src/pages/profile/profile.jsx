@@ -24,16 +24,11 @@ function Profile() {
 
   useEffect(() => {
     const func = (data) => {
-      if (isLoading) return 'Загрузка...';
       if (isFailed) return 'Не удалось загрузить данные';
       return data ?? '';
     };
-
-    const emailText = func(user?.email);
-    setEmail(emailText);
-
-    const nameText = func(user?.name);
-    setName(nameText);
+    setEmail(func(user?.email));
+    setName(func(user?.name));
   }, [user, isLoading, isFailed]);
 
   const navigate = useNavigate();
