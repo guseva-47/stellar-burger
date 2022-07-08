@@ -1,4 +1,4 @@
-.app {
+.page {
   overflow: hidden;
   max-width: 1280px;
   max-height: 100vh;
@@ -6,11 +6,6 @@
 }
 
 .main {
-  display: flex;
   max-width: 1240px;
   margin: 0 auto;
-}
-
-.col {
-  width: 100%;
 }

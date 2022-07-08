@@ -1,0 +1,20 @@
+.link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: var(--text-inactive-color);
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #b9b9f5;
+  text-decoration: none;
+}
+
+.active {
+  color: var(--text-primary-color);
+}
+
+.active:hover {
+  color: var(--text-primary-color);
+}

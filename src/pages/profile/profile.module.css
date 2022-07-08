@@ -1,0 +1,48 @@
+.layout {
+  display: grid;
+  padding-top: 120px;
+  gap: 60px;
+  grid-template-columns: 320px auto;
+}
+
+.nav {
+  display: grid;
+  grid-template-rows: repeat(3, 64px);
+}
+
+.link {
+  color: var(--text-inactive-color);
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #b9b9f5;
+  text-decoration: none;
+}
+
+.active {
+  color: var(--text-primary-color);
+  text-decoration: none;
+}
+
+.active:hover {
+  color: var(--text-primary-color);
+  text-decoration: none;
+}
+
+.exit {
+  padding: 0;
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.form {
+  max-width: 480px;
+}
+
+.form div {
+  width: 100%;
+  text-align: right;
+}

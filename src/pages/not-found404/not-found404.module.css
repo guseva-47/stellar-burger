@@ -1,0 +1,15 @@
+.text {
+  width: 100%;
+  padding: 2em 1em;
+  text-align: center;
+}
+
+.link {
+  color: var(--text-inactive-color);
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #b9b9f5;
+  text-decoration: none;
+}

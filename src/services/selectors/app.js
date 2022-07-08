@@ -8,6 +8,12 @@ export const getIngredientsByType = createSelector(
   (ingredients, type) => ingredients.filter((item) => item.type === type)
 );
 
+export const getIngredientById = createSelector(
+  (store) => store.app.allIngredients,
+  (_, id) => id,
+  (ingredients, id) => ingredients.find((prod) => prod._id === id)
+);
+
 export const getCurrentIngredient = (store) => store.app.currentIngredient;
 
 export const isAllIngredientsLoading = createSelector(

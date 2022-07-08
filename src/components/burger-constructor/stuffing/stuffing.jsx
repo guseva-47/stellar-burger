@@ -9,7 +9,6 @@ import ingredientPropTypes from '../../../types/ingredient-prop-types';
 
 import styles from './stuffing.module.css';
 
-// eslint-disable-next-line object-curly-newline
 function Stuffing({ ingredient = {}, moveCard, index, text = 'Добавьте начинку' }) {
   const dispatch = useDispatch();
 

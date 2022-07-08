@@ -1,10 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import backendApi from '../../api/backend-api';
 
-import data from '../../utils/data';
-
 const initialState = {
-  allIngredients: data,
+  allIngredients: [],
   currentIngredient: null,
   allIngredientsLoading: false,
   allIngredientsFailed: false

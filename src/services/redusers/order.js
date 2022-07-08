@@ -51,6 +51,7 @@ export const orderSlice = createSlice({
       state.number = null;
       state.isLoading = true;
       state.isFailed = false;
+      console.log('send');
     });
     builder.addCase(fetchPostOrder.fulfilled, (state, action) => {
       state.number = action.payload.order.number;
@@ -61,17 +62,18 @@ export const orderSlice = createSlice({
         stuffing: [],
         bun: null,
       };
+      console.log('good', action.payload.order.number);
     });
     builder.addCase(fetchPostOrder.rejected, (state, action) => {
       state.allIngredients = null;
       state.isLoading = false;
       state.isFailed = true;
       console.error(action.error.message);
+      console.log('fail');
     });
   },
 });
 
-// eslint-disable-next-line object-curly-newline
 export const { setStuffing, removeStuffing, setBun, removeBun, updateOrder } = orderSlice.actions;
 
 export default orderSlice.reducer;

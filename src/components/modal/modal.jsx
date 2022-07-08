@@ -1,5 +1,6 @@
 import { createRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { Outlet } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -37,7 +38,10 @@ function Modal({ children, title = '', closeHandler }) {
         </section>
 
         {/* main */}
-        <section className={styles.main}>{children}</section>
+        <section className={styles.main}>
+          <Outlet />
+          {children && <div>{children}</div>}
+        </section>
       </article>
       <ModalOverlay closeHandler={closeHandler} />
     </div>,
@@ -46,9 +50,9 @@ function Modal({ children, title = '', closeHandler }) {
 }
 
 Modal.propTypes = {
-  children: PropTypes.node.isRequired,
   title: PropTypes.string,
   closeHandler: PropTypes.func.isRequired,
+  children: PropTypes.node,
 };
 
 Modal.defaultProps = {

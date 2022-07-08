@@ -3,14 +3,19 @@ class BackendApi {
 
   async checkResponce(responce) {
     if (!responce.ok) {
-      return Promise.reject(new Error(`Request error: status ${responce.status}`));
+      const data = await responce.json();
+      return Promise.reject(
+        new Error(`Request error: status ${responce.status}, message "${data.message}"`)
+      );
     }
     return responce;
   }
 
   async checkSuccess(data) {
     if (data.success !== true) {
-      return Promise.reject(new Error(`Request error: success status ${data.success}`));
+      return Promise.reject(
+        new Error(`Request error: success status ${data.success} message ${data.message}`)
+      );
     }
     return data;
   }
@@ -41,6 +46,42 @@ class BackendApi {
     data = await this.checkSuccess(data);
 
     return { name: data.name, order: data.order };
+  }
+
+  async resetPasword(email) {
+    let res = await fetch(`${this.url}/password-reset`, {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    res = await this.checkResponce(res);
+
+    const data = await res.json();
+    await this.checkSuccess(data);
+  }
+
+  async newPasword({ password, token }) {
+    let res = await fetch(`${this.url}/password-reset/reset`, {
+      method: 'POST',
+      body: JSON.stringify({ password, token }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+    });
+
+    res = await this.checkResponce(res);
+
+    const data = await res.json();
+
+    await this.checkSuccess(data);
   }
 }
 
