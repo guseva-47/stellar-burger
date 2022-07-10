@@ -1,9 +1,14 @@
-import PropTypes from 'prop-types';
 import { NavLink, useMatch } from 'react-router-dom';
 
 import styles from './nav-link.module.css';
 
-function HeaderLink({ Icon, text = '', to = '' }) {
+type Props = {
+  Icon: Function;
+  to: string;
+  text: string;
+};
+
+function HeaderLink({ Icon, text = '', to = '' }: Props) {
   const isActive = useMatch(to);
   const getColor = isActive ? `${styles.link} ${styles.active}` : styles.link;
   const iconType = isActive ? 'primary' : 'secondary';
@@ -20,15 +25,5 @@ function HeaderLink({ Icon, text = '', to = '' }) {
     </NavLink>
   );
 }
-
-HeaderLink.propTypes = {
-  Icon: PropTypes.elementType.isRequired,
-  to: PropTypes.string,
-  text: PropTypes.string.isRequired,
-};
-
-HeaderLink.defaultProps = {
-  to: '',
-};
 
 export default HeaderLink;

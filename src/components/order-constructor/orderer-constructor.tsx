@@ -44,6 +44,9 @@ function OrderConstructor() {
     if (!isBurgerDone) return;
 
     const items = [bun, ...stuffing];
+
+    // todo
+    // @ts-ignore
     dispatch(fetchPostOrder(items));
     setIsSended(true);
   };

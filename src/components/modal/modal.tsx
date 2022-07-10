@@ -1,25 +1,30 @@
 import { createRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Outlet } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import ModalOverlay from '../modal-overlay/modal-overlay';
 
 import styles from './modal.module.css';
 
-function Modal({ children, title = '', closeHandler }) {
-  const modalNode = document.getElementById('modal');
+type Props = {
+  title?: string;
+  closeHandler: () => void;
+  children?: JSX.Element;
+};
 
-  const modalRef = createRef();
+function Modal({ title = '', closeHandler, children }: Props) {
+  const modalNode = document.getElementById('modal') as HTMLElement;
+
+  const modalRef = createRef<HTMLElement>();
 
   useEffect(() => {
-    const escapeHandler = (e) => {
+    const escapeHandler = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         closeHandler();
       }
     };
-    modalRef.current.focus();
+    modalRef.current?.focus();
     document.addEventListener('keydown', escapeHandler);
 
     return () => document.removeEventListener('keydown', escapeHandler);
@@ -49,14 +54,9 @@ function Modal({ children, title = '', closeHandler }) {
   );
 }
 
-Modal.propTypes = {
-  title: PropTypes.string,
-  closeHandler: PropTypes.func.isRequired,
-  children: PropTypes.node,
-};
-
 Modal.defaultProps = {
   title: '',
+  children: null
 };
 
 export default Modal;

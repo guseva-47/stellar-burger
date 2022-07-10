@@ -1,10 +1,11 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { editUser } from '../../services/redusers/auth';
 import { getProfile, isEditLoading } from '../../services/selectors/auth';
+import TLocation from '../../types/location';
 
 import styles from './profile.module.css';
 
@@ -23,7 +24,7 @@ function ProfileEditor() {
 
   useEffect(() => {
     const profilePath = '/profile';
-    if (location?.state?.from?.pathname !== profilePath) {
+    if ((location as TLocation).state?.from?.pathname !== profilePath) {
       navigate(profilePath, { replace: true });
     }
   }, [location, navigate]);
@@ -38,21 +39,23 @@ function ProfileEditor() {
   const cancelPassword = () => setPassword('');
 
   const cancelHandler = () => {
-    navigate(-1, { replace: true });
+    navigate(-1);
   };
 
   const isValidForm = name && email && (password.length >= 6 || password === '');
   const [isSaved, setIsSaved] = useState(false);
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     if (isValidForm) {
-      const newData = { name: user.name, email: user.email };
+      const newData = { name: user.name, email: user.email, password };
       if (user.name !== name) newData.name = name;
       if (user.email !== email) newData.email = email;
       if (password.length >= 6) newData.password = password;
 
       if (Object.keys(newData).length > 0) {
+        // todo
+        // @ts-ignore
         dispatch(editUser(newData));
       }
     }
@@ -61,7 +64,7 @@ function ProfileEditor() {
   };
 
   useEffect(() => {
-    if (isSaved && !isLoading) navigate(-1, { replace: true });
+    if (isSaved && !isLoading) navigate(-1);
   }, [isLoading, isSaved, navigate]);
 
   return (
@@ -70,7 +73,6 @@ function ProfileEditor() {
       <div className="pb-6">
         <Input
           type="text"
-          autocomplete="username"
           placeholder="Имя"
           onChange={(e) => setName(e.target.value)}
           value={name}
@@ -85,7 +87,6 @@ function ProfileEditor() {
       <div className="pb-6">
         <Input
           type="email"
-          autocomplete="username"
           placeholder="E-mail"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
@@ -101,8 +102,6 @@ function ProfileEditor() {
       <div className="pb-6">
         <Input
           type="password"
-          autocomplete="password"
-          placeholder="Пароль"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
           name="password"

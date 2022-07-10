@@ -1,24 +1,34 @@
 import { useRef } from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
+import type { Identifier, XYCoord } from 'dnd-core';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { removeStuffing } from '../../../services/redusers/order';
-import ingredientPropTypes from '../../../types/ingredient-prop-types';
 
 import styles from './stuffing.module.css';
+import { TIngredientInOrder } from '../../../types/ingredient';
 
-function Stuffing({ ingredient = {}, moveCard, index, text = 'Добавьте начинку' }) {
+type Props = {
+  ingredient?: TIngredientInOrder;
+  text?: string;
+  index?: number;
+  moveCard?: (dragIndex: number, hoverIndex: number) => void;
+};
+
+type TDragStuffing = {
+  id: string;
+  index: number;
+};
+
+function Stuffing({ ingredient, moveCard, index, text }: Props) {
   const dispatch = useDispatch();
 
-  const deleteStuffing = () => {
-    dispatch(removeStuffing(ingredient));
-  };
+  const deleteStuffing = () => dispatch(removeStuffing(ingredient));
 
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
 
-  const [{ handlerId }, drop] = useDrop({
+  const [{ handlerId }, drop] = useDrop<TDragStuffing, void, { handlerId: Identifier | null }>({
     accept: 'stuffing',
     collect(monitor) {
       return {
@@ -26,21 +36,19 @@ function Stuffing({ ingredient = {}, moveCard, index, text = 'Добавьте �
       };
     },
     hover(item, monitor) {
-      if (!ingredient) return;
-      if (!ref.current) {
-        return;
-      }
+      if (!ingredient || !index || !ref.current || !moveCard) return;
+
       const dragIndex = item.index;
       const hoverIndex = index;
 
       if (dragIndex === hoverIndex) {
         return;
       }
-      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      const hoverBoundingRect = (ref.current as any)?.getBoundingClientRect();
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
 
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
@@ -55,7 +63,7 @@ function Stuffing({ ingredient = {}, moveCard, index, text = 'Добавьте �
 
   const [{ isDragging }, drag] = useDrag({
     type: 'stuffing',
-    item: () => ({ id: ingredient._id, index }),
+    item: (): TDragStuffing => ({ id: ingredient?._id ?? '', index: index ?? 0 }),
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -78,19 +86,11 @@ function Stuffing({ ingredient = {}, moveCard, index, text = 'Добавьте �
         text={ingredient.name}
         price={ingredient.price}
         thumbnail={ingredient.image}
-        className={`${styles.element}`}
         handleClose={deleteStuffing}
       />
     </div>
   );
 }
-
-Stuffing.propTypes = {
-  ingredient: ingredientPropTypes,
-  text: PropTypes.string,
-  index: PropTypes.number,
-  moveCard: PropTypes.func,
-};
 
 Stuffing.defaultProps = {
   ingredient: null,

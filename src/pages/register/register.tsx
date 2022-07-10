@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -18,9 +18,11 @@ function RegisterPage() {
 
   const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setRegError('');
+    // todo
+    // @ts-ignore
     dispatch(registratiion({ email, password, name }));
   };
 
@@ -49,7 +51,6 @@ function RegisterPage() {
         <div className="pb-6">
           <Input
             type="text"
-            autocomplete="name"
             placeholder="Имя"
             onChange={(e) => setName(e.target.value)}
             value={name}
@@ -64,7 +65,6 @@ function RegisterPage() {
         <div className="pb-6">
           <Input
             type="email"
-            autocomplete="username"
             placeholder="E-mail"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
@@ -77,7 +77,6 @@ function RegisterPage() {
         {/* Password */}
         <div className="pb-6">
           <PasswordInput
-            autocomplete="current-password"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             name="password"

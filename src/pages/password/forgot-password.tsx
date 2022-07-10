@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import styles from './password.module.css';
 import backendApi from '../../api/backend-api';
+
+import styles from './password.module.css';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -13,7 +14,7 @@ function ForgotPassword() {
 
   const navigate = useNavigate();
 
-  const restorePasswrod = async (e) => {
+  const restorePasswrod = async (e: FormEvent) => {
     e.preventDefault();
     try {
       setEmailError('');
@@ -33,7 +34,6 @@ function ForgotPassword() {
         <div className="pb-6">
           <Input
             type="email"
-            autocomplete="username"
             placeholder="Укажите e-mail"
             onChange={(e) => setEmail(e.target.value)}
             value={email}

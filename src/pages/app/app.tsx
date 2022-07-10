@@ -19,13 +19,18 @@ import { fetchGetItems } from '../../services/redusers/app';
 import Modal from '../../components/modal/modal';
 import ProfileEditor from '../profile/profile-editor';
 import { getUser } from '../../services/redusers/auth';
+import TLocation from '../../types/location';
 
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
 
   useEffect(() => {
+    // todo
+    // @ts-ignore
     dispatch(fetchGetItems());
+    // todo
+    // @ts-ignore
     dispatch(getUser());
   }, [dispatch]);
 
@@ -34,7 +39,7 @@ function App() {
 
   return (
     <>
-      <Routes location={location.state?.backgroundLocation || location}>
+      <Routes location={(location as TLocation).state?.backgroundLocation || location}>
         <Route path="/" element={<Layout />}>
           <Route index element={<ConstructorPage />} />
           <Route path="login" element={<OnlyNotAuthRoute />}>
@@ -62,7 +67,7 @@ function App() {
         </Route>
       </Routes>
 
-      {location.state?.backgroundLocation && (
+      {(location as TLocation).state?.backgroundLocation && (
         <Routes>
           <Route
             path="/ingredients/:id"

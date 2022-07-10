@@ -5,13 +5,21 @@ import IngredientsSet from '../ingredients-set/ingredients-set';
 import styles from './burger-ingredients.module.css';
 import types from './ingredient-types';
 
+declare module 'react' {
+  interface FunctionComponent<P = {}> {
+    (props: PropsWithChildren<P>, context?: any): ReactElement<any, any> | null;
+  }
+}
+
 function BurgerIngredients() {
   const [currentType, setCurrentType] = useState(0);
 
-  const itemsRef = useRef([]);
-  const scrollAreaRef = useRef();
+  const itemsRef = useRef<Array<HTMLElement>>([]);
+  const scrollAreaRef = useRef<HTMLElement>(null);
 
   const current = () => {
+    if (!scrollAreaRef || !scrollAreaRef.current) return;
+
     const { top } = scrollAreaRef.current.getBoundingClientRect();
     const res = itemsRef.current.map((r) => Math.abs(r.getBoundingClientRect().top - top));
     let iOfMin = 0;
@@ -21,17 +29,17 @@ function BurgerIngredients() {
     setCurrentType(iOfMin);
   };
 
-  const tabClickHandler = (i) => {
+  const tabClickHandler = (i: number) => {
     setCurrentType(i);
     itemsRef.current[i].scrollIntoView();
   };
 
   useEffect(() => {
     const node = scrollAreaRef.current;
-    node.addEventListener('scroll', current);
+    node?.addEventListener('scroll', current);
 
     return () => {
-      node.removeEventListener('scroll', current);
+      node?.removeEventListener('scroll', current);
     };
   }, []);
 
@@ -59,6 +67,7 @@ function BurgerIngredients() {
           <div
             key={type.value}
             ref={(el) => {
+              if (!el) return;
               itemsRef.current[i] = el;
             }}
           >

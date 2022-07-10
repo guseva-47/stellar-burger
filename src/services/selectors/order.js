@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { BUN } from '../../types/ingredient-types';
+import { TypesOfIngredients } from '../../types/ingredient';
 
 export const getStuffing = createSelector(
   (store) => store.order.ingredients,
@@ -22,7 +22,7 @@ export const getCountStuffing = createSelector(
   (store) => store.order.ingredients,
   (_, ingredient) => ingredient,
   (ingredients, { _id, type }) => {
-    if (type === BUN) {
+    if (type === TypesOfIngredients.bun) {
       return ingredients.bun?._id === _id ? 2 : 0;
     }
     return ingredients.stuffing.filter((item) => item._id === _id).length;

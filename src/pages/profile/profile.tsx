@@ -19,16 +19,18 @@ function Profile() {
   const isFailed = useSelector(isProfileFailed);
 
   useEffect(() => {
+    // todo
+    // @ts-ignore
     dispatch(getUser());
   }, [dispatch]);
 
   useEffect(() => {
-    const func = (data) => {
+    const check = (data: string) => {
       if (isFailed) return 'Не удалось загрузить данные';
       return data ?? '';
     };
-    setEmail(func(user?.email));
-    setName(func(user?.name));
+    setEmail(check(user?.email));
+    setName(check(user?.name));
   }, [user, isLoading, isFailed]);
 
   const navigate = useNavigate();
@@ -45,7 +47,6 @@ function Profile() {
       <div className="pb-6">
         <Input
           type="text"
-          autocomplete="username"
           placeholder="Имя"
           onChange={(e) => setName(e.target.value)}
           value={name}
@@ -61,7 +62,6 @@ function Profile() {
       <div className="pb-6">
         <Input
           type="email"
-          autocomplete="username"
           placeholder="E-mail"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
@@ -78,7 +78,6 @@ function Profile() {
       <div className="pb-6">
         <Input
           type="password"
-          autocomplete="password"
           placeholder="Пароль"
           onChange={(e) => setPassword(e.target.value)}
           value={password}

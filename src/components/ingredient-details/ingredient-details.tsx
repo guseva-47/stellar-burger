@@ -2,20 +2,28 @@ import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 
 import { getIngredientById } from '../../services/selectors/app';
+import { TIngredient } from '../../types/ingredient';
+import TLocation from '../../types/location';
 
 import styles from './ingredient-details.module.css';
 
 function IngredientDetails() {
   const { id } = useParams();
-  const ingredient = useSelector((state) => getIngredientById(state, id));
-  const location = useLocation();
-  const cName = !location.state?.backgroundLocation ? styles.wrapper : '';
 
-  const energyValue = !ingredient ? [] : [
-    ['Каллории, ккал', ingredient.calories],
-    ['Белки, г', ingredient.proteins],
-    ['Жиры, г', ingredient.fat],
-    ['Улеводы, г', ingredient.carbohydrates],
+  const ingredient: TIngredient | undefined = useSelector((state) => (
+    // todo
+    // @ts-ignore
+    getIngredientById(state, id)
+  ));
+
+  const location = useLocation();
+  const cName = !(location as TLocation).state?.backgroundLocation ? styles.wrapper : '';
+
+  const energyValue = [
+    ['Каллории, ккал', ingredient?.calories ?? '-'],
+    ['Белки, г', ingredient?.proteins ?? '-'],
+    ['Жиры, г', ingredient?.fat ?? '-'],
+    ['Улеводы, г', ingredient?.carbohydrates ?? '-'],
   ];
 
   return (

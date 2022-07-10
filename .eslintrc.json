@@ -6,6 +6,7 @@
   "extends": [
     "plugin:react/recommended",
     "airbnb",
+    "airbnb-typescript",
     "plugin:react-hooks/recommended",
     "plugin:import/recommended",
     "plugin:import/typescript"
@@ -16,7 +17,8 @@
       "jsx": true
     },
     "ecmaVersion": "latest",
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": "./tsconfig.json"
   },
 
   "plugins": ["react", "@typescript-eslint"],
@@ -31,6 +33,9 @@
     "comma-dangle": ["error", "only-multiline"],
     "no-param-reassign": ["error", { "props": false }],
     "class-methods-use-this": "off",
-    "object-curly-newline": "off"
+    "object-curly-newline": "off",
+    "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+    "@typescript-eslint/comma-dangle": ["error", "only-multiline"],
+    "@typescript-eslint/no-unused-vars": "warn"
   }
 }

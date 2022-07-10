@@ -15,6 +15,8 @@ function ProfileLayout() {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
+    // todo
+    // @ts-ignore
     dispatch(logout());
   };
 

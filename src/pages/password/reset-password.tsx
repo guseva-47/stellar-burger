@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import styles from './password.module.css';
 import backendApi from '../../api/backend-api';
+import TLocation from '../../types/location';
+
+import styles from './password.module.css';
 
 function ResetPassword() {
   const [token, setToken] = useState('');
@@ -15,12 +17,12 @@ function ResetPassword() {
 
   useEffect(() => {
     const forgotPasswordPath = '/forgot-password';
-    if (location?.state?.from?.pathname !== forgotPasswordPath) {
+    if ((location as TLocation).state?.from?.pathname !== forgotPasswordPath) {
       navigate(forgotPasswordPath, { replace: true });
     }
   }, [location, navigate]);
 
-  const restorePasswrod = async (e) => {
+  const restorePasswrod = async (e: FormEvent) => {
     e.preventDefault();
     try {
       setRestoreError('');
@@ -39,8 +41,6 @@ function ResetPassword() {
         {/* New Password */}
         <div className="pb-6">
           <PasswordInput
-            autocomplete="new-password"
-            placeholder="Введите новый пароль"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             name="password"
@@ -51,7 +51,6 @@ function ResetPassword() {
         <div className="pb-6">
           <Input
             type="text"
-            autocomplete="text"
             placeholder="Введите код из письма"
             onChange={(e) => setToken(e.target.value)}
             value={token}

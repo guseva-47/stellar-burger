@@ -1,16 +1,16 @@
-import { BUN, MAIN, SAUCE } from '../../types/ingredient-types';
+import { TypesOfIngredients } from '../../types/ingredient';
 
 const ingredientTypes = [
   {
-    value: BUN,
+    value: TypesOfIngredients.bun,
     title: 'Булки',
   },
   {
-    value: SAUCE,
+    value: TypesOfIngredients.sauce,
     title: 'Соусы',
   },
   {
-    value: MAIN,
+    value: TypesOfIngredients.main,
     title: 'Начинки',
   },
 ];

@@ -1,10 +1,15 @@
-import PropTypes from 'prop-types';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import ingredientPropTypes from '../../../types/ingredient-prop-types';
+import { TIngredient } from '../../../types/ingredient';
+
 import styles from './bun.module.css';
 
-function BunTop({ bun, text = 'Добавьте булку' }) {
+type Props = {
+  bun?: TIngredient;
+  text?: string;
+};
+
+function BunTop({ bun, text }: Props) {
   return bun ? (
     <div className={`${styles.line} pl-8 pr-4 pb-4`}>
       <ConstructorElement
@@ -13,7 +18,6 @@ function BunTop({ bun, text = 'Добавьте булку' }) {
         text={`${bun.name} (верх)`}
         price={bun.price}
         thumbnail={bun.image}
-        className={`${styles.element}`}
       />
     </div>
   ) : (
@@ -24,11 +28,6 @@ function BunTop({ bun, text = 'Добавьте булку' }) {
     </div>
   );
 }
-
-BunTop.propTypes = {
-  bun: ingredientPropTypes,
-  text: PropTypes.string,
-};
 
 BunTop.defaultProps = {
   bun: null,

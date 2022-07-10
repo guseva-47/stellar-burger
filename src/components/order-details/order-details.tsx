@@ -1,9 +1,11 @@
-import PropTypes from 'prop-types';
-
 import styles from './order-details.module.css';
 import doneIcon from '../../images/done.svg';
 
-function OrderDetails({ number = '' }) {
+type Props = {
+  number: string;
+};
+
+function OrderDetails({ number = '' }: Props) {
   return (
     <article className={`${styles['order-details']} pt-4`}>
       <h2 className={`${styles.number} text text_type_digits-large pb-8`}>{number}</h2>
@@ -16,9 +18,5 @@ function OrderDetails({ number = '' }) {
     </article>
   );
 }
-
-OrderDetails.propTypes = {
-  number: PropTypes.number.isRequired,
-};
 
 export default OrderDetails;

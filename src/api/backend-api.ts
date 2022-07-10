@@ -1,7 +1,10 @@
+import { TIngredient } from '../types/ingredient';
+import { TData, TDataIngredients, TDataOrder } from './responce.types';
+
 class BackendApi {
   url = 'https://norma.nomoreparties.space/api';
 
-  async checkResponce(responce) {
+  async checkResponce(responce: Response): Promise<Response> {
     if (!responce.ok) {
       const data = await responce.json();
       return Promise.reject(
@@ -11,7 +14,7 @@ class BackendApi {
     return responce;
   }
 
-  async checkSuccess(data) {
+  async checkSuccess<T extends TData>(data: T): Promise<T> {
     if (data.success !== true) {
       return Promise.reject(
         new Error(`Request error: success status ${data.success} message ${data.message}`)
@@ -25,13 +28,14 @@ class BackendApi {
 
     res = await this.checkResponce(res);
 
-    let data = await res.json();
-    data = await this.checkSuccess(data);
+    const data: TDataIngredients = await res.json();
+
+    await this.checkSuccess(data);
 
     return data.data;
   }
 
-  async postOrder(ingredients) {
+  async postOrder(ingredients: TIngredient[]) {
     let res = await fetch(`${this.url}/orders`, {
       method: 'POST',
       body: JSON.stringify({ ingredients }),
@@ -42,13 +46,14 @@ class BackendApi {
 
     res = await this.checkResponce(res);
 
-    let data = await res.json();
-    data = await this.checkSuccess(data);
+    const data: TDataOrder = await res.json();
+
+    await this.checkSuccess(data);
 
     return { name: data.name, order: data.order };
   }
 
-  async resetPasword(email) {
+  async resetPasword(email: string) {
     let res = await fetch(`${this.url}/password-reset`, {
       method: 'POST',
       body: JSON.stringify({ email }),
@@ -59,11 +64,12 @@ class BackendApi {
 
     res = await this.checkResponce(res);
 
-    const data = await res.json();
+    const data: TData = await res.json();
+
     await this.checkSuccess(data);
   }
 
-  async newPasword({ password, token }) {
+  async newPasword({ password, token }: { password: string; token: string }) {
     let res = await fetch(`${this.url}/password-reset/reset`, {
       method: 'POST',
       body: JSON.stringify({ password, token }),
@@ -79,7 +85,7 @@ class BackendApi {
 
     res = await this.checkResponce(res);
 
-    const data = await res.json();
+    const data: TData = await res.json();
 
     await this.checkSuccess(data);
   }
