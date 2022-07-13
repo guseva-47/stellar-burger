@@ -4,10 +4,10 @@ import { useDrag, useDrop } from 'react-dnd';
 import type { Identifier, XYCoord } from 'dnd-core';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import { TIngredientInOrder } from '../../../types/ingredient';
 import { removeStuffing } from '../../../services/redusers/order';
 
 import styles from './stuffing.module.css';
-import { TIngredientInOrder } from '../../../types/ingredient';
 
 type Props = {
   ingredient?: TIngredientInOrder;

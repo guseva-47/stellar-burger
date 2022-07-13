@@ -40,7 +40,7 @@ function BurgerConstructor() {
   );
 
   return (
-    <section ref={dropTarget} className={styles.tes}>
+    <section ref={dropTarget} className={isHover ? styles.hover : styles.main}>
       <BunTop bun={bun} />
 
       <ul className={`${styles.middle} ${styles.elements} custom-scroll`}>
