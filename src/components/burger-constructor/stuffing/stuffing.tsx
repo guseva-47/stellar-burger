@@ -36,7 +36,7 @@ function Stuffing({ ingredient, moveCard, index, text }: Props) {
       };
     },
     hover(item, monitor) {
-      if (!ingredient || !index || !ref.current || !moveCard) return;
+      if (!ingredient || index === undefined || !ref.current || !moveCard) return;
 
       const dragIndex = item.index;
       const hoverIndex = index;
@@ -56,6 +56,7 @@ function Stuffing({ ingredient, moveCard, index, text }: Props) {
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
+      
       moveCard(dragIndex, hoverIndex);
       item.index = hoverIndex;
     },
