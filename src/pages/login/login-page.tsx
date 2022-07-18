@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { login } from '../../services/redusers/auth';
+import { isLoginFailed, loginErrorMessage } from '../../services/selectors/auth';
 
 import styles from './login-page.module.css';
-import { isLoginFailed, loginErrorMessage } from '../../services/selectors/auth';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -20,15 +20,17 @@ function LoginPage() {
   const isFailed = useSelector(isLoginFailed);
   const errMsg = useSelector(loginErrorMessage);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    // todo
+    // @ts-ignore
     dispatch(login({ email, password }));
   };
 
   useEffect(() => {
     if (isFailed) {
       setLoginError(
-        errMsg.includes('email or password are incorrect')
+        (errMsg as string).includes('email or password are incorrect')
           ? 'Неверный логин или пароль'
           : 'Ошибка авторизации'
       );
@@ -44,7 +46,6 @@ function LoginPage() {
         <div className="pb-6">
           <Input
             type="email"
-            autocomplete="username"
             placeholder="E-mail"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
@@ -58,7 +59,6 @@ function LoginPage() {
         {/* Password */}
         <div className="pb-6">
           <PasswordInput
-            autocomplete="current-password"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             name="password"

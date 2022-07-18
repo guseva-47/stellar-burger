@@ -6,13 +6,26 @@ import {
 } from '../../services/selectors/app';
 
 import Ingredient from '../ingredient/ingredient';
-import ingredientsTypePropTypes from '../../types/ingredients-type-prop-types';
+import { TIngredient } from '../../types/ingredient';
+
 import styles from './ingredients-set.module.css';
 
-function IngredientsSet({ type = { title: '', value: '' } }) {
-  const ingredients = useSelector((state) => getIngredientsByType(state, type.value));
-  const isLoding = useSelector(isAllIngredientsLoading);
-  const isFailed = useSelector(isAllIngredientsFailed);
+type Props = {
+  type: {
+    title: string;
+    value: string;
+  };
+};
+
+function IngredientsSet({ type = { title: '', value: '' } }: Props) {
+  const ingredients: TIngredient[] = useSelector((state) => (
+    // todo
+    // @ts-ignore
+    getIngredientsByType(state, type.value)
+  ));
+
+  const isLoding: boolean = useSelector(isAllIngredientsLoading);
+  const isFailed: boolean = useSelector(isAllIngredientsFailed);
 
   return (
     <section>
@@ -27,7 +40,7 @@ function IngredientsSet({ type = { title: '', value: '' } }) {
           <ul className={`${styles.ingredients}`}>
             {ingredients.map((data) => (
               <li className={`${styles.item}`} key={data._id}>
-                <Ingredient data={data} />
+                <Ingredient ingredient={data} />
               </li>
             ))}
           </ul>
@@ -36,9 +49,5 @@ function IngredientsSet({ type = { title: '', value: '' } }) {
     </section>
   );
 }
-
-IngredientsSet.propTypes = {
-  type: ingredientsTypePropTypes.isRequired,
-};
 
 export default IngredientsSet;

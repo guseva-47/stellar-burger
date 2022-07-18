@@ -44,6 +44,9 @@ function OrderConstructor() {
     if (!isBurgerDone) return;
 
     const items = [bun, ...stuffing];
+    
+    // todo
+    // @ts-ignore
     dispatch(fetchPostOrder(items));
     setIsSended(true);
   };
@@ -52,8 +55,8 @@ function OrderConstructor() {
   const isFailed = useSelector(isOrderFailed);
 
   return (
-    <section className="pt-25 pl-4">
-      <div className={`${styles.elements} pb-10`}>
+    <section className="pt-20 pl-4">
+      <div className={`${styles.elements} pb-5`}>
         <BurgerConstructor />
       </div>
 

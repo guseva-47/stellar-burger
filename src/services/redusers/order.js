@@ -23,6 +23,7 @@ export const orderSlice = createSlice({
   reducers: {
     setStuffing: (state, action) => {
       const item = action.payload;
+      // TODO uniqItem: TIngredientInOrder
       const uniqItem = { ...item, uuid: uuidv4() };
       state.ingredients.stuffing.splice(0, 0, uniqItem);
     },

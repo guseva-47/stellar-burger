@@ -1,13 +1,15 @@
 import Cookies from 'js-cookie';
 
 import backendApi from './backend-api';
+import { TUser, TUserAuth, TUserFull } from '../types/user';
+import { TData, TDataLogin, TDataTokens, TDataUser } from './responce.types';
 
 class AuthApi {
   urlAuth = `${backendApi.url}/auth`;
 
   calcAuthExpires = () => new Date(new Date().getTime() + 20 * 60 * 1000);
 
-  setAccessToken = (token) => Cookies.set('access', token.split('Bearer ')[1], {
+  setAccessToken = (token: string) => Cookies.set('access', token.split('Bearer ')[1], {
     path: '/',
     expires: this.calcAuthExpires(),
   });
@@ -16,13 +18,13 @@ class AuthApi {
 
   removeAccessToken = () => Cookies.remove('access', { path: '/' });
 
-  setRefreshToken = (token) => localStorage.setItem('refresh', token);
+  setRefreshToken = (token: string) => localStorage.setItem('refresh', token);
 
   getRefreshToken = () => localStorage.getItem('refresh');
 
   removeRefreshToken = () => localStorage.removeItem('refresh');
 
-  async registerUser({ email, password, name }) {
+  async registerUser({ email, password, name }: TUserFull): Promise<{ user: TUser }> {
     let res = await fetch(`${this.urlAuth}/register`, {
       method: 'POST',
       body: JSON.stringify({ email, password, name }),
@@ -33,7 +35,7 @@ class AuthApi {
 
     res = await backendApi.checkResponce(res);
 
-    const data = await res.json();
+    const data: TDataLogin = await res.json();
     await backendApi.checkSuccess(data);
 
     this.setAccessToken(data.accessToken);
@@ -42,7 +44,7 @@ class AuthApi {
     return { user: data.user };
   }
 
-  async login({ email, password }) {
+  async login({ email, password }: TUserAuth): Promise<{ user: TUser }> {
     let res = await fetch(`${this.urlAuth}/login`, {
       method: 'POST',
       body: JSON.stringify({ email, password }),
@@ -53,7 +55,7 @@ class AuthApi {
 
     res = await backendApi.checkResponce(res);
 
-    const data = await res.json();
+    const data: TDataLogin = await res.json();
     await backendApi.checkSuccess(data);
 
     this.setAccessToken(data.accessToken);
@@ -75,7 +77,7 @@ class AuthApi {
 
     res = await backendApi.checkResponce(res);
 
-    const data = await res.json();
+    const data: TDataTokens = await res.json();
     await backendApi.checkSuccess(data);
 
     this.setAccessToken(data.accessToken);
@@ -98,14 +100,14 @@ class AuthApi {
 
     res = await backendApi.checkResponce(res);
 
-    const data = await res.json();
+    const data: TData = await res.json();
     await backendApi.checkSuccess(data);
 
     this.removeAccessToken();
     this.removeRefreshToken();
   }
 
-  async getUser() {
+  async getUser(): Promise<{ user: TUser }> {
     const token = await this.getAccessTokenWithRefresh();
 
     let res = await fetch(`${this.urlAuth}/user`, {
@@ -117,13 +119,13 @@ class AuthApi {
 
     res = await backendApi.checkResponce(res);
 
-    const data = await res.json();
+    const data: TDataUser = await res.json();
     await backendApi.checkSuccess(data);
 
     return { user: data.user };
   }
 
-  async updateUser({ email, password, name }) {
+  async updateUser({ email, password, name }: TUserFull): Promise<{ user: TUser }> {
     const token = await this.getAccessTokenWithRefresh();
 
     let res = await fetch(`${this.urlAuth}/user`, {
@@ -137,13 +139,13 @@ class AuthApi {
 
     res = await backendApi.checkResponce(res);
 
-    const data = await res.json();
+    const data: TDataUser = await res.json();
     await backendApi.checkSuccess(data);
     return { user: data.user };
   }
 
-  async getAccessTokenWithRefresh() {
-    const parseJwt = (token) => {
+  async getAccessTokenWithRefresh(): Promise<string | undefined> {
+    const parseJwt = (token: string) => {
       const base64Url = token.split('.')[1];
       const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
       const jsonPayload = decodeURIComponent(
@@ -156,7 +158,7 @@ class AuthApi {
       return JSON.parse(jsonPayload);
     };
 
-    const isExpired = (token) => {
+    const isExpired = (token: string) => {
       const payload = parseJwt(token);
       return Date.now() >= payload.exp * 1000;
     };
