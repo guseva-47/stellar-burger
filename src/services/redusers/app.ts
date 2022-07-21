@@ -1,9 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import backendApi from '../../api/backend-api';
+import { TIngredient } from '../../types/ingredient';
 
-const initialState = {
+interface IAppState {
+  allIngredients: Array<TIngredient>,
+  allIngredientsLoading: boolean,
+  allIngredientsFailed: boolean
+}
+
+const initialState: IAppState = {
   allIngredients: [],
-  currentIngredient: null,
   allIngredientsLoading: false,
   allIngredientsFailed: false
 };
@@ -16,14 +22,7 @@ export const fetchGetItems = createAsyncThunk(
 export const appSlice = createSlice({
   name: 'app',
   initialState,
-  reducers: {
-    setCurrent: (state, action) => {
-      state.currentIngredient = action.payload;
-    },
-    resetCurrent: (state) => {
-      state.currentIngredient = null;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchGetItems.pending, (state) => {
       state.allIngredientsLoading = true;
@@ -43,7 +42,5 @@ export const appSlice = createSlice({
     });
   },
 });
-
-export const { resetCurrent, setCurrent } = appSlice.actions;
 
 export default appSlice.reducer;

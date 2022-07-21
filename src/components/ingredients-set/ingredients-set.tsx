@@ -9,6 +9,7 @@ import Ingredient from '../ingredient/ingredient';
 import { TIngredient } from '../../types/ingredient';
 
 import styles from './ingredients-set.module.css';
+import { TRootState } from '../../services/store';
 
 type Props = {
   type: {
@@ -18,9 +19,7 @@ type Props = {
 };
 
 function IngredientsSet({ type = { title: '', value: '' } }: Props) {
-  const ingredients: TIngredient[] = useSelector((state) => (
-    // todo
-    // @ts-ignore
+  const ingredients: TIngredient[] = useSelector((state: TRootState) => (
     getIngredientsByType(state, type.value)
   ));
 

@@ -6,4 +6,7 @@ const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production',
 });
 
+export type TRootState = ReturnType<typeof store.getState>;
+export type TAppDispatch = typeof store.dispatch;
+
 export default store;

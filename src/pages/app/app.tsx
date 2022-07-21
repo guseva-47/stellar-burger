@@ -1,5 +1,4 @@
 import { useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import ConstructorPage from '../constructor/constructor-page';
@@ -20,17 +19,14 @@ import Modal from '../../components/modal/modal';
 import ProfileEditor from '../profile/profile-editor';
 import { getUser } from '../../services/redusers/auth';
 import TLocation from '../../types/location';
+import { useAppDispatch } from '../../hooks/use-store';
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
 
   useEffect(() => {
-    // todo
-    // @ts-ignore
     dispatch(fetchGetItems());
-    // todo
-    // @ts-ignore
     dispatch(getUser());
   }, [dispatch]);
 
