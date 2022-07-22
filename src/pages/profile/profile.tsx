@@ -1,7 +1,8 @@
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks/use-store';
 import { getUser } from '../../services/redusers/auth';
 import { getProfile, isProfileFailed, isProfileLoading } from '../../services/selectors/auth';
 
@@ -12,15 +13,13 @@ function Profile() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const user = useSelector(getProfile);
   const isLoading = useSelector(isProfileLoading);
   const isFailed = useSelector(isProfileFailed);
 
   useEffect(() => {
-    // todo
-    // @ts-ignore
     dispatch(getUser());
   }, [dispatch]);
 

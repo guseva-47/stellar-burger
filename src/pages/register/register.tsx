@@ -1,12 +1,13 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { registratiion } from '../../services/redusers/auth';
+import { isRegFailed, regErrorMessage } from '../../services/selectors/auth';
+import { useAppDispatch } from '../../hooks/use-store';
 
 import styles from './register.module.css';
-import { isRegFailed, regErrorMessage } from '../../services/selectors/auth';
 
 function RegisterPage() {
   const [name, setName] = useState('');
@@ -16,13 +17,11 @@ function RegisterPage() {
 
   const isValidForm = name && email && password.length >= 6;
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setRegError('');
-    // todo
-    // @ts-ignore
     dispatch(registratiion({ email, password, name }));
   };
 
@@ -33,7 +32,7 @@ function RegisterPage() {
     if (isFailed) {
       setRegError(
         errMsg.includes('User already exists')
-          ? 'Такой пользователь уже существует'
+          ? 'Пользователь уже существует'
           : 'Ошибка регистрации'
       );
     }
@@ -44,7 +43,6 @@ function RegisterPage() {
       <form className={`${styles.main} pt-20`} onSubmit={handleSubmit}>
         <h2 className="text text_type_main-medium pb-6">
           Регистрация
-          {`${isFailed}`}
         </h2>
 
         {/* Имя */}

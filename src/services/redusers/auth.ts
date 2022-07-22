@@ -1,47 +1,54 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import authApi from '../../api/auth-api';
-import { initIsLoadFailed, initIsLoadFailedErrMsg } from './utils';
+import { TUser, TUserAuth, TUserFull } from '../../types/user';
+import {
+  initIsLoadFailed,
+  initIsLoadFailedErrMsg,
+  TIsLoadFailed,
+  TIsLoadFailedErrMsg,
+} from './utils';
 
-const initialState = {
+interface IAuthState {
+  user: TUser;
+  isUser: TIsLoadFailed;
+  isReg: TIsLoadFailedErrMsg;
+  isLogin: TIsLoadFailedErrMsg;
+  isEdit: TIsLoadFailed;
+}
+
+const initialState: IAuthState = {
   user: {
     email: '',
     name: '',
   },
   isUser: initIsLoadFailed(),
-  isReg: initIsLoadFailed(),
+  isReg: initIsLoadFailedErrMsg(),
   isLogin: initIsLoadFailedErrMsg(),
   isEdit: initIsLoadFailed(),
 };
 
-export const login = createAsyncThunk(
-  'auth/login',
-  async ({ email, password }) => authApi.login({ email, password })
-);
+export const login = createAsyncThunk('auth/login', async ({ email, password }: TUserAuth) => (
+  authApi.login({ email, password })
+));
 
 export const registratiion = createAsyncThunk(
   'auth/registration',
-  async ({ email, password, name }) => authApi.registerUser({ email, password, name })
+  async ({ email, password, name }: TUserFull) => authApi.registerUser({ email, password, name })
 );
 
-export const logout = createAsyncThunk(
-  'auth/logout',
-  async () => authApi.logout()
-);
+export const logout = createAsyncThunk('auth/logout', async () => authApi.logout());
 
-export const getUser = createAsyncThunk(
-  'auth/getuser',
-  async () => authApi.getUser()
-);
+export const getUser = createAsyncThunk('auth/getuser', async () => authApi.getUser());
 
-export const editUser = createAsyncThunk(
-  'auth/edituser',
-  async ({ email, password, name }) => authApi.updateUser({ email, password, name })
-);
+export const editUser = createAsyncThunk('auth/edituser', async ({ email, password, name }: TUserFull) => (
+  authApi.updateUser({ email, password, name })
+));
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
+  reducers: {},
   extraReducers: (builder) => {
     // Регистрация
     builder.addCase(registratiion.pending, (state) => {
@@ -59,7 +66,7 @@ export const authSlice = createSlice({
       state.isReg.errMessage = '';
     });
     builder.addCase(registratiion.rejected, (state, action) => {
-      state.isReg.errMessage = action.error.message;
+      state.isReg.errMessage = action.error.message ?? 'Неизвестная ошибка регистрации';
       state.isReg.isFailed = true;
       state.isReg.isLoading = false;
     });
@@ -82,21 +89,13 @@ export const authSlice = createSlice({
     builder.addCase(login.rejected, (state, action) => {
       state.isLogin.isFailed = true;
       state.isLogin.isLoading = false;
-      state.isLogin.errMessage = action.error.message;
+      state.isLogin.errMessage = action.error.message ?? 'Неизвестная ошибка авторизации';
     });
 
     // Разлогинивание
     builder.addCase(logout.pending, (state) => {
-      console.log('отправлен запрос logout');
       state.user.email = '';
       state.user.name = '';
-    });
-    builder.addCase(logout.fulfilled, (state, action) => {
-      console.log('GOOD logout');
-    });
-    builder.addCase(logout.rejected, (state, action) => {
-      console.log('FAIL logout');
-      console.error(action.error.message);
     });
 
     // Получение данных профиля
@@ -119,12 +118,10 @@ export const authSlice = createSlice({
 
     // Редактирование данных профиля
     builder.addCase(editUser.pending, (state) => {
-      console.log('отправлен запрос edit');
       state.isEdit.isLoading = true;
       state.isEdit.isFailed = false;
     });
     builder.addCase(editUser.fulfilled, (state, action) => {
-      console.log('good edit', state.user);
       const { user } = action.payload;
       state.user.email = user.email;
       state.user.name = user.name;
@@ -132,8 +129,7 @@ export const authSlice = createSlice({
       state.isEdit.isLoading = false;
       state.isEdit.isFailed = false;
     });
-    builder.addCase(editUser.rejected, (state, action) => {
-      console.error(action.error.message);
+    builder.addCase(editUser.rejected, (state) => {
       state.isEdit.isLoading = false;
       state.isEdit.isFailed = true;
     });
