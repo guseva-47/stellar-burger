@@ -1,10 +1,10 @@
-import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { TIngredient } from '../../types/ingredient';
 import { getCountStuffing } from '../../services/selectors/order';
+import { useAppSelector } from '../../hooks/use-store';
 
 import styles from './ingredient.module.css';
 
@@ -23,9 +23,7 @@ function Ingredient({ ingredient }: Props) {
     }),
   });
 
-  const count = useSelector((state) => (
-    // todo
-    // @ts-ignore
+  const count = useAppSelector((state) => (
     getCountStuffing(state, ingredient)
   ));
 

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import Modal from '../modal/modal';
@@ -15,9 +15,10 @@ import {
   isOrderFailed,
   isOrderLoading,
 } from '../../services/selectors/order';
+import { getUserName } from '../../services/selectors/auth';
+import { useAppDispatch } from '../../hooks/use-store';
 
 import styles from './order-constructor.module.css';
-import { getUserName } from '../../services/selectors/auth';
 
 function OrderConstructor() {
   const auth = useSelector(getUserName);
@@ -32,7 +33,7 @@ function OrderConstructor() {
   const bun = useSelector(getBun);
   const isBurgerDone = bun && stuffing.length > 0;
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const orderNum = useSelector(getOrderNumber);
 
   const makeOrder = () => {
@@ -45,8 +46,6 @@ function OrderConstructor() {
 
     const items = [bun, ...stuffing];
     
-    // todo
-    // @ts-ignore
     dispatch(fetchPostOrder(items));
     setIsSended(true);
   };
@@ -72,7 +71,7 @@ function OrderConstructor() {
 
         {isSended && !isLoading && orderNum && (
           <Modal closeHandler={closeHandler}>
-            <OrderDetails number={orderNum} />
+            <OrderDetails number={`${orderNum}`} />
           </Modal>
         )}
         {isSended && isFailed && (

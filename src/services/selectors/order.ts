@@ -1,17 +1,18 @@
 import { createSelector } from 'reselect';
-import { TypesOfIngredients } from '../../types/ingredient';
+import { TIngredient, TypesOfIngredients } from '../../types/ingredient';
+import { TRootState } from '../store';
 
 export const getStuffing = createSelector(
-  (store) => store.order.ingredients,
+  (store: TRootState) => store.order.ingredients,
   (ingredients) => ingredients.stuffing
 );
 
 export const getBun = createSelector(
-  (store) => store.order.ingredients,
+  (store: TRootState) => store.order.ingredients,
   (ingredients) => ingredients.bun
 );
 
-export const getCost = (store) => {
+export const getCost = (store: TRootState) => {
   const { bun, stuffing } = store.order.ingredients;
   let cost = stuffing.reduce((accum, ingredient) => ingredient.price + accum, 0);
   cost += 2 * (bun?.price ?? 0);
@@ -19,8 +20,8 @@ export const getCost = (store) => {
 };
 
 export const getCountStuffing = createSelector(
-  (store) => store.order.ingredients,
-  (_, ingredient) => ingredient,
+  (store: TRootState) => store.order.ingredients,
+  (_: any, ingredient: TIngredient) => ingredient,
   (ingredients, { _id, type }) => {
     if (type === TypesOfIngredients.bun) {
       return ingredients.bun?._id === _id ? 2 : 0;
@@ -30,16 +31,16 @@ export const getCountStuffing = createSelector(
 );
 
 export const getOrderNumber = createSelector(
-  (store) => store.order,
+  (store: TRootState) => store.order,
   (order) => order.number
 );
 
 export const isOrderLoading = createSelector(
-  (store) => store.order.isLoading,
+  (store: TRootState) => store.order.isLoading,
   (isLoading) => isLoading
 );
 
 export const isOrderFailed = createSelector(
-  (store) => store.order.isFailed,
+  (store: TRootState) => store.order.isFailed,
   (isFailed) => isFailed
 );

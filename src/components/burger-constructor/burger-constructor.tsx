@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 
 import { TIngredient, TIngredientInOrder, TypesOfIngredients } from '../../types/ingredient';
@@ -8,14 +8,16 @@ import { setBun, setStuffing, updateOrder } from '../../services/redusers/order'
 import BunTop from './bun/bun-top';
 import BunBottom from './bun/bun-bottom';
 import Stuffing from './stuffing/stuffing';
+import { useAppDispatch } from '../../hooks/use-store';
 
 import styles from './burger-constructor.module.css';
 
+
 function BurgerConstructor() {
   const ingredients: TIngredientInOrder[] = useSelector(getStuffing);
-  const bun: TIngredient = useSelector(getBun);
+  const bun: TIngredient | null = useSelector(getBun);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onDropHandler = (ingredient: TIngredient) => {
     const action = ingredient.type === TypesOfIngredients.bun ? setBun : setStuffing;
@@ -41,7 +43,7 @@ function BurgerConstructor() {
 
   return (
     <section ref={dropTarget} className={isHover ? styles.hover : styles.main}>
-      <BunTop bun={bun} />
+      <BunTop bun={bun ?? undefined} />
 
       <ul className={`${styles.middle} ${styles.elements} custom-scroll`}>
         {ingredients.length === 0 && (
@@ -57,7 +59,7 @@ function BurgerConstructor() {
         ))}
       </ul>
 
-      <BunBottom bun={bun} />
+      <BunBottom bun={bun ?? undefined} />
     </section>
   );
 }

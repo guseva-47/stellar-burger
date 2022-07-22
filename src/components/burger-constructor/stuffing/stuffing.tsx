@@ -1,11 +1,11 @@
 import { useRef } from 'react';
-import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import type { Identifier, XYCoord } from 'dnd-core';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { TIngredientInOrder } from '../../../types/ingredient';
 import { removeStuffing } from '../../../services/redusers/order';
+import { useAppDispatch } from '../../../hooks/use-store';
 
 import styles from './stuffing.module.css';
 
@@ -22,9 +22,12 @@ type TDragStuffing = {
 };
 
 function Stuffing({ ingredient, moveCard, index, text }: Props) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const deleteStuffing = () => dispatch(removeStuffing(ingredient));
+  const deleteStuffing = () => {
+    if (!ingredient) return;
+    dispatch(removeStuffing(ingredient));
+  };
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -56,7 +59,7 @@ function Stuffing({ ingredient, moveCard, index, text }: Props) {
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
-      
+
       moveCard(dragIndex, hoverIndex);
       item.index = hoverIndex;
     },

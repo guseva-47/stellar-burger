@@ -1,8 +1,7 @@
-import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 
+import { useAppSelector } from '../../hooks/use-store';
 import { getIngredientById } from '../../services/selectors/app';
-import { TRootState } from '../../services/store';
 import { TIngredient } from '../../types/ingredient';
 import TLocation from '../../types/location';
 
@@ -11,7 +10,7 @@ import styles from './ingredient-details.module.css';
 function IngredientDetails() {
   const { id } = useParams();
 
-  const ingredient: TIngredient | undefined = useSelector((state: TRootState) => {
+  const ingredient: TIngredient | undefined = useAppSelector((state) => {
     if (typeof id === 'undefined') return undefined;
     return getIngredientById(state, id);
   });
