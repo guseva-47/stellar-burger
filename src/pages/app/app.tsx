@@ -20,6 +20,7 @@ import ProfileEditor from '../profile/profile-editor';
 import { getUser } from '../../services/redusers/auth';
 import TLocation from '../../types/location';
 import { useAppDispatch } from '../../hooks/use-store';
+import Feed from '../feed/feed';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -50,6 +51,7 @@ function App() {
           <Route path="reset-password" element={<OnlyNotAuthRoute />}>
             <Route index element={<ResetPassword />} />
           </Route>
+          <Route path="feed" element={<Feed />} />
           <Route path="profile" element={<PrivateRoute />}>
             <Route element={<ProfileLayout />}>
               <Route index element={<Profile />} />
