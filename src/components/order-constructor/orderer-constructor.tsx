@@ -45,7 +45,7 @@ function OrderConstructor() {
     if (!isBurgerDone) return;
 
     const items = [bun, ...stuffing];
-    
+
     dispatch(fetchPostOrder(items));
     setIsSended(true);
   };

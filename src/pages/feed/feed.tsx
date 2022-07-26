@@ -1,6 +1,6 @@
-import FeedOrders from './feed-orders';
+import FeedOrders from '../../components/orders-feed/feed-orders';
 import styles from './feed.module.css';
-import OrderBoard from './order-board';
+import OrderBoard from '../../components/order-board/order-board';
 
 function Feed() {
   return (

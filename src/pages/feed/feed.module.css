@@ -5,8 +5,3 @@
 .col {
   width: 100%;
 }
-
-.elements {
-  overflow: auto;
-  height: calc(100vh - 200px);
-}
