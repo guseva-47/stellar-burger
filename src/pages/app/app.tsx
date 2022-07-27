@@ -21,10 +21,11 @@ import { getUser } from '../../services/redusers/auth';
 import TLocation from '../../types/location';
 import { useAppDispatch } from '../../hooks/use-store';
 import Feed from '../feed/feed';
+import Order from '../order/order';
 
 function App() {
   const dispatch = useAppDispatch();
-  const location = useLocation();
+  const location = useLocation() as TLocation;
 
   useEffect(() => {
     dispatch(fetchGetItems());
@@ -36,7 +37,7 @@ function App() {
 
   return (
     <>
-      <Routes location={(location as TLocation).state?.backgroundLocation || location}>
+      <Routes location={location.state?.backgroundLocation || location}>
         <Route path="/" element={<Layout />}>
           <Route index element={<ConstructorPage />} />
           <Route path="login" element={<OnlyNotAuthRoute />}>
@@ -51,7 +52,10 @@ function App() {
           <Route path="reset-password" element={<OnlyNotAuthRoute />}>
             <Route index element={<ResetPassword />} />
           </Route>
-          <Route path="feed" element={<Feed />} />
+          <Route path="feed">
+            <Route index element={<Feed />} />
+            <Route path=":id" element={<Order />} />
+          </Route>
           <Route path="profile" element={<PrivateRoute />}>
             <Route element={<ProfileLayout />}>
               <Route index element={<Profile />} />
@@ -59,19 +63,23 @@ function App() {
               <Route path="orders" element={<Orders />} />
             </Route>
           </Route>
-          <Route path="/ingredients/:id" element={<IngredientDetails />} />
+          <Route path="ingredients/:id" element={<IngredientDetails />} />
 
           <Route path="*" element={<NotFound404 />} />
         </Route>
       </Routes>
 
-      {(location as TLocation).state?.backgroundLocation && (
+      {location.state?.backgroundLocation && (
         <Routes>
           <Route
-            path="/ingredients/:id"
+            path="ingredients/:id"
             element={<Modal title="Детали ингредиента" closeHandler={modalCloseHandler} />}
           >
             <Route index element={<IngredientDetails />} />
+          </Route>
+
+          <Route path="feed/:id" element={<Modal closeHandler={modalCloseHandler} />}>
+            <Route index element={<Order />} />
           </Route>
         </Routes>
       )}
