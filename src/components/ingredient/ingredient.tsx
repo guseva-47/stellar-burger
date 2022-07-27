@@ -32,7 +32,7 @@ function Ingredient({ ingredient }: Props) {
       <Link
         to={`/ingredients/${ingredient._id}`}
         state={{ backgroundLocation: location }}
-        className={styles.wrapper}
+        className={styles.link}
       >
         {count > 0 ? <Counter count={count} size="default" /> : null}
         <div className=" pr-3 pb-1 pl-4">
