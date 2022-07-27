@@ -1,5 +1,6 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import data from '../../utils/order-data';
+import IngredientIcon from '../ingredient-icon/ingredient-icon';
 
 import styles from './feed-order-record.module.css';
 
@@ -17,20 +18,11 @@ function FeedOrderRecord() {
       <div className={styles.line}>
         <div className={styles.ingredients}>
           <div className={styles.ingredient}>
-            <span className={`${styles['ingredient-count']} text text_type_main-medium`}>+3</span>
-            <img
-              className={styles['ingredient-img']}
-              src={ingredients[0].image_mobile}
-              alt={ingredients[0].name}
-            />
+            <IngredientIcon ingredient={ingredients[0]} count={5} />
           </div>
           {ingredients.reverse().map((ingredient) => (
             <div className={styles.ingredient}>
-              <img
-                className={styles['ingredient-img']}
-                src={ingredient.image_mobile}
-                alt={ingredient.name}
-              />
+              <IngredientIcon ingredient={ingredient} />
             </div>
           ))}
         </div>
