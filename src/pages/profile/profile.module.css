@@ -46,3 +46,8 @@
   width: 100%;
   text-align: right;
 }
+
+.wrapper {
+  max-height: calc(100vh - 230px);
+  box-sizing: border-box;
+}
