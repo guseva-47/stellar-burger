@@ -21,7 +21,7 @@ import { getUser } from '../../services/redusers/auth';
 import TLocation from '../../types/location';
 import { useAppDispatch } from '../../hooks/use-store';
 import Feed from '../feed/feed';
-import Order from '../order/order';
+import Order from '../../components/order/order';
 
 function App() {
   const dispatch = useAppDispatch();
