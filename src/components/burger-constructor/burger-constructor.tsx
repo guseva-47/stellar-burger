@@ -12,7 +12,6 @@ import { useAppDispatch } from '../../hooks/use-store';
 
 import styles from './burger-constructor.module.css';
 
-
 function BurgerConstructor() {
   const ingredients: TIngredientInOrder[] = useSelector(getStuffing);
   const bun: TIngredient | null = useSelector(getBun);
