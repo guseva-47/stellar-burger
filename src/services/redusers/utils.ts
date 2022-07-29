@@ -14,3 +14,9 @@ export const initIsLoadFailedErrMsg = (): TIsLoadFailedErrMsg => ({
   isFailed: false,
   errMessage: '',
 });
+
+export enum WebsocketStatus {
+  connecting = 'connecting',
+  online = 'online',
+  offline = 'offline',
+}
