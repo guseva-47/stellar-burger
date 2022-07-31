@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { TOrdersResponse } from '../../types/order';
 import { setData } from '../redusers/live-feed';
 
-export const api = createApi({
+export const feedWsApi = createApi({
   reducerPath: 'liveFeedAPI',
   baseQuery: fetchBaseQuery({ baseUrl: '/' }),
   endpoints: (build) => ({
@@ -22,7 +22,23 @@ export const api = createApi({
             });
             dispatch(setData(data));
           };
+
+          const onOpenWs = () => {
+            console.log('openning connection');
+          };
+
+          const onCloseWs = () => {
+            console.log('closed connection');
+          };
+
+          const onErrorWs = () => {
+            console.log('connection error');
+          };
+
+          ws.addEventListener('close', onCloseWs);
+          ws.addEventListener('error', onErrorWs);
           ws.addEventListener('message', listener);
+          ws.addEventListener('open', onOpenWs);
         } catch {
           // no-op in case `cacheEntryRemoved` resolves before `cacheDataLoaded`,
           // in which case `cacheDataLoaded` will throw
@@ -34,4 +50,4 @@ export const api = createApi({
   }),
 });
 
-export const { useGetOrdersQuery } = api;
+export const { useGetOrdersQuery } = feedWsApi;
