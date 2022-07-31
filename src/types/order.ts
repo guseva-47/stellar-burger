@@ -22,4 +22,4 @@ export type TOrders = {
   totalToday: number;
 };
 
-export type TOrdersResponce = TOrders | TData;
+export type TOrdersResponse = TOrders & TData;

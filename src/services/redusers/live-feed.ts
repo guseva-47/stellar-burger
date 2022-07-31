@@ -1,6 +1,5 @@
-import { createReducer } from '@reduxjs/toolkit';
-import { TOrders } from '../../types/order';
-import { wsClose, wsConnecting, wsError, wsMessage, wsOpen } from '../actions/live-feed';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { TOrders, TOrdersResponse } from '../../types/order';
 import { WebsocketStatus } from './utils';
 
 export interface ILiveFeed extends TOrders {
@@ -14,18 +13,17 @@ const initialState: ILiveFeed = {
   status: WebsocketStatus.offline,
 };
 
-export const liveFeedReducer = createReducer(initialState, (builder) => {
-  builder
-    .addCase(wsConnecting, (state) => {
-      state.status = WebsocketStatus.connecting;
-    })
-    .addCase(wsOpen, (state) => {
-      state.status = WebsocketStatus.online;
-    })
-    .addCase(wsClose, (state) => {
-      state.status = WebsocketStatus.offline;
-    })
-    .addCase(wsMessage, (state, action) => {
-      console.log(action.payload, action.type);
-    });
+const liveFeedSlice = createSlice({
+  name: 'live-feed',
+  initialState,
+  reducers: {
+    setData: (state, action: PayloadAction<TOrdersResponse>) => {
+      state.orders = action.payload.success ? action.payload.orders : [];
+      state.total = action.payload.success ? action.payload.total : 0;
+      state.totalToday = action.payload.success ? action.payload.totalToday : 0;
+    },
+  },
 });
+
+export const { setData } = liveFeedSlice.actions;
+export default liveFeedSlice.reducer;
