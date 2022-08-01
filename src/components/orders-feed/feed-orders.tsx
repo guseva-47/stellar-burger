@@ -2,7 +2,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useAppSelector } from '../../hooks/use-store';
-import { feedWsApi } from '../../services/api/live-feed';
 import { getAllIngredients } from '../../services/selectors/app';
 import { ordersSelector } from '../../services/selectors/live-feed';
 import { TIngredientInOrder } from '../../types/ingredient';
@@ -13,7 +12,6 @@ import styles from './feed-order-record.module.css';
 
 function FeedOrders() {
   const location = useLocation();
-  const { isSuccess } = feedWsApi.useGetOrdersQuery();
   const orders = useAppSelector(ordersSelector);
   const ingredients = useAppSelector(getAllIngredients);
   const ingredientsInOrder = (order: TOrder) => {
@@ -26,22 +24,21 @@ function FeedOrders() {
 
   return (
     <section className={`${styles.elements} custom-scroll`}>
-      {isSuccess
-        && orders.map((order) => (
-          <Link
-            to={`${order._id}`}
-            state={{ backgroundLocation: location }}
-            className={styles.link}
-            key={order._id}
-          >
-            <FeedOrderRecord
-              createdAt={order.createdAt}
-              ingredients={ingredientsInOrder(order)}
-              name={order.name}
-              number={order.number}
-            />
-          </Link>
-        ))}
+      {orders.map((order) => (
+        <Link
+          to={`${order._id}`}
+          state={{ backgroundLocation: location }}
+          className={styles.link}
+          key={order._id}
+        >
+          <FeedOrderRecord
+            createdAt={order.createdAt}
+            ingredients={ingredientsInOrder(order)}
+            name={order.name}
+            number={order.number}
+          />
+        </Link>
+      ))}
     </section>
   );
 }
