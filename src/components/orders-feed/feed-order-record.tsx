@@ -1,27 +1,47 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import data from '../../utils/order-data';
+import { TIngredientInOrder } from '../../types/ingredient';
+import { TOrederStatus } from '../../types/order';
 import IngredientIcon from '../ingredient-icon/ingredient-icon';
 
 import styles from './feed-order-record.module.css';
 
-function FeedOrderRecord() {
-  const ingredients = data;
+type Props = {
+  ingredients: TIngredientInOrder[];
+  status?: TOrederStatus;
+  name: string;
+  number: number;
+  createdAt: string;
+};
+
+// todo
+// дата день
+
+// посчитать итоговую стоимость заказа
+// обрабатывать сколько иконочек ингредиентов (нужен ли плюс сколько-то)
+//   , мб вынести в отдельный компонент
+
+function FeedOrderRecord({ createdAt, ingredients, name, number, status }: Props) {
+  // const ingredients = data;
+
   return (
     <article className={styles.record}>
       <div className={styles.line}>
-        <p className="text text_type_main-default">#034535</p>
+        <p className="text text_type_main-default">{`#${number}`}</p>
         <time className="text text_type_main-default text_color_inactive">
-          Сегодня, 16:20 i-GMT+3
+          {createdAt}
         </time>
       </div>
-      <h2 className="text text_type_main-medium">Death Star Starship Main бургер</h2>
+      <h2 className="text text_type_main-medium">{name}</h2>
+
+      {status && <p className="text text_type_main-default">{status}</p>}
+
       <div className={styles.line}>
         <div className={styles.ingredients}>
           <div className={styles.ingredient}>
             <IngredientIcon ingredient={ingredients[0]} count={5} />
           </div>
           {ingredients.reverse().map((ingredient) => (
-            <div className={styles.ingredient}>
+            <div className={styles.ingredient} key={ingredient.uuid}>
               <IngredientIcon ingredient={ingredient} />
             </div>
           ))}
@@ -36,5 +56,9 @@ function FeedOrderRecord() {
     </article>
   );
 }
+
+FeedOrderRecord.defaultProps = {
+  status: null,
+};
 
 export default FeedOrderRecord;
