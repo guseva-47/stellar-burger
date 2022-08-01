@@ -15,13 +15,12 @@ type Props = {
 
 // todo
 // дата день
-
-// посчитать итоговую стоимость заказа
 // обрабатывать сколько иконочек ингредиентов (нужен ли плюс сколько-то)
 //   , мб вынести в отдельный компонент
 
 function FeedOrderRecord({ createdAt, ingredients, name, number, status }: Props) {
   // const ingredients = data;
+  const cost = ingredients.reduce((prev, elem) => prev + elem.price, 0);
 
   return (
     <article className={styles.record}>
@@ -47,7 +46,7 @@ function FeedOrderRecord({ createdAt, ingredients, name, number, status }: Props
           ))}
         </div>
         <div className={`${styles.icon}`}>
-          <span className="text text_type_digits-default mr-2">560</span>
+          <span className="text text_type_digits-default mr-2">{cost}</span>
           <span>
             <CurrencyIcon type="primary" />
           </span>
