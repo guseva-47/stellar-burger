@@ -12,9 +12,10 @@ type Props = {
   name: string;
   number: number;
   createdAt: string;
+  withStatus: boolean;
 };
 
-function FeedOrderRecord({ createdAt, ingredients, name, number, status }: Props) {
+function FeedOrderRecord({ createdAt, ingredients, name, number, status, withStatus }: Props) {
   // const ingredients = data;
   const cost = ingredients.reduce((prev, elem) => prev + elem.price, 0);
 
@@ -26,7 +27,7 @@ function FeedOrderRecord({ createdAt, ingredients, name, number, status }: Props
       </div>
       <h2 className="text text_type_main-medium">{name}</h2>
 
-      {status && <p className="text text_type_main-default">{status}</p>}
+      {withStatus && <p className="text text_type_main-default">{status}</p>}
 
       <div className={styles.line}>
 

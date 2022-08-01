@@ -3,16 +3,19 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { useAppSelector } from '../../hooks/use-store';
 import { getAllIngredients } from '../../services/selectors/app';
-import { ordersSelector } from '../../services/selectors/live-feed';
 import { TIngredientInOrder } from '../../types/ingredient';
 import { TOrder } from '../../types/order';
 import FeedOrderRecord from './feed-order-record';
 
 import styles from './feed-order-record.module.css';
 
-function FeedOrders() {
+type Props = {
+  orders: TOrder[]
+  withStatus: boolean
+};
+
+function FeedOrders({ orders, withStatus }: Props) {
   const location = useLocation();
-  const orders = useAppSelector(ordersSelector);
   const ingredients = useAppSelector(getAllIngredients);
   const ingredientsInOrder = (order: TOrder) => {
     const elems = order.ingredients.map((id) => {
@@ -36,6 +39,7 @@ function FeedOrders() {
             ingredients={ingredientsInOrder(order)}
             name={order.name}
             number={order.number}
+            withStatus={withStatus}
           />
         </Link>
       ))}

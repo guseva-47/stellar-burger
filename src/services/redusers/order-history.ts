@@ -1,20 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TOrders, TOrdersResponse } from '../../types/order';
-import { WebsocketStatus } from './utils';
 
-export interface ILiveFeed extends TOrders {
-  status: WebsocketStatus;
-}
-
-const initialState: ILiveFeed = {
+const initialState: TOrders = {
   orders: [],
   total: 0,
   totalToday: 0,
-  status: WebsocketStatus.offline,
 };
 
-const liveFeedSlice = createSlice({
-  name: 'feed',
+const orderHistorySlice = createSlice({
+  name: 'history',
   initialState,
   reducers: {
     setData: (state, action: PayloadAction<TOrdersResponse>) => {
@@ -25,5 +19,5 @@ const liveFeedSlice = createSlice({
   },
 });
 
-export const { setData } = liveFeedSlice.actions;
-export default liveFeedSlice.reducer;
+export const { setData } = orderHistorySlice.actions;
+export default orderHistorySlice.reducer;

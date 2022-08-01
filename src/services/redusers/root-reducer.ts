@@ -5,6 +5,8 @@ import authReducer from './auth';
 import orderReducer from './order';
 import feedReducer from './live-feed';
 import { feedWsApi as liveFeedAPI } from '../api/live-feed';
+import { privateFeedWsApi } from '../api/private-live-feed';
+import orderHistoryReducer from './order-history';
 
 const rootReducer = combineReducers({
   app: appReducer,
@@ -12,6 +14,8 @@ const rootReducer = combineReducers({
   auth: authReducer,
   feed: feedReducer,
   [liveFeedAPI.reducerPath]: liveFeedAPI.reducer,
+  history: orderHistoryReducer,
+  [privateFeedWsApi.reducerPath]: privateFeedWsApi.reducer
 });
 
 export default rootReducer;
