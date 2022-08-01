@@ -4,6 +4,7 @@ import { TOrederStatus } from '../../types/order';
 
 import styles from './feed-order-record.module.css';
 import RecordIngredientsList from './record-ingredients-list';
+import RecordTime from './record-time';
 
 type Props = {
   ingredients: TIngredientInOrder[];
@@ -13,9 +14,6 @@ type Props = {
   createdAt: string;
 };
 
-// todo
-// дата день
-
 function FeedOrderRecord({ createdAt, ingredients, name, number, status }: Props) {
   // const ingredients = data;
   const cost = ingredients.reduce((prev, elem) => prev + elem.price, 0);
@@ -24,9 +22,7 @@ function FeedOrderRecord({ createdAt, ingredients, name, number, status }: Props
     <article className={styles.record}>
       <div className={styles.line}>
         <p className="text text_type_main-default">{`#${number}`}</p>
-        <time className="text text_type_main-default text_color_inactive">
-          {createdAt}
-        </time>
+        <RecordTime createdAt={createdAt} />
       </div>
       <h2 className="text text_type_main-medium">{name}</h2>
 
