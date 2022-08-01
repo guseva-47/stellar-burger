@@ -1,9 +1,9 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { TIngredientInOrder } from '../../types/ingredient';
 import { TOrederStatus } from '../../types/order';
-import IngredientIcon from '../ingredient-icon/ingredient-icon';
 
 import styles from './feed-order-record.module.css';
+import RecordIngredientsList from './record-ingredients-list';
 
 type Props = {
   ingredients: TIngredientInOrder[];
@@ -15,8 +15,6 @@ type Props = {
 
 // todo
 // дата день
-// обрабатывать сколько иконочек ингредиентов (нужен ли плюс сколько-то)
-//   , мб вынести в отдельный компонент
 
 function FeedOrderRecord({ createdAt, ingredients, name, number, status }: Props) {
   // const ingredients = data;
@@ -35,16 +33,9 @@ function FeedOrderRecord({ createdAt, ingredients, name, number, status }: Props
       {status && <p className="text text_type_main-default">{status}</p>}
 
       <div className={styles.line}>
-        <div className={styles.ingredients}>
-          <div className={styles.ingredient}>
-            <IngredientIcon ingredient={ingredients[0]} count={5} />
-          </div>
-          {ingredients.reverse().map((ingredient) => (
-            <div className={styles.ingredient} key={ingredient.uuid}>
-              <IngredientIcon ingredient={ingredient} />
-            </div>
-          ))}
-        </div>
+
+        <RecordIngredientsList ingredients={ingredients} />
+
         <div className={`${styles.icon}`}>
           <span className="text text_type_digits-default mr-2">{cost}</span>
           <span>
