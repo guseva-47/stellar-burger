@@ -1,4 +1,5 @@
 import { TIngredient } from '../types/ingredient';
+import { TOrdersResponse } from '../types/order';
 import { TData, TDataIngredients, TDataOrder } from './responce.types';
 
 class BackendApi {
@@ -33,6 +34,18 @@ class BackendApi {
     await this.checkSuccess(data);
 
     return data.data;
+  }
+
+  async getOrder(num: string) {
+    let res = await fetch(`${this.url}/orders/${num}`);
+
+    res = await this.checkResponce(res);
+
+    const data: TOrdersResponse = await res.json();
+
+    await this.checkSuccess(data);
+
+    return (data.orders?.length > 0) ? data.orders[0] : null;
   }
 
   async postOrder(ingredients: TIngredient[]) {

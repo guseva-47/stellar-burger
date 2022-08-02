@@ -25,3 +25,5 @@ export const isAllIngredientsFailed = createSelector(
   (store: TRootState) => store.app.allIngredientsFailed,
   (isFailed: boolean) => isFailed
 );
+
+export const getOrder = (store: TRootState) => store.app.order;

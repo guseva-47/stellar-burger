@@ -1,10 +1,11 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { TIngredientInOrder } from '../../types/ingredient';
-import { TOrederStatus } from '../../types/order';
 
-import styles from './feed-order-record.module.css';
+import { TIngredientInOrder, TypesOfIngredients } from '../../types/ingredient';
+import { TOrederStatus, TOrederStatusALias } from '../../types/order';
 import RecordIngredientsList from './record-ingredients-list';
 import RecordTime from './record-time';
+
+import styles from './feed-order-record.module.css';
 
 type Props = {
   ingredients: TIngredientInOrder[];
@@ -16,9 +17,11 @@ type Props = {
 };
 
 function FeedOrderRecord({ createdAt, ingredients, name, number, status, withStatus }: Props) {
-  // const ingredients = data;
-  const cost = ingredients.reduce((prev, elem) => prev + elem.price, 0);
-
+  const cost = () => {
+    const bun = ingredients.find((elem) => elem.type === TypesOfIngredients.bun);
+    const bunCost = bun ? bun.price : 0;
+    return ingredients.reduce((prev, elem) => prev + elem.price, bunCost);
+  };
   return (
     <article className={styles.record}>
       <div className={styles.line}>
@@ -27,14 +30,15 @@ function FeedOrderRecord({ createdAt, ingredients, name, number, status, withSta
       </div>
       <h2 className="text text_type_main-medium">{name}</h2>
 
-      {withStatus && <p className="text text_type_main-default">{status}</p>}
+      {withStatus && status && (
+        <p className="text text_type_main-default">{TOrederStatusALias[status]}</p>
+      )}
 
       <div className={styles.line}>
-
         <RecordIngredientsList ingredients={ingredients} />
 
         <div className={`${styles.icon}`}>
-          <span className="text text_type_digits-default mr-2">{cost}</span>
+          <span className="text text_type_digits-default mr-2">{cost()}</span>
           <span>
             <CurrencyIcon type="primary" />
           </span>

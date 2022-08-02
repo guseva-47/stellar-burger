@@ -1,22 +1,30 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import backendApi from '../../api/backend-api';
 import { TIngredient } from '../../types/ingredient';
+import { TOrder } from '../../types/order';
 
 interface IAppState {
   allIngredients: Array<TIngredient>,
   allIngredientsLoading: boolean,
-  allIngredientsFailed: boolean
+  allIngredientsFailed: boolean,
+  order: TOrder | null
 }
 
 const initialState: IAppState = {
   allIngredients: [],
   allIngredientsLoading: false,
-  allIngredientsFailed: false
+  allIngredientsFailed: false,
+  order: null
 };
 
 export const fetchGetItems = createAsyncThunk(
   'app/getAll',
   async () => backendApi.getAllIngredients()
+);
+
+export const fetchGetOrder = createAsyncThunk(
+  'app/getOderById',
+  async (num: string) => backendApi.getOrder(num)
 );
 
 export const appSlice = createSlice({
@@ -38,6 +46,13 @@ export const appSlice = createSlice({
       state.allIngredientsLoading = false;
       state.allIngredientsFailed = true;
       state.allIngredients = [];
+      console.error(action.error.message);
+    });
+    builder.addCase(fetchGetOrder.fulfilled, (state, action) => {
+      state.order = action.payload;
+    });
+    builder.addCase(fetchGetOrder.rejected, (state, action) => {
+      state.order = null;
       console.error(action.error.message);
     });
   },

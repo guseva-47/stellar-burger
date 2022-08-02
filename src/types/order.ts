@@ -16,6 +16,12 @@ export enum TOrederStatus {
   created = 'created',
 }
 
+export enum TOrederStatusALias {
+  done = 'Выполнен',
+  pending = 'Готовится',
+  created = 'Создан',
+}
+
 export type TOrders = {
   orders: TOrder[];
   total: number;

@@ -29,7 +29,7 @@ function FeedOrders({ orders, withStatus }: Props) {
     <section className={`${styles.elements} custom-scroll`}>
       {orders.map((order) => (
         <Link
-          to={`${order._id}`}
+          to={`${order.number}`}
           state={{ backgroundLocation: location }}
           className={styles.link}
           key={order._id}

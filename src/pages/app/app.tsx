@@ -54,7 +54,7 @@ function App() {
           </Route>
           <Route path="feed">
             <Route index element={<Feed />} />
-            <Route path=":id" element={<Order />} />
+            <Route path=":num" element={<Order />} />
           </Route>
           <Route path="profile" element={<PrivateRoute />}>
             <Route element={<ProfileLayout />}>
@@ -62,7 +62,7 @@ function App() {
               <Route path="edit" element={<ProfileEditor />} />
               <Route path="orders" element={<Orders />} />
             </Route>
-            <Route path="orders/:id" element={<Order />} />
+            <Route path="orders/:num" element={<Order />} />
           </Route>
           <Route path="ingredients/:id" element={<IngredientDetails />} />
 
@@ -79,11 +79,11 @@ function App() {
             <Route index element={<IngredientDetails />} />
           </Route>
 
-          <Route path="feed/:id" element={<Modal closeHandler={modalCloseHandler} />}>
+          <Route path="feed/:num" element={<Modal closeHandler={modalCloseHandler} />}>
             <Route index element={<Order />} />
           </Route>
 
-          <Route path="profile/orders/:id" element={<Modal closeHandler={modalCloseHandler} />}>
+          <Route path="profile/orders/:num" element={<Modal closeHandler={modalCloseHandler} />}>
             <Route index element={<Order />} />
           </Route>
         </Routes>
