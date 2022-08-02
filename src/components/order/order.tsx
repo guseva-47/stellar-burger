@@ -9,10 +9,10 @@ import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
 import { getAllIngredients, getOrder } from '../../services/selectors/app';
 import RecordTime from '../orders-feed/record-time';
 import { TIngredientInOrder, TypesOfIngredients } from '../../types/ingredient';
-
-import styles from './order.module.css';
 import IngredientLine from './ingredient-line';
 import { TOrederStatusALias } from '../../types/order';
+
+import styles from './order.module.css';
 
 function Order() {
   const location = useLocation();
@@ -52,7 +52,9 @@ function Order() {
           </p>
 
           <h2 className="text text_type_main-medium pb-3">{order.name}</h2>
-          <p className={`${styles['status-done']} text text_type_main-small`}>{TOrederStatusALias[order.status]}</p>
+          <p className={`${styles['status-done']} text text_type_main-small`}>
+            {TOrederStatusALias[order.status]}
+          </p>
           <h3 className="text text_type_main-medium pt-15 pb-6">Состав:</h3>
           <ul className={`${styles.ingredients} custom-scroll pb-10`}>
             {ingredientsInOrder().map((ingredient) => (

@@ -40,6 +40,7 @@ function FeedOrders({ orders, withStatus }: Props) {
             name={order.name}
             number={order.number}
             withStatus={withStatus}
+            status={order.status}
           />
         </Link>
       ))}
