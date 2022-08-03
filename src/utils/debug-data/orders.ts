@@ -1,4 +1,4 @@
-import { TOrder } from '../types/order';
+import { TOrder } from '../../types/order';
 
 const orders: TOrder[] = [
   {
