@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import Modal from '../modal/modal';
@@ -16,25 +15,25 @@ import {
   isOrderLoading,
 } from '../../services/selectors/order';
 import { getUserName } from '../../services/selectors/auth';
-import { useAppDispatch } from '../../hooks/use-store';
+import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
 
 import styles from './order-constructor.module.css';
 
 function OrderConstructor() {
-  const auth = useSelector(getUserName);
+  const auth = useAppSelector(getUserName);
   const navigate = useNavigate();
   const location = useLocation();
 
   const [isSended, setIsSended] = useState(false);
   const closeHandler = () => setIsSended(false);
-  const cost = useSelector(getCost);
+  const cost = useAppSelector(getCost);
 
-  const stuffing = useSelector(getStuffing);
-  const bun = useSelector(getBun);
+  const stuffing = useAppSelector(getStuffing);
+  const bun = useAppSelector(getBun);
   const isBurgerDone = bun && stuffing.length > 0;
 
   const dispatch = useAppDispatch();
-  const orderNum = useSelector(getOrderNumber);
+  const orderNum = useAppSelector(getOrderNumber);
 
   const makeOrder = () => {
     if (!auth) {
@@ -50,8 +49,8 @@ function OrderConstructor() {
     setIsSended(true);
   };
 
-  const isLoading = useSelector(isOrderLoading);
-  const isFailed = useSelector(isOrderFailed);
+  const isLoading = useAppSelector(isOrderLoading);
+  const isFailed = useAppSelector(isOrderFailed);
 
   return (
     <section className="pt-20 pl-4">

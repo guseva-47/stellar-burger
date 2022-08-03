@@ -1,8 +1,7 @@
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks/use-store';
+import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
 import { getUser } from '../../services/redusers/auth';
 import { getProfile, isProfileFailed, isProfileLoading } from '../../services/selectors/auth';
 
@@ -15,9 +14,9 @@ function Profile() {
 
   const dispatch = useAppDispatch();
 
-  const user = useSelector(getProfile);
-  const isLoading = useSelector(isProfileLoading);
-  const isFailed = useSelector(isProfileFailed);
+  const user = useAppSelector(getProfile);
+  const isLoading = useAppSelector(isProfileLoading);
+  const isFailed = useAppSelector(isProfileFailed);
 
   useEffect(() => {
     dispatch(getUser());

@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import {
   getIngredientsByType,
   isAllIngredientsFailed,
@@ -23,8 +22,8 @@ function IngredientsSet({ type = { title: '', value: '' } }: Props) {
     getIngredientsByType(state, type.value)
   ));
 
-  const isLoding: boolean = useSelector(isAllIngredientsLoading);
-  const isFailed: boolean = useSelector(isAllIngredientsFailed);
+  const isLoding: boolean = useAppSelector(isAllIngredientsLoading);
+  const isFailed: boolean = useAppSelector(isAllIngredientsFailed);
 
   return (
     <section>

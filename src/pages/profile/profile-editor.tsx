@@ -1,9 +1,8 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { FormEvent, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks/use-store';
+import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
 import { editUser } from '../../services/redusers/auth';
 import { getProfile, isEditLoading } from '../../services/selectors/auth';
 import TLocation from '../../types/location';
@@ -11,8 +10,8 @@ import TLocation from '../../types/location';
 import styles from './profile.module.css';
 
 function ProfileEditor() {
-  const user = useSelector(getProfile);
-  const isLoading = useSelector(isEditLoading);
+  const user = useAppSelector(getProfile);
+  const isLoading = useAppSelector(isEditLoading);
 
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');

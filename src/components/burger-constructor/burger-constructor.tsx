@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 
 import { TIngredient, TIngredientInOrder, TypesOfIngredients } from '../../types/ingredient';
@@ -8,13 +7,13 @@ import { setBun, setStuffing, updateOrder } from '../../services/redusers/order'
 import BunTop from './bun/bun-top';
 import BunBottom from './bun/bun-bottom';
 import Stuffing from './stuffing/stuffing';
-import { useAppDispatch } from '../../hooks/use-store';
+import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
 
 import styles from './burger-constructor.module.css';
 
 function BurgerConstructor() {
-  const ingredients: TIngredientInOrder[] = useSelector(getStuffing);
-  const bun: TIngredient | null = useSelector(getBun);
+  const ingredients: TIngredientInOrder[] = useAppSelector(getStuffing);
+  const bun: TIngredient | null = useAppSelector(getBun);
 
   const dispatch = useAppDispatch();
 

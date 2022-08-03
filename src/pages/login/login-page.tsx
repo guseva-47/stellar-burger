@@ -1,11 +1,10 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { login } from '../../services/redusers/auth';
 import { isLoginFailed, loginErrorMessage } from '../../services/selectors/auth';
-import { useAppDispatch } from '../../hooks/use-store';
+import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
 
 import styles from './login-page.module.css';
 
@@ -18,8 +17,8 @@ function LoginPage() {
   const dispatch = useAppDispatch();
 
   const [loginError, setLoginError] = useState('');
-  const isFailed = useSelector(isLoginFailed);
-  const errMsg = useSelector(loginErrorMessage);
+  const isFailed = useAppSelector(isLoginFailed);
+  const errMsg = useAppSelector(loginErrorMessage);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();

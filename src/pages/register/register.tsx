@@ -1,11 +1,10 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { registratiion } from '../../services/redusers/auth';
 import { isRegFailed, regErrorMessage } from '../../services/selectors/auth';
-import { useAppDispatch } from '../../hooks/use-store';
+import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
 
 import styles from './register.module.css';
 
@@ -25,8 +24,8 @@ function RegisterPage() {
     dispatch(registratiion({ email, password, name }));
   };
 
-  const isFailed = useSelector(isRegFailed);
-  const errMsg = useSelector(regErrorMessage);
+  const isFailed = useAppSelector(isRegFailed);
+  const errMsg = useAppSelector(regErrorMessage);
 
   useEffect(() => {
     if (isFailed) {
