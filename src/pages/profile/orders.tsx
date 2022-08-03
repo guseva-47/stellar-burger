@@ -1,12 +1,12 @@
 import FeedOrders from '../../components/orders-feed/feed-orders';
 import { useAppSelector } from '../../hooks/use-store';
-import { feedWsApi } from '../../services/api/live-feed';
-import { ordersSelector } from '../../services/selectors/live-feed';
+import { privateFeedWsApi } from '../../services/api/private-live-feed';
+import { ordersSelector } from '../../services/selectors/history';
 
 import styles from './profile.module.css';
 
 function Orders() {
-  const { isSuccess } = feedWsApi.useGetOrdersQuery();
+  const { isSuccess } = privateFeedWsApi.useGetPrivateOrdersQuery();
   const orders = useAppSelector(ordersSelector);
 
   return (
