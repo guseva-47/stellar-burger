@@ -1,11 +1,11 @@
 import Cookies from 'js-cookie';
 
-import backendApi from './backend-api';
+import api from './api';
 import { TUser, TUserAuth, TUserFull } from '../types/user';
 import { TData, TDataLogin, TDataTokens, TDataUser } from './responce.types';
 
 class AuthApi {
-  urlAuth = `${backendApi.url}/auth`;
+  urlAuth = `${api.url}/auth`;
 
   calcAuthExpires = () => new Date(new Date().getTime() + 20 * 60 * 1000);
 
@@ -33,10 +33,10 @@ class AuthApi {
       },
     });
 
-    res = await backendApi.checkResponce(res);
+    res = await api.checkResponce(res);
 
     const data: TDataLogin = await res.json();
-    await backendApi.checkSuccess(data);
+    await api.checkSuccess(data);
 
     this.setAccessToken(data.accessToken);
     this.setRefreshToken(data.refreshToken);
@@ -53,10 +53,10 @@ class AuthApi {
       },
     });
 
-    res = await backendApi.checkResponce(res);
+    res = await api.checkResponce(res);
 
     const data: TDataLogin = await res.json();
-    await backendApi.checkSuccess(data);
+    await api.checkSuccess(data);
 
     this.setAccessToken(data.accessToken);
     this.setRefreshToken(data.refreshToken);
@@ -75,10 +75,10 @@ class AuthApi {
       },
     });
 
-    res = await backendApi.checkResponce(res);
+    res = await api.checkResponce(res);
 
     const data: TDataTokens = await res.json();
-    await backendApi.checkSuccess(data);
+    await api.checkSuccess(data);
 
     this.setAccessToken(data.accessToken);
     this.setRefreshToken(data.refreshToken);
@@ -98,10 +98,10 @@ class AuthApi {
       },
     });
 
-    res = await backendApi.checkResponce(res);
+    res = await api.checkResponce(res);
 
     const data: TData = await res.json();
-    await backendApi.checkSuccess(data);
+    await api.checkSuccess(data);
 
     this.removeAccessToken();
     this.removeRefreshToken();
@@ -117,10 +117,10 @@ class AuthApi {
       },
     });
 
-    res = await backendApi.checkResponce(res);
+    res = await api.checkResponce(res);
 
     const data: TDataUser = await res.json();
-    await backendApi.checkSuccess(data);
+    await api.checkSuccess(data);
 
     return { user: data.user };
   }
@@ -137,10 +137,10 @@ class AuthApi {
       },
     });
 
-    res = await backendApi.checkResponce(res);
+    res = await api.checkResponce(res);
 
     const data: TDataUser = await res.json();
-    await backendApi.checkSuccess(data);
+    await api.checkSuccess(data);
     return { user: data.user };
   }
 

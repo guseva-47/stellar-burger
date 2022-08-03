@@ -2,7 +2,7 @@ import { FormEvent, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import backendApi from '../../api/backend-api';
+import backendApi from '../../api/app-api';
 
 import styles from './password.module.css';
 

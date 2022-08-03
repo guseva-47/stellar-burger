@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import backendApi from '../../api/backend-api';
+import backendApi from '../../api/app-api';
 import { TIngredient } from '../../types/ingredient';
 import { TOrder } from '../../types/order';
 

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 
-import backendApi from '../../api/backend-api';
+import backendApi from '../../api/app-api';
 import { TIngredient, TIngredientInOrder } from '../../types/ingredient';
 
 type TIngredients = {

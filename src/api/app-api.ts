@@ -1,73 +1,57 @@
 import { TIngredient } from '../types/ingredient';
 import { TOrdersResponse } from '../types/order';
+import api from './api';
+import authApi from './auth-api';
 import { TData, TDataIngredients, TDataOrder } from './responce.types';
 
-class BackendApi {
-  url = 'https://norma.nomoreparties.space/api';
-
-  async checkResponce(responce: Response): Promise<Response> {
-    if (!responce.ok) {
-      const data = await responce.json();
-      return Promise.reject(
-        new Error(`Request error: status ${responce.status}, message "${data.message}"`)
-      );
-    }
-    return responce;
-  }
-
-  async checkSuccess<T extends TData>(data: T): Promise<T> {
-    if (data.success !== true) {
-      return Promise.reject(
-        new Error(`Request error: success status ${data.success} message ${data.message}`)
-      );
-    }
-    return data;
-  }
-
+class AppApi {
   async getAllIngredients() {
-    let res = await fetch(`${this.url}/ingredients`);
+    let res = await fetch(`${api.url}/ingredients`);
 
-    res = await this.checkResponce(res);
+    res = await api.checkResponce(res);
 
     const data: TDataIngredients = await res.json();
 
-    await this.checkSuccess(data);
+    await api.checkSuccess(data);
 
     return data.data;
   }
 
   async getOrder(num: string) {
-    let res = await fetch(`${this.url}/orders/${num}`);
+    let res = await fetch(`${api.url}/orders/${num}`);
 
-    res = await this.checkResponce(res);
+    res = await api.checkResponce(res);
 
     const data: TOrdersResponse = await res.json();
 
-    await this.checkSuccess(data);
+    await api.checkSuccess(data);
 
     return (data.orders?.length > 0) ? data.orders[0] : null;
   }
 
   async postOrder(ingredients: TIngredient[]) {
-    let res = await fetch(`${this.url}/orders`, {
+    const accessToken = await authApi.getAccessTokenWithRefresh();
+
+    let res = await fetch(`${api.url}/orders`, {
       method: 'POST',
       body: JSON.stringify({ ingredients }),
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer: ${accessToken}`
       },
     });
 
-    res = await this.checkResponce(res);
+    res = await api.checkResponce(res);
 
     const data: TDataOrder = await res.json();
 
-    await this.checkSuccess(data);
+    await api.checkSuccess(data);
 
     return { name: data.name, order: data.order };
   }
 
   async resetPasword(email: string) {
-    let res = await fetch(`${this.url}/password-reset`, {
+    let res = await fetch(`${api.url}/password-reset`, {
       method: 'POST',
       body: JSON.stringify({ email }),
       headers: {
@@ -75,15 +59,15 @@ class BackendApi {
       },
     });
 
-    res = await this.checkResponce(res);
+    res = await api.checkResponce(res);
 
     const data: TData = await res.json();
 
-    await this.checkSuccess(data);
+    await api.checkSuccess(data);
   }
 
   async newPasword({ password, token }: { password: string; token: string }) {
-    let res = await fetch(`${this.url}/password-reset/reset`, {
+    let res = await fetch(`${api.url}/password-reset/reset`, {
       method: 'POST',
       body: JSON.stringify({ password, token }),
       headers: {
@@ -96,12 +80,12 @@ class BackendApi {
       referrerPolicy: 'no-referrer',
     });
 
-    res = await this.checkResponce(res);
+    res = await api.checkResponce(res);
 
     const data: TData = await res.json();
 
-    await this.checkSuccess(data);
+    await api.checkSuccess(data);
   }
 }
 
-export default new BackendApi();
+export default new AppApi();
