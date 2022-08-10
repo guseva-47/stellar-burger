@@ -1,4 +1,4 @@
-import { ordersSelector } from '../../services/selectors/live-feed';
+import { ordersSelector } from '../../services/live-feed/live-feed.selector';
 import FeedOrders from '../../components/orders-feed/feed-orders';
 import OrderBoard from '../../components/order-board/order-board';
 import { feedWsApi } from '../../services/api/live-feed';

@@ -1,7 +1,7 @@
 import { useLocation, useParams } from 'react-router-dom';
 
 import { useAppSelector } from '../../hooks/use-store';
-import { getIngredientById } from '../../services/selectors/app';
+import { getIngredientById } from '../../services/app/app.selector';
 import { TIngredient } from '../../types/ingredient';
 import TLocation from '../../types/location';
 

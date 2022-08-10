@@ -1,6 +1,6 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAppSelector } from '../hooks/use-store';
-import { getUserName } from '../services/selectors/auth';
+import { getUserName } from '../services/auth/auth.selector';
 
 function PrivateRoute() {
   const auth = useAppSelector(getUserName);

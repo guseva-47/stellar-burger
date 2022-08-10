@@ -2,7 +2,7 @@ import {
   getIngredientsByType,
   isAllIngredientsFailed,
   isAllIngredientsLoading,
-} from '../../services/selectors/app';
+} from '../../services/app/app.selector';
 
 import Ingredient from '../ingredient/ingredient';
 import { TIngredient } from '../../types/ingredient';

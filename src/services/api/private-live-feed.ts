@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { TOrdersResponse } from '../../types/order';
-import { setData } from '../redusers/order-history';
+import { setData } from '../order-history/order-history.reducer';
 import authApi from '../../api/auth-api';
 
 export const privateFeedWsApi = createApi({

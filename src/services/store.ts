@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import rootReducer from './redusers/root-reducer';
+import rootReducer from './root-reducer';
 import { feedWsApi as liveFeedAPI } from './api/live-feed';
 import { privateFeedWsApi as privateFeedAPI } from './api/private-live-feed';
 

@@ -2,8 +2,8 @@ import { useCallback } from 'react';
 import { useDrop } from 'react-dnd';
 
 import { TIngredient, TIngredientInOrder, TypesOfIngredients } from '../../types/ingredient';
-import { getBun, getStuffing } from '../../services/selectors/order';
-import { setBun, setStuffing, updateOrder } from '../../services/redusers/order';
+import { getBun, getStuffing } from '../../services/order/order.selector';
+import { setBun, setStuffing, updateOrder } from '../../services/order/order.reducer';
 import BunTop from './bun/bun-top';
 import BunBottom from './bun/bun-bottom';
 import Stuffing from './stuffing/stuffing';

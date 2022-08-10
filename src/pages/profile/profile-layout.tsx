@@ -1,7 +1,7 @@
 import { Link, Outlet, useMatch } from 'react-router-dom';
 
 import { useAppDispatch } from '../../hooks/use-store';
-import { logout } from '../../services/redusers/auth';
+import { logout } from '../../services/auth/auth.reducer';
 
 import styles from './profile.module.css';
 

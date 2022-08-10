@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { TIngredient } from '../../types/ingredient';
-import { getCountStuffing } from '../../services/selectors/order';
+import { getCountStuffing } from '../../services/order/order.selector';
 import { useAppSelector } from '../../hooks/use-store';
 
 import styles from './ingredient.module.css';

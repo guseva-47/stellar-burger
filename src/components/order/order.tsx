@@ -4,9 +4,9 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { v4 as uuidv4 } from 'uuid';
 
 import TLocation from '../../types/location';
-import { fetchGetOrder } from '../../services/redusers/app';
+import { fetchGetOrder } from '../../services/app/app.reducer';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
-import { getAllIngredients, getOrder } from '../../services/selectors/app';
+import { getAllIngredients, getOrder } from '../../services/app/app.selector';
 import RecordTime from '../orders-feed/record-time';
 import { TIngredientInOrder, TypesOfIngredients } from '../../types/ingredient';
 import IngredientLine from './ingredient-line';

@@ -2,8 +2,8 @@ import { FormEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { registratiion } from '../../services/redusers/auth';
-import { isRegFailed, regErrorMessage } from '../../services/selectors/auth';
+import { registratiion } from '../../services/auth/auth.reducer';
+import { isRegFailed, regErrorMessage } from '../../services/auth/auth.selector';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
 
 import styles from './register.module.css';

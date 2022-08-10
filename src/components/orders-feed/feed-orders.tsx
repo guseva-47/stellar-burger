@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useAppSelector } from '../../hooks/use-store';
-import { getAllIngredients } from '../../services/selectors/app';
+import { getAllIngredients } from '../../services/app/app.selector';
 import { TIngredientInOrder } from '../../types/ingredient';
 import { TOrder } from '../../types/order';
 import FeedOrderRecord from './feed-order-record';

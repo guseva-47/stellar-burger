@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TOrders, TOrdersResponse } from '../../types/order';
-import { WebsocketStatus } from './utils';
+import { WebsocketStatus } from '../utils/utils';
 
 export interface ILiveFeed extends TOrders {
   status: WebsocketStatus;

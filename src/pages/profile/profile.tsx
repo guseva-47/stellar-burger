@@ -2,8 +2,8 @@ import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
-import { getUser } from '../../services/redusers/auth';
-import { getProfile, isProfileFailed, isProfileLoading } from '../../services/selectors/auth';
+import { getUser } from '../../services/auth/auth.reducer';
+import { getProfile, isProfileFailed, isProfileLoading } from '../../services/auth/auth.selector';
 
 import styles from './profile.module.css';
 

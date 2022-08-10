@@ -7,7 +7,7 @@ import {
   initIsLoadFailedErrMsg,
   TIsLoadFailed,
   TIsLoadFailedErrMsg,
-} from './utils';
+} from '../utils/utils';
 
 interface IAuthState {
   user: TUser;
