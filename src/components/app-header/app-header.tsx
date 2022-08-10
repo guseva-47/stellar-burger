@@ -21,7 +21,7 @@ function AppHeader() {
             </div>
           </li>
           <li className={`${styles['nav-li']}`}>
-            <HeaderLink to="/orders" text="Лента заказов" Icon={ListIcon} />
+            <HeaderLink to="/feed" text="Лента заказов" Icon={ListIcon} />
           </li>
         </ul>
       </nav>

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import Modal from '../modal/modal';
@@ -15,25 +14,26 @@ import {
   isOrderFailed,
   isOrderLoading,
 } from '../../services/selectors/order';
+import { getUserName } from '../../services/selectors/auth';
+import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
 
 import styles from './order-constructor.module.css';
-import { getUserName } from '../../services/selectors/auth';
 
 function OrderConstructor() {
-  const auth = useSelector(getUserName);
+  const auth = useAppSelector(getUserName);
   const navigate = useNavigate();
   const location = useLocation();
 
   const [isSended, setIsSended] = useState(false);
   const closeHandler = () => setIsSended(false);
-  const cost = useSelector(getCost);
+  const cost = useAppSelector(getCost);
 
-  const stuffing = useSelector(getStuffing);
-  const bun = useSelector(getBun);
+  const stuffing = useAppSelector(getStuffing);
+  const bun = useAppSelector(getBun);
   const isBurgerDone = bun && stuffing.length > 0;
 
-  const dispatch = useDispatch();
-  const orderNum = useSelector(getOrderNumber);
+  const dispatch = useAppDispatch();
+  const orderNum = useAppSelector(getOrderNumber);
 
   const makeOrder = () => {
     if (!auth) {
@@ -44,15 +44,13 @@ function OrderConstructor() {
     if (!isBurgerDone) return;
 
     const items = [bun, ...stuffing];
-    
-    // todo
-    // @ts-ignore
+
     dispatch(fetchPostOrder(items));
     setIsSended(true);
   };
 
-  const isLoading = useSelector(isOrderLoading);
-  const isFailed = useSelector(isOrderFailed);
+  const isLoading = useAppSelector(isOrderLoading);
+  const isFailed = useAppSelector(isOrderFailed);
 
   return (
     <section className="pt-20 pl-4">
@@ -72,7 +70,7 @@ function OrderConstructor() {
 
         {isSended && !isLoading && orderNum && (
           <Modal closeHandler={closeHandler}>
-            <OrderDetails number={orderNum} />
+            <OrderDetails number={`${orderNum}`} />
           </Modal>
         )}
         {isSended && isFailed && (

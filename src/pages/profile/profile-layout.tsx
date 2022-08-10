@@ -1,5 +1,6 @@
-import { useDispatch } from 'react-redux';
 import { Link, Outlet, useMatch } from 'react-router-dom';
+
+import { useAppDispatch } from '../../hooks/use-store';
 import { logout } from '../../services/redusers/auth';
 
 import styles from './profile.module.css';
@@ -12,13 +13,9 @@ function ProfileLayout() {
     ? 'В этом разделе вы можете изменить свои персональные данные'
     : 'В этом разделе вы можете просмотреть свою историю заказов';
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const handleLogout = () => {
-    // todo
-    // @ts-ignore
-    dispatch(logout());
-  };
+  const handleLogout = () => dispatch(logout());
 
   return (
     <div className={styles.layout}>

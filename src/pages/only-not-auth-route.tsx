@@ -1,10 +1,10 @@
-import { useSelector } from 'react-redux';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { useAppSelector } from '../hooks/use-store';
 import { getUserName } from '../services/selectors/auth';
 import TLocation from '../types/location';
 
 function OnlyNotAuthRoute() {
-  const auth = useSelector(getUserName);
+  const auth = useAppSelector(getUserName);
 
   const location = useLocation();
 

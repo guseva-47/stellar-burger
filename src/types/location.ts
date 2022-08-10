@@ -1,10 +1,12 @@
 type TLocation = {
   pathname?: string;
-  state?: {
-    backgroundLocation?: TLocation;
-    from?: {
-      pathname: string;
-    };
+  state?: TLocationState;
+};
+
+type TLocationState = {
+  backgroundLocation?: TLocation;
+  from?: {
+    pathname: string;
   };
 };
 

@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import {
   getIngredientsByType,
   isAllIngredientsFailed,
@@ -7,6 +6,7 @@ import {
 
 import Ingredient from '../ingredient/ingredient';
 import { TIngredient } from '../../types/ingredient';
+import { useAppSelector } from '../../hooks/use-store';
 
 import styles from './ingredients-set.module.css';
 
@@ -18,14 +18,12 @@ type Props = {
 };
 
 function IngredientsSet({ type = { title: '', value: '' } }: Props) {
-  const ingredients: TIngredient[] = useSelector((state) => (
-    // todo
-    // @ts-ignore
+  const ingredients: TIngredient[] = useAppSelector((state) => (
     getIngredientsByType(state, type.value)
   ));
 
-  const isLoding: boolean = useSelector(isAllIngredientsLoading);
-  const isFailed: boolean = useSelector(isAllIngredientsFailed);
+  const isLoding: boolean = useAppSelector(isAllIngredientsLoading);
+  const isFailed: boolean = useAppSelector(isAllIngredientsFailed);
 
   return (
     <section>

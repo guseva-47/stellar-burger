@@ -1,5 +1,4 @@
 import { useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import ConstructorPage from '../constructor/constructor-page';
@@ -20,17 +19,16 @@ import Modal from '../../components/modal/modal';
 import ProfileEditor from '../profile/profile-editor';
 import { getUser } from '../../services/redusers/auth';
 import TLocation from '../../types/location';
+import { useAppDispatch } from '../../hooks/use-store';
+import Feed from '../feed/feed';
+import Order from '../../components/order/order';
 
 function App() {
-  const dispatch = useDispatch();
-  const location = useLocation();
+  const dispatch = useAppDispatch();
+  const location = useLocation() as TLocation;
 
   useEffect(() => {
-    // todo
-    // @ts-ignore
     dispatch(fetchGetItems());
-    // todo
-    // @ts-ignore
     dispatch(getUser());
   }, [dispatch]);
 
@@ -39,7 +37,7 @@ function App() {
 
   return (
     <>
-      <Routes location={(location as TLocation).state?.backgroundLocation || location}>
+      <Routes location={location.state?.backgroundLocation || location}>
         <Route path="/" element={<Layout />}>
           <Route index element={<ConstructorPage />} />
           <Route path="login" element={<OnlyNotAuthRoute />}>
@@ -54,26 +52,39 @@ function App() {
           <Route path="reset-password" element={<OnlyNotAuthRoute />}>
             <Route index element={<ResetPassword />} />
           </Route>
+          <Route path="feed">
+            <Route index element={<Feed />} />
+            <Route path=":num" element={<Order />} />
+          </Route>
           <Route path="profile" element={<PrivateRoute />}>
             <Route element={<ProfileLayout />}>
               <Route index element={<Profile />} />
               <Route path="edit" element={<ProfileEditor />} />
               <Route path="orders" element={<Orders />} />
             </Route>
+            <Route path="orders/:num" element={<Order />} />
           </Route>
-          <Route path="/ingredients/:id" element={<IngredientDetails />} />
+          <Route path="ingredients/:id" element={<IngredientDetails />} />
 
           <Route path="*" element={<NotFound404 />} />
         </Route>
       </Routes>
 
-      {(location as TLocation).state?.backgroundLocation && (
+      {location.state?.backgroundLocation && (
         <Routes>
           <Route
-            path="/ingredients/:id"
+            path="ingredients/:id"
             element={<Modal title="Детали ингредиента" closeHandler={modalCloseHandler} />}
           >
             <Route index element={<IngredientDetails />} />
+          </Route>
+
+          <Route path="feed/:num" element={<Modal closeHandler={modalCloseHandler} />}>
+            <Route index element={<Order />} />
+          </Route>
+
+          <Route path="profile/orders/:num" element={<Modal closeHandler={modalCloseHandler} />}>
+            <Route index element={<Order />} />
           </Route>
         </Routes>
       )}

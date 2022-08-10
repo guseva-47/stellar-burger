@@ -1,11 +1,20 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import backendApi from '../../api/backend-api';
+import backendApi from '../../api/app-api';
+import { TIngredient } from '../../types/ingredient';
+import { TOrder } from '../../types/order';
 
-const initialState = {
+interface IAppState {
+  allIngredients: Array<TIngredient>,
+  allIngredientsLoading: boolean,
+  allIngredientsFailed: boolean,
+  order: TOrder | null
+}
+
+const initialState: IAppState = {
   allIngredients: [],
-  currentIngredient: null,
   allIngredientsLoading: false,
-  allIngredientsFailed: false
+  allIngredientsFailed: false,
+  order: null
 };
 
 export const fetchGetItems = createAsyncThunk(
@@ -13,17 +22,15 @@ export const fetchGetItems = createAsyncThunk(
   async () => backendApi.getAllIngredients()
 );
 
+export const fetchGetOrder = createAsyncThunk(
+  'app/getOderById',
+  async (num: string) => backendApi.getOrder(num)
+);
+
 export const appSlice = createSlice({
   name: 'app',
   initialState,
-  reducers: {
-    setCurrent: (state, action) => {
-      state.currentIngredient = action.payload;
-    },
-    resetCurrent: (state) => {
-      state.currentIngredient = null;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchGetItems.pending, (state) => {
       state.allIngredientsLoading = true;
@@ -41,9 +48,14 @@ export const appSlice = createSlice({
       state.allIngredients = [];
       console.error(action.error.message);
     });
+    builder.addCase(fetchGetOrder.fulfilled, (state, action) => {
+      state.order = action.payload;
+    });
+    builder.addCase(fetchGetOrder.rejected, (state, action) => {
+      state.order = null;
+      console.error(action.error.message);
+    });
   },
 });
-
-export const { resetCurrent, setCurrent } = appSlice.actions;
 
 export default appSlice.reducer;

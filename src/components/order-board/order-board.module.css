@@ -1,0 +1,26 @@
+.line {
+  display: flex;
+  gap: 36px;
+}
+
+.board {
+  width: 100%;
+}
+
+.numbers {
+  padding: 0;
+  margin: 0;
+  gap: 8px;
+  list-style: none;
+}
+
+.num {
+  color: #0cc;
+}
+
+.amount {
+  text-shadow:
+    0 0 16px rgb(51 51 255 / 25%),
+    0 0 8px rgb(51 51 255 / 25%),
+    0 4px 32px rgb(51 51 255 / 50%);
+}

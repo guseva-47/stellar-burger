@@ -1,8 +1,8 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { FormEvent, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
 import { editUser } from '../../services/redusers/auth';
 import { getProfile, isEditLoading } from '../../services/selectors/auth';
 import TLocation from '../../types/location';
@@ -10,14 +10,14 @@ import TLocation from '../../types/location';
 import styles from './profile.module.css';
 
 function ProfileEditor() {
-  const user = useSelector(getProfile);
-  const isLoading = useSelector(isEditLoading);
+  const user = useAppSelector(getProfile);
+  const isLoading = useAppSelector(isEditLoading);
 
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -53,11 +53,7 @@ function ProfileEditor() {
       if (user.email !== email) newData.email = email;
       if (password.length >= 6) newData.password = password;
 
-      if (Object.keys(newData).length > 0) {
-        // todo
-        // @ts-ignore
-        dispatch(editUser(newData));
-      }
+      if (Object.keys(newData).length > 0) dispatch(editUser(newData));
     }
 
     setIsSaved(true);
