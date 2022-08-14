@@ -40,7 +40,7 @@ function BurgerConstructor() {
   );
 
   return (
-    <section ref={dropTarget} className={isHover ? styles.hover : styles.main}>
+    <section ref={dropTarget} className={isHover ? styles.hover : styles.main} id="burger-constructor">
       <BunTop bun={bun ?? undefined} />
 
       <ul className={`${styles.middle} ${styles.elements} custom-scroll`}>
