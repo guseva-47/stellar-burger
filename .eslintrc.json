@@ -15,8 +15,8 @@
     {
       "files": ["**/*.test.js"],
       "env": { "jest/globals": true },
-      "plugins": ["jest"],
-      "extends": ["plugin:jest/recommended"],
+      "plugins": ["jest", "cypress"],
+      "extends": ["plugin:jest/recommended", "plugin:cypress/recommended"],
       "rules": { "jest/prefer-expect-assertions": "off" }
     }
   ],
