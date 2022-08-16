@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { TOrdersResponse } from '../../types/order';
-import { setData } from '../redusers/live-feed';
+import { setData } from '../live-feed/live-feed.reducer';
 
 export const feedWsApi = createApi({
   reducerPath: 'liveFeedAPI',

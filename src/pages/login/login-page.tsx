@@ -2,8 +2,8 @@ import { FormEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { login } from '../../services/redusers/auth';
-import { isLoginFailed, loginErrorMessage } from '../../services/selectors/auth';
+import { login } from '../../services/auth/auth.reducer';
+import { isLoginFailed, loginErrorMessage } from '../../services/auth/auth.selector';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
 
 import styles from './login-page.module.css';

@@ -3,7 +3,7 @@ import {
   ordersSelector,
   totalOrderSelector,
   totalTodayOrderSelector,
-} from '../../services/selectors/live-feed';
+} from '../../services/live-feed/live-feed.selector';
 import { TOrederStatus } from '../../types/order';
 import styles from './order-board.module.css';
 

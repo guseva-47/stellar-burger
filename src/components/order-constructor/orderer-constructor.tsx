@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import Modal from '../modal/modal';
-import { fetchPostOrder } from '../../services/redusers/order';
+import { fetchPostOrder } from '../../services/order/order.reducer';
 import OrderDetails from '../order-details/order-details';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import {
@@ -13,8 +13,8 @@ import {
   getStuffing,
   isOrderFailed,
   isOrderLoading,
-} from '../../services/selectors/order';
-import { getUserName } from '../../services/selectors/auth';
+} from '../../services/order/order.selector';
+import { getUserName } from '../../services/auth/auth.selector';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
 
 import styles from './order-constructor.module.css';

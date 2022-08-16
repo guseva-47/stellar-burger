@@ -3,8 +3,8 @@ import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-component
 import { FormEvent, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
-import { editUser } from '../../services/redusers/auth';
-import { getProfile, isEditLoading } from '../../services/selectors/auth';
+import { editUser } from '../../services/auth/auth.reducer';
+import { getProfile, isEditLoading } from '../../services/auth/auth.selector';
 import TLocation from '../../types/location';
 
 import styles from './profile.module.css';

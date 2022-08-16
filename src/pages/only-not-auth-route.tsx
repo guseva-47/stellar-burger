@@ -1,6 +1,6 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAppSelector } from '../hooks/use-store';
-import { getUserName } from '../services/selectors/auth';
+import { getUserName } from '../services/auth/auth.selector';
 import TLocation from '../types/location';
 
 function OnlyNotAuthRoute() {

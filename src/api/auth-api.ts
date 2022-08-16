@@ -159,8 +159,12 @@ class AuthApi {
     };
 
     const isExpired = (token: string) => {
-      const payload = parseJwt(token);
-      return Date.now() >= payload.exp * 1000;
+      try {
+        const payload = parseJwt(token);
+        return Date.now() >= payload.exp * 1000;
+      } catch (err) {
+        return true;
+      }
     };
 
     const accessToken = this.getAccessToken();
